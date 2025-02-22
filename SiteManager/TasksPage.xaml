@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SiteManager.TasksPage"
+             Title="TasksPage">
+    <Grid RowDefinitions=".05*,.45*,.05*,.45*">
+        <Label Text="ELENCO TASK" Grid.Row="0" Margin="20,20,0,0" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="2" Margin="20,0,20,0">
+                <CollectionView x:Name="TasksCollectionView" SelectionMode="None" HeightRequest="400">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <FlexLayout>
+                                        <HorizontalStackLayout Grid.Column="0" Margin="5" Padding="5" >
+                                            <VerticalStackLayout>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="Descrizione:" VerticalTextAlignment="Center" />
+                                                    <Label Text="{Binding Descrizione}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="Data:" VerticalTextAlignment="Center" />
+                                                    <Label Text="{Binding Data}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Grid.Column="1" Margin="20,0,0,0"  VerticalOptions="Start">
+                                            <Button Text="Visualizza" FontSize="11" Clicked="VisualizzaTask_Clicked" CommandParameter="{Binding}" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                            <Button Text="Modifica" FontSize="11" Clicked="ModificaTask_Clicked" CommandParameter="{Binding}" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                            <Button Text="Elimina" FontSize="11" Clicked="EliminaTask_Clicked" CommandParameter="{Binding}" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                        </HorizontalStackLayout>
+                            </FlexLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button 
+            Grid.Row="1"
+            Text="Nuovo task" 
+            Clicked="AggiungiTask_Clicked" 
+            HeightRequest="50"
+            WidthRequest="150"
+            Margin="10"
+            BackgroundColor="SteelBlue"
+            HorizontalOptions="Center"/>
+
+        <StackLayout x:Name="FormStackLayout" IsVisible="False" HeightRequest="300" Spacing="10" Grid.Row="2" Margin="30,0,30,0">
+            <Entry x:Name="DescrizioneEntry" Placeholder="Descrizione" />
+            <Label Text="Data:" />
+            <DatePicker x:Name="DataPicker"/>
+        </StackLayout>
+        <Button x:Name="SalvaTaskBtn" Text="Salva" Clicked="SalvaTask_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+        <Button x:Name="AggiornaTaskBtn" Text="Aggiorna" Clicked="AggiornaTask_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+    </Grid>
+</ContentPage>

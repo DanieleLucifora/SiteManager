@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SiteManager.MainPage">
+
+    <VerticalStackLayout Spacing="10" Margin="20">
+        <Image
+            Source="sm_image.png"
+            HeightRequest="200"
+            HorizontalOptions="Center"
+            Aspect="AspectFit"
+            SemanticProperties.Description="building image" />
+
+        <Grid RowDefinitions="auto,auto,auto,auto,auto" ColumnDefinitions="*,*" Margin="10">
+            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Margin="10">
+                <Label Text="Cantieri" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
+                <Button
+                    Padding="20"
+                    x:Name="CaPageBtn"
+                    ImageSource="cantieri_icon.png"
+                    SemanticProperties.Hint="Cantieri page"
+                    Clicked="CantieriPageClicked"
+                    HorizontalOptions="Fill"
+                    WidthRequest="120"
+                    HeightRequest="120"
+                    BackgroundColor="SteelBlue" />
+            </VerticalStackLayout>
+            <VerticalStackLayout  Grid.Row="0" Grid.Column="1" Margin="10">
+                <Label Text="Operai" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
+                <Button
+                    Padding="20"
+                    x:Name="OpePageBtn"
+                    ImageSource="operaio_icon.png"
+                    SemanticProperties.Hint="Operai page"
+                    Clicked="OperaiPageClicked"
+                    HorizontalOptions="Fill"
+                    WidthRequest="120"
+                    HeightRequest="120"
+                    BackgroundColor="SteelBlue" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Margin="10">
+                <Label Text="Materiali" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
+                <Button
+                    Padding="20"
+                    x:Name="MatPageBtn"
+                    ImageSource="tools_icon.png"
+                    SemanticProperties.Hint="Materiali page"
+                    Clicked="MaterialiPageClicked"
+                    HorizontalOptions="Fill"
+                    WidthRequest="120"
+                    HeightRequest="120"
+                    BackgroundColor="SteelBlue" />
+            </VerticalStackLayout>
+            <VerticalStackLayout  Grid.Row="1" Grid.Column="1" Margin="10">
+                <Label Text="Reporting" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
+                <Button
+                    Padding="20"
+                    x:Name="RepPageBtn"
+                    ImageSource="finance_icon.png"
+                    SemanticProperties.Hint="Reporting page"
+                    Clicked="ReportingPageClicked"
+                    HorizontalOptions="Fill"
+                    WidthRequest="120"
+                    HeightRequest="120"
+                    BackgroundColor="SteelBlue" />
+            </VerticalStackLayout>
+        </Grid>
+    </VerticalStackLayout>
+
+</ContentPage>
