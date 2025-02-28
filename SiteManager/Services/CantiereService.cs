@@ -6,14 +6,19 @@ namespace SiteManager.Services;
 
 public class CantiereService
 {
-
+    private static MySqlConnection GetConnection()
+    {
+        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+        return new MySqlConnection(stringaConnessione);
+    }    
+    
     public static IEnumerable<Cantiere> OttieniCantieri()
     {
         var cantieri = new List<Cantiere>();
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             MySqlCommand command = new ("SELECT * FROM cantieri", connessione); //Comando = query + db
@@ -46,11 +51,10 @@ public class CantiereService
 
     public static bool AggiungiCantiere(Cantiere nuovoCantiere)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
 
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "INSERT INTO cantieri (Città, Committente, DataInizio, Scadenza) VALUES (@Città, @Committente, @DataInizio, @Scadenza)";
@@ -81,11 +85,10 @@ public class CantiereService
 
     public static bool AggiornaCantiere(Cantiere cantiereAggiornato)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
 
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "UPDATE cantieri SET Città = @Città, Committente = @Committente, DataInizio = @DataInizio, Scadenza = @Scadenza WHERE IdCantiere = @IdCantiere";
@@ -112,10 +115,10 @@ public class CantiereService
     
     public static bool EliminaCantiere(int IdCantiere)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "DELETE FROM cantieri WHERE IdCantiere = @IdCantiere";

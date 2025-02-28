@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SiteManager.OperaiPage"
              Title="OperaiPage">
-    <Grid RowDefinitions=".4*,.2*,.2*,.2*">
-        <ScrollView>
+    <Grid RowDefinitions="0.05*,.5*,.1*,.38*,.15*">
+        <Button Text="Ordina Operai" Grid.Row="0" Clicked="OrdinaOperai_Clicked" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue" HorizontalOptions="End"/>
+        <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
                 <CollectionView x:Name="OperaiCollectionView" SelectionMode="None" SelectionChanged="OnSelectionChanged" HeightRequest="400">
                     <CollectionView.ItemTemplate>
@@ -34,15 +35,16 @@
             </VerticalStackLayout>
         </ScrollView>
         <Button 
-            Grid.Row="1"
+            Grid.Row="2"
             Text="Aggiungi operaio" 
             Clicked="AggiungiOperaio_Clicked" 
             HeightRequest="50"
             WidthRequest="150"
+            Margin="10"
             BackgroundColor="SteelBlue"
             HorizontalOptions="Center"/>
 
-        <StackLayout x:Name="FormStackLayout" IsVisible="False" HeightRequest="300" Spacing="10" Grid.Row="2" Margin="30,0,30,0">
+        <StackLayout x:Name="FormStackLayout" IsVisible="False" HeightRequest="300" Spacing="10" Grid.Row="3" Margin="30,10,30,0">
             <Entry x:Name="NomeEntry" Placeholder="Nome" />
             <Entry x:Name="CognomeEntry" Placeholder="Cognome" />
             <Entry x:Name="MansioneEntry" Placeholder="Mansione" />
@@ -51,8 +53,8 @@
             <Label Text="Data di assunzione:"/>
             <DatePicker x:Name="DataAssunzionePicker" />
         </StackLayout>
-        <Button x:Name="SalvaOperaioBtn" Text="Salva" Clicked="SalvaOperaio_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-        <Button x:Name="AggiornaOperaioBtn" Text="Aggiorna" Clicked="AggiornaOperaio_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+        <Button x:Name="SalvaOperaioBtn" Text="Salva" Clicked="SalvaOperaio_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+        <Button x:Name="AggiornaOperaioBtn" Text="Aggiorna" Clicked="AggiornaOperaio_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
 
     </Grid>
 </ContentPage>

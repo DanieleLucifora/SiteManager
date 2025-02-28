@@ -88,15 +88,23 @@ public partial class CantieriPage : ContentPage
         }
     }
 
-    private void VisualizzaCantiere_Clicked(object sender, EventArgs e)
+    private async void VisualizzaCantiere_Clicked(object sender, EventArgs e)
     {
-        var button = sender as Button;
-        var cantiere = button?.BindingContext as Cantiere;
-        if (cantiere != null)
+        if (sender is Button button && button.CommandParameter is Cantiere selectedCantiere)
         {
-            // Logica per visualizzare i dettagli del cantiere
-            DisplayAlert("Dettagli Cantiere", $"Città: {cantiere.Città}\nCommittente: {cantiere.Committente}\nData inizio: {cantiere.DataInizio.ToShortDateString()}\nScadenza: {cantiere.Scadenza.ToShortDateString()}", "OK");
+            DisplayAlert("Dettagli Cantiere", $"Città: {selectedCantiere.Città}\nCommittente: {selectedCantiere.Committente}\nData inizio: {selectedCantiere.DataInizio.ToShortDateString()}\nScadenza: {selectedCantiere.Scadenza.ToShortDateString()}", "OK");
         }
+        else
+        {
+            await DisplayAlert("Errore", "Seleziona un cantiere valido.", "OK");
+        }
+        /*         var button = sender as Button;
+                var cantiere = button?.BindingContext as Cantiere;
+                if (cantiere != null)
+                {
+                    // Logica per visualizzare i dettagli del cantiere
+                    DisplayAlert("Dettagli Cantiere", $"Città: {cantiere.Città}\nCommittente: {cantiere.Committente}\nData inizio: {cantiere.DataInizio.ToShortDateString()}\nScadenza: {cantiere.Scadenza.ToShortDateString()}", "OK");
+                } */
     }
 
     private async void GestisciCantiere_Clicked(object sender, EventArgs e)

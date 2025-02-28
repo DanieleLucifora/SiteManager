@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-maccatalyst/resizetizer/r/Resources/background_login.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-maccatalyst/resizetizer/r/Resources/sm_logo.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-maccatalyst/resizetizer/r/Resources/tools_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-maccatalyst/resizetizer/r/Resources/home_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-maccatalyst/resizetizer/r/Resources/cantieri_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-maccatalyst/resizetizer/r/Resources/finance_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-maccatalyst/resizetizer/r/Resources/tasks_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-maccatalyst/resizetizer/r/Resources/sm_image.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-maccatalyst/resizetizer/r/Resources/operaio_icon.png" />
+    <BundleResource Include="obj/Debug/net9.0-maccatalyst/resizetizer/f/FluentUI.cs" />
+    <BundleResource Include="obj/Debug/net9.0-maccatalyst/resizetizer/f/OpenSans-Regular.ttf" />
+    <BundleResource Include="obj/Debug/net9.0-maccatalyst/resizetizer/f/OpenSans-Semibold.ttf" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SiteManager.LoginPage"
+             Title="LoginPage">
+
+    <Grid RowDefinitions=".3*,.7*">
+        <Image Aspect="AspectFill" Source="background_login.png"/>
+        <Grid BackgroundColor="Grey" Opacity=".8"/>
+            <Image Aspect="AspectFit"
+                   HeightRequest="220"
+                   Source="sm_logo.png"/>
+        
+        <Grid Grid.Row="1" BackgroundColor="LightGray">
+            <RoundRectangle WidthRequest="350" 
+                        HeightRequest="500"
+                        Margin="-5,-30,-5,-2"
+                        CornerRadius="30,30,30,30"
+                        Fill="White"/>
+            <VerticalStackLayout WidthRequest="300" HeightRequest="350" Margin="30,0,30,60" BackgroundColor="White">
+                <Label  FontAttributes="Bold"
+                        FontFamily="bold"
+                        FontSize="25"
+                        Text="Benventuto!"
+                        TextColor="SteelBlue"/>
+                <Label  FontFamily="medium"
+                        Text="Login to continue"
+                        TextColor="DarkGray"
+                        Margin="0,10"/>
+                <Entry  Placeholder="Username"
+                        x:Name="UsernameEntry"
+                        VerticalOptions="Center"
+                        Margin="0,30,0,0"/>
+                <Entry  Placeholder="Password"
+                        x:Name="PasswordEntry"
+                        VerticalOptions="Center"
+                        IsPassword="True"
+                        Margin="0,30,0,0"/>
+                <Button Margin="0,20,0,0"
+                        x:Name="LoginBtn"
+                        Text="Login" 
+                        SemanticProperties.Hint="Login page"
+                        Clicked="LoginButton_Clicked"
+                        BackgroundColor="SteelBlue" />
+                <Label  Margin="0,20,0,0"
+                        HorizontalOptions="Center"
+                        Text="Hai dimenticato la password?"
+                        TextColor="SteelBlue"
+                        TextDecorations="Underline"/>
+                <Button Margin="0,30,0,0"
+                        BackgroundColor="LightGray"
+                        HeightRequest="60"
+                        Text="Crea il tuo account"
+                        TextColor="SteelBlue"/>
+
+            </VerticalStackLayout>        
+        </Grid>
+    </Grid>
+
+</ContentPage>

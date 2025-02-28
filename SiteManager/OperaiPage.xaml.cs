@@ -2,15 +2,20 @@ using MySql.Data.MySqlClient;
 using SiteManager.Models;
 using SiteManager.Services;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 
 namespace SiteManager;
 
 public partial class OperaiPage : ContentPage
 {
     private readonly OperaioService _operaioService;
-    public ObservableCollection<Operaio> OperaiList{ get; set; }	
-    
-	public OperaiPage()
+    public ObservableCollection<Operaio> OperaiList{ get; set; }
+
+    // Importa la funzione C++ dalla libreria
+    [DllImport("libsortlibrary.dylib", EntryPoint = "SortStrings")]
+    public static extern void SortStrings(IntPtr[] strings, int length);
+
+    public OperaiPage()
 	{
 		InitializeComponent();
         OperaiList = new ObservableCollection<Operaio>();
@@ -41,7 +46,32 @@ public partial class OperaiPage : ContentPage
         }
     }
 
-	private async void AggiungiOperaio_Clicked(object sender, EventArgs e)
+    private void OrdinaOperai_Clicked(object sender, EventArgs e)
+    {
+        // Converti i nomi degli operai in puntatori a stringhe ANSI
+        var operaiArray = OperaiList.Select(o => Marshal.StringToHGlobalAnsi(o.Nome)).ToArray();
+
+        // Chiama la funzione C++ per ordinare i nomi
+        SortStrings(operaiArray, operaiArray.Length);
+
+        // Converti i puntatori ordinati di nuovo in stringhe
+        var sortedNames = operaiArray.Select(ptr => Marshal.PtrToStringAnsi(ptr)).ToList();
+
+        // Libera la memoria allocata per i puntatori
+        foreach (var ptr in operaiArray)
+        {
+            Marshal.FreeHGlobal(ptr);
+        }
+
+        // Crea una nuova lista di operai ordinata in base ai nomi ordinati
+        var sortedOperai = sortedNames.Select(name => OperaiList.First(o => o.Nome == name)).ToList();
+
+        // Aggiorna la lista degli operai e la vista
+        OperaiList = new ObservableCollection<Operaio>(sortedOperai);
+        OperaiCollectionView.ItemsSource = OperaiList;
+    }
+    
+    private async void AggiungiOperaio_Clicked(object sender, EventArgs e)
 	{
 		FormStackLayout.IsVisible = true;
         SalvaOperaioBtn.IsVisible = true;

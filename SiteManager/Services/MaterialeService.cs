@@ -6,14 +6,19 @@ namespace SiteManager.Services;
 
 public class MaterialeService
 {
-    
+    private static MySqlConnection GetConnection()
+    {
+        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+        return new MySqlConnection(stringaConnessione);
+    }    
+        
     public static IEnumerable<Materiale> OttieniMateriali()
     {
         var materiali = new List<Materiale>();
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             MySqlCommand command = new("SELECT * FROM materiali", connessione); // Comando = query + db
@@ -45,10 +50,10 @@ public class MaterialeService
 
     public static bool AggiungiMateriale(Materiale nuovoMateriale)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "INSERT INTO materiali (Nome, Quantità, Unità, CostoUnitario) VALUES (@Nome, @Quantità, @Unità, @CostoUnitario)";
@@ -78,10 +83,10 @@ public class MaterialeService
 
     public static bool AggiornaMateriale(Materiale materialeAggiornato)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "UPDATE materiali SET Nome = @Nome, Quantità = @Quantità, Unità = @Unità, CostoUnitario = @CostoUnitario WHERE IdMateriale = @IdMateriale";
@@ -108,10 +113,9 @@ public class MaterialeService
 
     public static bool EliminaMateriale(int IdMateriale)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;"; 
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "DELETE FROM materiali WHERE IdMateriale = @IdMateriale";
@@ -134,11 +138,10 @@ public class MaterialeService
 
     public void AssegnaMaterialeACantiere(int cantiereId, int materialeId, int quantitàUtilizzata)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
-    try
-    {
-        using (MySqlConnection connessione = new(stringaConnessione))
+
+        try
         {
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
 
@@ -194,21 +197,20 @@ public class MaterialeService
             }
 
             connessione.Close();
+
         }
-    }
-    catch (Exception eccezione)
-    {
-        Console.WriteLine($"Errore: {eccezione.Message}");
-    }     
+        catch (Exception eccezione)
+        {
+            Console.WriteLine($"Errore: {eccezione.Message}");
+        }
     }
 
     public void RimuoviMaterialeDaCantiere(int cantiereId, int materialeId, int quantitàDaRimuovere)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;"; 
         MaterialeCantiere materialeCantiere = null;
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
 

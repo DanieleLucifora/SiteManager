@@ -6,14 +6,19 @@ namespace SiteManager.Services;
 
 public class OperaioService
 {
-  
+    private static MySqlConnection GetConnection()
+    {
+        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+        return new MySqlConnection(stringaConnessione);
+    }    
+
     public static IEnumerable<Operaio> OttieniOperai()
     {
         var operai = new List<Operaio>();
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             MySqlCommand command = new("SELECT * FROM operai", connessione); // Comando = query + db
@@ -44,12 +49,13 @@ public class OperaioService
         }
     }
 
+
     public static bool AggiungiOperaio(Operaio nuovoOperaio)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "INSERT INTO operai (Nome, Cognome, Mansione, DataNascita, DataAssunzione) VALUES (@Nome, @Cognome, @Mansione, @DataNascita, @DataAssunzione)";
@@ -80,10 +86,10 @@ public class OperaioService
 
     public bool AggiornaOperaio(Operaio operaioAggiornato)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "UPDATE operai SET Nome = @Nome, Cognome = @Cognome, Mansione = @Mansione, DataNascita = @DataNascita, DataAssunzione = @DataAssunzione WHERE IdOperaio = @IdOperaio";
@@ -111,10 +117,9 @@ public class OperaioService
 
     public static bool EliminaOperaio(int IdOperaio)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "DELETE FROM operai WHERE IdOperaio = @IdOperaio";
@@ -137,10 +142,9 @@ public class OperaioService
 
     public bool AssegnaOperaioACantiere(Operaio operaioAggiornato)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "UPDATE operai SET Nome = @Nome, Cognome = @Cognome, Mansione = @Mansione, DataNascita = @DataNascita, DataAssunzione = @DataAssunzione, CantiereId = @CantiereId WHERE IdOperaio = @IdOperaio";
@@ -169,10 +173,9 @@ public class OperaioService
 
     public static bool RimuoviOperaioDaCantiere(Operaio operaioAggiornato)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             

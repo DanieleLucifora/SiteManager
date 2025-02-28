@@ -6,14 +6,17 @@ namespace SiteManager.Services;
 
 public class TasksService
 {
-
+    private static MySqlConnection GetConnection()
+    {
+        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+        return new MySqlConnection(stringaConnessione);
+    }    
     public static IEnumerable<Tasks> OttieniTasks(Cantiere cantiere)
     {
         var taskList = new List<Tasks>();
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             MySqlCommand command = new("SELECT * FROM tasks WHERE CantiereId = @CantiereId", connessione); // Comando = query + db
@@ -41,10 +44,9 @@ public class TasksService
 
     public static bool AggiungiTask(Tasks task)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "INSERT INTO tasks (Descrizione, Data, CantiereId) VALUES (@Descrizione, @Data, @CantiereId)";
@@ -69,10 +71,9 @@ public class TasksService
 
     public static bool AggiornaTask(Tasks task)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "UPDATE tasks SET Descrizione = @Descrizione, Data = @Data WHERE IdTasks = @IdTasks";
@@ -97,10 +98,9 @@ public class TasksService
 
     public static bool EliminaTask(int IdTasks)
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         try
         {
-            MySqlConnection connessione = new(stringaConnessione);
+            var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
             string query = "DELETE FROM tasks WHERE IdTasks = @IdTasks";

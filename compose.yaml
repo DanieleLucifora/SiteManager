@@ -1,0 +1,16 @@
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: database
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: SiteManager
+    volumes:
+      - db-data:/var/lib/mysql #volume condiviso
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql #script di inizializzazione
+    ports:
+      - 3307:3306 #porta host:porta container
+
+
+volumes:
+  db-data:

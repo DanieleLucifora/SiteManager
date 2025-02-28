@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/danielelucifora/Desktop/Università/SiteManager/SiteManager/SiteManager.csproj": {}
+    "/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/SiteManager.csproj": {}
   },
   "projects": {
-    "/Users/danielelucifora/Desktop/Università/SiteManager/SiteManager/SiteManager.csproj": {
+    "/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/SiteManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/danielelucifora/Desktop/Università/SiteManager/SiteManager/SiteManager.csproj",
+        "projectUniqueName": "/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/SiteManager.csproj",
         "projectName": "SiteManager",
-        "projectPath": "/Users/danielelucifora/Desktop/Università/SiteManager/SiteManager/SiteManager.csproj",
+        "projectPath": "/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/SiteManager.csproj",
         "packagesPath": "/Users/danielelucifora/.nuget/packages/",
-        "outputPath": "/Users/danielelucifora/Desktop/Università/SiteManager/SiteManager/obj/",
+        "outputPath": "/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "configFilePaths": [
@@ -73,6 +73,10 @@
             "MySql.Data": {
               "target": "Package",
               "version": "[9.2.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             }
           },
           "imports": [
@@ -116,6 +120,10 @@
             "MySql.Data": {
               "target": "Package",
               "version": "[9.2.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             }
           },
           "imports": [
@@ -159,6 +167,10 @@
             "MySql.Data": {
               "target": "Package",
               "version": "[9.2.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             }
           },
           "imports": [

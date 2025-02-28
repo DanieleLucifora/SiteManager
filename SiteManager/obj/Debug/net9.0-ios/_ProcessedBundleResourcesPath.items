@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <BundleResource Include="Platforms/iOS/Resources/PrivacyInfo.xcprivacy" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/sp/splash_61635F94ABD2A93CED6F5EB7B2159B14425C9BA9C0145073F87E3E623AC94453.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/sp/splash_61635F94ABD2A93CED6F5EB7B2159B14425C9BA9C0145073F87E3E623AC94453@2x.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/sp/splash_61635F94ABD2A93CED6F5EB7B2159B14425C9BA9C0145073F87E3E623AC94453@3x.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/r/Resources/finance_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/r/Resources/cantieri_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/r/Resources/home_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/r/Resources/tasks_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/r/Resources/background_login.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/r/Resources/operaio_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/r/Resources/sm_logo.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/r/Resources/tools_icon.png" />
+    <BundleResource Include="/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/obj/Debug/net9.0-ios/resizetizer/r/Resources/sm_image.png" />
+    <BundleResource Include="obj/Debug/net9.0-ios/resizetizer/f/FluentUI.cs" />
+    <BundleResource Include="obj/Debug/net9.0-ios/resizetizer/f/OpenSans-Regular.ttf" />
+    <BundleResource Include="obj/Debug/net9.0-ios/resizetizer/f/OpenSans-Semibold.ttf" />
+  </ItemGroup>
+</Project>

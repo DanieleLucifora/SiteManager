@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SiteManager.MaterialiPage"
              Title="MaterialiPage">
-    <Grid RowDefinitions=".4*,.2*,.2*,.2*">
-        <ScrollView>
+    <Grid RowDefinitions="0.05*,.5*,.1*,.38*,.15*">
+        <Button Text="Ordina Materiali" Grid.Row="0" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue" HorizontalOptions="End"/>
+        <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
                 <CollectionView x:Name="MaterialiCollectionView" SelectionMode="Single" SelectionChanged="OnSelectionChanged" HeightRequest="400">
                     <CollectionView.ItemTemplate>
@@ -32,7 +33,7 @@
             </VerticalStackLayout>
         </ScrollView>
         <Button 
-            Grid.Row="1"
+            Grid.Row="2"
             Text="Aggiungi Materiale" 
             Clicked="AggiungiMateriale_Clicked" 
             HeightRequest="50"
@@ -40,13 +41,13 @@
             BackgroundColor="SteelBlue"
             HorizontalOptions="Center"/>
 
-        <StackLayout x:Name="FormStackLayout" IsVisible="False" Spacing="10" Grid.Row="2" Margin="30,0,30,0">
+        <StackLayout x:Name="FormStackLayout" IsVisible="False" Spacing="10" Grid.Row="3" Margin="30,10,30,0">
             <Entry x:Name="NomeEntry" Placeholder="Nome" />
             <Entry x:Name="QuantitàEntry" Placeholder="Quantità" Keyboard="Numeric"/>
             <Entry x:Name="UnitàEntry" Placeholder="Unità" />
             <Entry x:Name="CostoUnitarioEntry" Placeholder="CostoUnitario" Keyboard="Numeric"/>
         </StackLayout>
-        <Button x:Name="SalvaMaterialeBtn" Text="Salva" Clicked="SalvaMateriale_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-        <Button x:Name="AggiornaMaterialeBtn" Text="Aggiorna" Clicked="AggiornaMateriale_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+        <Button x:Name="SalvaMaterialeBtn" Text="Salva" Clicked="SalvaMateriale_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+        <Button x:Name="AggiornaMaterialeBtn" Text="Aggiorna" Clicked="AggiornaMateriale_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
     </Grid>
 </ContentPage>
