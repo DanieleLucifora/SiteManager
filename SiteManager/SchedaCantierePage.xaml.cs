@@ -89,16 +89,16 @@ public partial class SchedaCantierePage : ContentPage
     {
         if (sender is Button button && button.CommandParameter is Materiale selectedMateriale)
         {
-            var quantitàUtilizzata = await DisplayPromptAsync("Quantità", "Inserisci la quantità da assegnare:", "OK", "Annulla", "Quantità", -1, Keyboard.Numeric);
-            if (int.TryParse(quantitàUtilizzata, out int quantità))
+            var quantitaUtilizzata = await DisplayPromptAsync("Quantita", "Inserisci la quantita da assegnare:", "OK", "Annulla", "Quantita", -1, Keyboard.Numeric);
+            if (int.TryParse(quantitaUtilizzata, out int quantita))
             {
-                _materialeService.AssegnaMaterialeACantiere(_selectedCantiere.IdCantiere, selectedMateriale.IdMateriale, quantità);
+                _materialeService.AssegnaMaterialeACantiere(_selectedCantiere.IdCantiere, selectedMateriale.IdMateriale, quantita);
                 await DisplayAlert("Successo", "Materiale assegnato con successo.", "OK");
                 LoadMateriali(); 
             }
             else
             {
-                await DisplayAlert("Errore", "Inserisci una quantità valida.", "OK");
+                await DisplayAlert("Errore", "Inserisci una quantita valida.", "OK");
             }
         }
         else
@@ -111,16 +111,16 @@ public partial class SchedaCantierePage : ContentPage
     {
         if (sender is Button button && button.CommandParameter is Materiale selectedMateriale)
         {
-            var quantitàUtilizzata = await DisplayPromptAsync("Quantità", "Inserisci la quantità da rimuovere:", "OK", "Annulla", "Quantità", -1, Keyboard.Numeric);
-            if (int.TryParse(quantitàUtilizzata, out int quantità))
+            var quantitaUtilizzata = await DisplayPromptAsync("Quantita", "Inserisci la quantita da rimuovere:", "OK", "Annulla", "Quantita", -1, Keyboard.Numeric);
+            if (int.TryParse(quantitaUtilizzata, out int quantita))
             {
-                _materialeService.RimuoviMaterialeDaCantiere(_selectedCantiere.IdCantiere, selectedMateriale.IdMateriale, quantità);
+                _materialeService.RimuoviMaterialeDaCantiere(_selectedCantiere.IdCantiere, selectedMateriale.IdMateriale, quantita);
                 await DisplayAlert("Successo", "Materiale rimosso con successo.", "OK");
                 LoadMateriali();
             }
             else
             {
-                await DisplayAlert("Errore", "Inserisci una quantità valida.", "OK");
+                await DisplayAlert("Errore", "Inserisci una quantita valida.", "OK");
             }
         }
         else

@@ -8,7 +8,9 @@ public class CantiereService
 {
     private static MySqlConnection GetConnection()
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+        //connessione db remoto -> docker container
+        string stringaConnessione = "Server=localhost;Port=3307;Database=SiteManager;User=root;Password=1234;";
+        //connessione db locale string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         return new MySqlConnection(stringaConnessione);
     }    
     
@@ -29,7 +31,7 @@ public class CantiereService
                     cantieri.Add(new Cantiere
                     {
                         IdCantiere = reader.GetInt32("IdCantiere"),
-                        Città = reader.GetString("Città"),
+                        Citta = reader.GetString("Citta"),
                         Committente = reader.GetString("Committente"),
                         DataInizio = reader.GetDateTime("DataInizio"),
                         Scadenza = reader.GetDateTime("Scadenza")
@@ -57,10 +59,10 @@ public class CantiereService
             var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
-            string query = "INSERT INTO cantieri (Città, Committente, DataInizio, Scadenza) VALUES (@Città, @Committente, @DataInizio, @Scadenza)";
+            string query = "INSERT INTO cantieri (Citta, Committente, DataInizio, Scadenza) VALUES (@Citta, @Committente, @DataInizio, @Scadenza)";
             MySqlCommand command = new(query, connessione);
 
-            command.Parameters.AddWithValue("@Città", nuovoCantiere.Città);
+            command.Parameters.AddWithValue("@Citta", nuovoCantiere.Citta);
             command.Parameters.AddWithValue("@Committente", nuovoCantiere.Committente);
             command.Parameters.AddWithValue("@DataInizio", nuovoCantiere.DataInizio);
             command.Parameters.AddWithValue("@Scadenza", nuovoCantiere.Scadenza);
@@ -91,10 +93,10 @@ public class CantiereService
             var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
-            string query = "UPDATE cantieri SET Città = @Città, Committente = @Committente, DataInizio = @DataInizio, Scadenza = @Scadenza WHERE IdCantiere = @IdCantiere";
+            string query = "UPDATE cantieri SET Citta = @Citta, Committente = @Committente, DataInizio = @DataInizio, Scadenza = @Scadenza WHERE IdCantiere = @IdCantiere";
             MySqlCommand command = new(query, connessione);
 
-            command.Parameters.AddWithValue("@Città", cantiereAggiornato.Città);
+            command.Parameters.AddWithValue("@Citta", cantiereAggiornato.Citta);
             command.Parameters.AddWithValue("@Committente", cantiereAggiornato.Committente);
             command.Parameters.AddWithValue("@DataInizio", cantiereAggiornato.DataInizio);
             command.Parameters.AddWithValue("@Scadenza", cantiereAggiornato.Scadenza);

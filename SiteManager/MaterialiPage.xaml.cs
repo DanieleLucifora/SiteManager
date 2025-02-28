@@ -31,8 +31,8 @@ public partial class MaterialiPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is Materiale selectedMateriale)
         {
             NomeEntry.Text = selectedMateriale.Nome;
-            QuantitàEntry.Text = selectedMateriale.Quantità.ToString();
-            UnitàEntry.Text = selectedMateriale.Unità;
+            QuantitaEntry.Text = selectedMateriale.Quantita.ToString();
+            UnitaEntry.Text = selectedMateriale.Unita;
             CostoUnitarioEntry.Text = selectedMateriale.CostoUnitario.ToString();
             FormStackLayout.IsVisible = true;
         }
@@ -51,15 +51,15 @@ public partial class MaterialiPage : ContentPage
     {
         
         string nome = NomeEntry.Text; 
-        int Quantità = int.Parse(QuantitàEntry.Text); 
-        string Unità = UnitàEntry.Text; 
+        int Quantita = int.Parse(QuantitaEntry.Text); 
+        string Unita = UnitaEntry.Text; 
         double CostoUnitario = double.Parse(CostoUnitarioEntry.Text); 
 
         Materiale nuovoMateriale = new Materiale
         {
             Nome = nome,
-            Quantità = Quantità,
-            Unità = Unità,
+            Quantita = Quantita,
+            Unita = Unita,
             CostoUnitario = CostoUnitario
         };
 
@@ -84,7 +84,7 @@ public partial class MaterialiPage : ContentPage
         if (materiale != null)
         {
             // Logica per visualizzare i dettagli del materiale
-            DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantità: {materiale.Quantità.ToString()}\nUnità: {materiale.Unità}\nData di Nascita: {materiale.CostoUnitario.ToString()}", "OK");
+            DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantita: {materiale.Quantita.ToString()}\nUnita: {materiale.Unita}\nData di Nascita: {materiale.CostoUnitario.ToString()}", "OK");
         }
     }
 
@@ -94,8 +94,8 @@ public partial class MaterialiPage : ContentPage
         {
             // Popola i campi del form con i dati del materiale selezionato
             NomeEntry.Text = selectedMateriale.Nome;
-            QuantitàEntry.Text = selectedMateriale.Quantità.ToString();
-            UnitàEntry.Text = selectedMateriale.Unità;
+            QuantitaEntry.Text = selectedMateriale.Quantita.ToString();
+            UnitaEntry.Text = selectedMateriale.Unita;
             CostoUnitarioEntry.Text = selectedMateriale.CostoUnitario.ToString();
 
             // Imposta il BindingContext del pulsante AggiornaMaterialeBtn
@@ -120,11 +120,11 @@ public partial class MaterialiPage : ContentPage
         {
             // Aggiorna i dati del materiale con i valori del form
             selectedMateriale.Nome = NomeEntry.Text;
-            selectedMateriale.Quantità = int.Parse(QuantitàEntry.Text);
-            selectedMateriale.Unità = UnitàEntry.Text;
+            selectedMateriale.Quantita = int.Parse(QuantitaEntry.Text);
+            selectedMateriale.Unita = UnitaEntry.Text;
             selectedMateriale.CostoUnitario = double.Parse(CostoUnitarioEntry.Text);
             
-            DisplayAlert("Dettagli materiale", $"Id: {selectedMateriale.IdMateriale} \nNome: {selectedMateriale.Nome}\nQuantità: {selectedMateriale.Quantità}\nUnità: {selectedMateriale.Unità}\nData di Nascita: {selectedMateriale.CostoUnitario.ToString()}", "OK");
+            DisplayAlert("Dettagli materiale", $"Id: {selectedMateriale.IdMateriale} \nNome: {selectedMateriale.Nome}\nQuantita: {selectedMateriale.Quantita}\nUnita: {selectedMateriale.Unita}\nData di Nascita: {selectedMateriale.CostoUnitario.ToString()}", "OK");
 
             bool success = MaterialeService.AggiornaMateriale(selectedMateriale);
             if (success)
@@ -167,8 +167,8 @@ public partial class MaterialiPage : ContentPage
 	private void ClearForm()
     {
         NomeEntry.Text = string.Empty;
-        QuantitàEntry.Text = string.Empty;
-        UnitàEntry.Text = string.Empty;
+        QuantitaEntry.Text = string.Empty;
+        UnitaEntry.Text = string.Empty;
         CostoUnitarioEntry.Text = string.Empty;
     }
 }

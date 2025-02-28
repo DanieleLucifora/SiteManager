@@ -55,9 +55,9 @@
                                                 <Label Text="{Binding Nome}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
                                             </HorizontalStackLayout>
                                             <HorizontalStackLayout>
-                                                <Label Text="Quantità: " VerticalTextAlignment="Center"/>
-                                                <Label Text="{Binding Quantità}" FontSize="16" VerticalTextAlignment="Center" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                                                <Label Text="{Binding Unità}" IsVisible="Hidden"/>
+                                                <Label Text="Quantita: " VerticalTextAlignment="Center"/>
+                                                <Label Text="{Binding Quantita}" FontSize="16" VerticalTextAlignment="Center" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                                <Label Text="{Binding Unita}" IsVisible="Hidden"/>
                                                 <Label Text="{Binding CostoUnitario}" IsVisible="Hidden"/>
                                             </HorizontalStackLayout>
                                         </VerticalStackLayout>

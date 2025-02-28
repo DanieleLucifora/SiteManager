@@ -30,7 +30,7 @@ public partial class CantieriPage : ContentPage
     {
         if (e.CurrentSelection.FirstOrDefault() is Cantiere selectedCantiere)
         {
-            CittàEntry.Text = selectedCantiere.Città;
+            CittaEntry.Text = selectedCantiere.Citta;
             CommittenteEntry.Text = selectedCantiere.Committente;
             DataInizioPicker.Date = selectedCantiere.DataInizio;
             ScadenzaPicker.Date = selectedCantiere.Scadenza;
@@ -61,14 +61,14 @@ public partial class CantieriPage : ContentPage
     private async void SalvaCantiere_Clicked(object sender, EventArgs e)
     {
         
-        string città = CittàEntry.Text; 
+        string citta = CittaEntry.Text; 
         string committente = CommittenteEntry.Text;  
         DateTime dataInizio = DataInizioPicker.Date; 
         DateTime scadenza = ScadenzaPicker.Date; 
 
         Cantiere nuovoCantiere = new Cantiere
         {
-            Città = città,
+            Citta = citta,
             Committente = committente,
             DataInizio = dataInizio,
             Scadenza = scadenza
@@ -92,7 +92,7 @@ public partial class CantieriPage : ContentPage
     {
         if (sender is Button button && button.CommandParameter is Cantiere selectedCantiere)
         {
-            DisplayAlert("Dettagli Cantiere", $"Città: {selectedCantiere.Città}\nCommittente: {selectedCantiere.Committente}\nData inizio: {selectedCantiere.DataInizio.ToShortDateString()}\nScadenza: {selectedCantiere.Scadenza.ToShortDateString()}", "OK");
+            DisplayAlert("Dettagli Cantiere", $"Citta: {selectedCantiere.Citta}\nCommittente: {selectedCantiere.Committente}\nData inizio: {selectedCantiere.DataInizio.ToShortDateString()}\nScadenza: {selectedCantiere.Scadenza.ToShortDateString()}", "OK");
         }
         else
         {
@@ -103,7 +103,7 @@ public partial class CantieriPage : ContentPage
                 if (cantiere != null)
                 {
                     // Logica per visualizzare i dettagli del cantiere
-                    DisplayAlert("Dettagli Cantiere", $"Città: {cantiere.Città}\nCommittente: {cantiere.Committente}\nData inizio: {cantiere.DataInizio.ToShortDateString()}\nScadenza: {cantiere.Scadenza.ToShortDateString()}", "OK");
+                    DisplayAlert("Dettagli Cantiere", $"Citta: {cantiere.Citta}\nCommittente: {cantiere.Committente}\nData inizio: {cantiere.DataInizio.ToShortDateString()}\nScadenza: {cantiere.Scadenza.ToShortDateString()}", "OK");
                 } */
     }
 
@@ -125,7 +125,7 @@ public partial class CantieriPage : ContentPage
         if (sender is Button button && button.CommandParameter is Cantiere selectedCantiere)
         {
             // Popola i campi del form con i dati dell'operaio selezionato
-            CittàEntry.Text = selectedCantiere.Città;
+            CittaEntry.Text = selectedCantiere.Citta;
             CommittenteEntry.Text = selectedCantiere.Committente;
             DataInizioPicker.Date = selectedCantiere.DataInizio;
             ScadenzaPicker.Date = selectedCantiere.Scadenza;
@@ -151,12 +151,12 @@ public partial class CantieriPage : ContentPage
         if (AggiornaCantiereBtn.BindingContext is Cantiere selectedCantiere)
         {
             // Aggiorna i dati del cantiere con i valori del form
-            selectedCantiere.Città = CittàEntry.Text;
+            selectedCantiere.Citta = CittaEntry.Text;
             selectedCantiere.Committente = CommittenteEntry.Text;
             selectedCantiere.DataInizio = DataInizioPicker.Date;
             selectedCantiere.Scadenza = ScadenzaPicker.Date;
             
-            DisplayAlert("Dettagli Cantiere", $"Id: {selectedCantiere.IdCantiere} \nCittà: {selectedCantiere.Città}\nCommittente: {selectedCantiere.Committente}\nData di Nascita: {selectedCantiere.DataInizio.ToShortDateString()}\nData di Assunzione: {selectedCantiere.Scadenza.ToShortDateString()}", "OK");
+            DisplayAlert("Dettagli Cantiere", $"Id: {selectedCantiere.IdCantiere} \nCitta: {selectedCantiere.Citta}\nCommittente: {selectedCantiere.Committente}\nData di Nascita: {selectedCantiere.DataInizio.ToShortDateString()}\nData di Assunzione: {selectedCantiere.Scadenza.ToShortDateString()}", "OK");
 
             bool success = CantiereService.AggiornaCantiere(selectedCantiere);
             if (success)
@@ -178,7 +178,7 @@ public partial class CantieriPage : ContentPage
     {
         if (sender is Button button && button.CommandParameter is Cantiere selectedCantiere)
         {
-            bool conferma = await DisplayAlert("Conferma Eliminazione", $"Sei sicuro di voler cancellare il cantiere di {selectedCantiere.Città}?", "Si", "No");
+            bool conferma = await DisplayAlert("Conferma Eliminazione", $"Sei sicuro di voler cancellare il cantiere di {selectedCantiere.Citta}?", "Si", "No");
             if (conferma)
             {
                 bool success = CantiereService.EliminaCantiere(selectedCantiere.IdCantiere);
@@ -198,7 +198,7 @@ public partial class CantieriPage : ContentPage
 
 	private void ClearForm()
     {
-        CittàEntry.Text = string.Empty;
+        CittaEntry.Text = string.Empty;
         CommittenteEntry.Text = string.Empty;
         DataInizioPicker.Date = DateTime.Now;
         ScadenzaPicker.Date = DateTime.Now;

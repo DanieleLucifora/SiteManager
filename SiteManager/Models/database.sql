@@ -3,7 +3,7 @@ USE SiteManager;
 
 CREATE TABLE cantieri (
     IdCantiere INT AUTO_INCREMENT PRIMARY KEY,
-    Città VARCHAR(100) NOT NULL,
+    Citta VARCHAR(100) NOT NULL,
     Committente VARCHAR(100) NOT NULL,
     DataInizio DATE NOT NULL,
     Scadenza DATE NOT NULL
@@ -31,8 +31,8 @@ CREATE TABLE tasks (
 CREATE TABLE materiali (
     IdMateriale INT AUTO_INCREMENT PRIMARY KEY,
     Nome VARCHAR(100) NOT NULL,
-    Quantità FLOAT NOT NULL,
-    Unità VARCHAR(10) DEFAULT 'kg',
+    Quantita FLOAT NOT NULL,
+    Unita VARCHAR(10) DEFAULT 'kg',
     CostoUnitario DOUBLE NOT NULL,
     CantiereId INT,
     FOREIGN KEY (CantiereId) REFERENCES cantieri(IdCantiere)
@@ -42,7 +42,7 @@ CREATE TABLE materialecantiere (
     IdMaterialeCantiere INT AUTO_INCREMENT PRIMARY KEY,
     IdMateriale INT,
     IdCantiere INT,
-    QuantitàUtilizzata FLOAT NOT NULL,
+    QuantitaUtilizzata FLOAT NOT NULL,
     FOREIGN KEY (IdMateriale) REFERENCES materiali(IdMateriale),
     FOREIGN KEY (IdCantiere) REFERENCES cantieri(IdCantiere)
 );

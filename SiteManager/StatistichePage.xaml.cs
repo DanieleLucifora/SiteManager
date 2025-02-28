@@ -6,12 +6,11 @@ using System.Text;
 
 namespace SiteManager;
 
-public partial class ReportingPage : ContentPage
+public partial class StatistichePage : ContentPage
 {
 	private readonly CantiereService _cantiereService;
-	public ObservableCollection<Cantiere> CantieriList { get; set; }
-
-	public ReportingPage()
+	public ObservableCollection<Cantiere> CantieriList { get; set; }	
+	public StatistichePage()
 	{
 		InitializeComponent();
 		_cantiereService = new CantiereService();
@@ -30,11 +29,12 @@ public partial class ReportingPage : ContentPage
 		CantieriCollectionView.ItemsSource = CantieriList;
 	}
 
-	private async void GeneraReport_Clicked(object sender, EventArgs e)
+	//Metodo da rivedere !!!
+	private async void GeneraStatistiche_Clicked(object sender, EventArgs e)
 	{
 		if (sender is Button button && button.CommandParameter is Cantiere selectedCantiere)
 		{
-			bool conferma = await DisplayAlert("Conferma", $"Vuoi generare il report del cantiere di {selectedCantiere.Citta}?", "Si", "No");
+			bool conferma = await DisplayAlert("Conferma", $"Vuoi visualizzare le statistiche per il cantiere di {selectedCantiere.Citta}?", "Si", "No");
 			if (conferma)
 			{
 				try
@@ -52,17 +52,17 @@ public partial class ReportingPage : ContentPage
 							"application/json"
 						);
 
-						string serverUrl = "http://localhost:5001/genera_report"; // URL API del server Flask
+						string serverUrl = "http://localhost:5002/statistiche"; // URL API del server Flask
 						HttpResponseMessage response = await client.PostAsync(serverUrl, jsonContent);
 						string result = await response.Content.ReadAsStringAsync();
 
 						if (response.IsSuccessStatusCode)
 						{
-							await DisplayAlert("Report Generato", $"Il report è stato creato con successo:\n{result}", "OK");
+							await DisplayAlert("Statistiche Generate", $"Le statistiche sono state create con successo:\n{result}", "OK");
 						}
 						else
 						{
-							await DisplayAlert("Errore", $"Errore nella generazione del report:\n{result}", "OK");
+							await DisplayAlert("Errore", $"Errore nella generazione delle statistiche:\n{result}", "OK");
 						}
 					}
 				}
@@ -73,5 +73,4 @@ public partial class ReportingPage : ContentPage
 			}
 		}
 	}
-
 }

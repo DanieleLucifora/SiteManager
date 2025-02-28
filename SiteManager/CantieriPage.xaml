@@ -13,13 +13,11 @@
                             <FlexLayout>
                                 <Grid RowDefinitions="auto,auto">
                                         <HorizontalStackLayout Grid.Row="0" Margin="0,10,0,0">
-                                            <Label Text="Città: " VerticalTextAlignment="Center" />
-                                            <Label Text="{Binding Città}" VerticalTextAlignment="Center" FontSize="20" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                            <Label Text="Citta: " VerticalTextAlignment="Center" />
+                                            <Label Text="{Binding Citta}" VerticalTextAlignment="Center" FontSize="20" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
                                             <Label Text="Committente: " VerticalTextAlignment="Center"/>
                                             <Label Text="{Binding Committente}" VerticalTextAlignment="Center" FontSize="20"  Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                                            <Label Text="Data inizio cantiere: " VerticalTextAlignment="Center"/>
                                             <Label Text="{Binding DataInizio}" IsVisible="Hidden"/>
-                                            <Label Text="Scadenza cantier: " VerticalTextAlignment="Center"/>
                                             <Label Text="{Binding Scadenza}" IsVisible="Hidden"/>
                                         </HorizontalStackLayout>
                                         <HorizontalStackLayout Grid.Row="1" Margin="0,10,0,0">
@@ -47,9 +45,11 @@
             HorizontalOptions="Center"/>
 
         <StackLayout x:Name="FormStackLayout" IsVisible="False" Spacing="10" Grid.Row="3" Margin="30,10,30,0">
-            <Entry x:Name="CittàEntry" Placeholder="Città" />
+            <Entry x:Name="CittaEntry" Placeholder="Citta" />
             <Entry x:Name="CommittenteEntry" Placeholder="Committente" />
+            <Label Text="Data inizio cantiere:" />
             <DatePicker x:Name="DataInizioPicker"/>
+            <Label Text="Scadenza cantiere:" />
             <DatePicker x:Name="ScadenzaPicker"/>
         </StackLayout>
            <Button x:Name="SalvaCantiereBtn" Text="Salva" Clicked="SalvaCantiere_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="10" BackgroundColor="LightGray" TextColor="SteelBlue"/>

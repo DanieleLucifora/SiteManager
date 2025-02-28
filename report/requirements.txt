@@ -1,0 +1,5 @@
+Flask
+reportlab
+mysql-connector-python
+gunicorn
+cachetools

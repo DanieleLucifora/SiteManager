@@ -8,7 +8,9 @@ public class TasksService
 {
     private static MySqlConnection GetConnection()
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+        //connessione db remoto -> docker container
+        string stringaConnessione = "Server=localhost;Port=3307;Database=SiteManager;User=root;Password=1234;";
+        //connessione db locale string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         return new MySqlConnection(stringaConnessione);
     }    
     public static IEnumerable<Tasks> OttieniTasks(Cantiere cantiere)

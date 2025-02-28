@@ -6,8 +6,8 @@ public class Materiale
 {
     public int IdMateriale { get; set; }
     public required string Nome { get; set; }
-    public required int Quantità { get; set; }
-    public required string Unità { get; set; }
+    public required int Quantita { get; set; }
+    public required string Unita { get; set; }
     public required double CostoUnitario { get; set; }
     public List<MaterialeCantiere> materialiCantiere = [];
 }

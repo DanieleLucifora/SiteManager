@@ -11,6 +11,25 @@ services:
     ports:
       - 3307:3306 #porta host:porta container
 
+  report:
+    image: report-app:v1
+    build:
+      context: .
+      dockerfile: report/Dockerfile.report
+    environment:
+      - MYSQL_HOST=mysqldb
+      - MYSQL_PORT=3306
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=SiteManager
+      - FLASK_APP=report.report
+      - FLASK_ENV=development
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mysqldb
+    restart: always
+
+#da aggiungere container statistiche
 
 volumes:
   db-data:

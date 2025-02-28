@@ -8,7 +8,9 @@ public class MaterialeService
 {
     private static MySqlConnection GetConnection()
     {
-        string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
+        //connessione db remoto -> docker container
+        string stringaConnessione = "Server=localhost;Port=3307;Database=SiteManager;User=root;Password=1234;";
+        //connessione db locale string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         return new MySqlConnection(stringaConnessione);
     }    
         
@@ -30,8 +32,8 @@ public class MaterialeService
                     {
                         IdMateriale = reader.GetInt32("IdMateriale"),
                         Nome = reader.GetString("Nome"),
-                        Quantità = reader.GetInt32("Quantità"),
-                        Unità = reader.GetString("Unità"),
+                        Quantita = reader.GetInt32("Quantita"),
+                        Unita = reader.GetString("Unita"),
                         CostoUnitario = reader.GetDouble("CostoUnitario")
                     });
                 }
@@ -56,12 +58,12 @@ public class MaterialeService
             var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
-            string query = "INSERT INTO materiali (Nome, Quantità, Unità, CostoUnitario) VALUES (@Nome, @Quantità, @Unità, @CostoUnitario)";
+            string query = "INSERT INTO materiali (Nome, Quantita, Unita, CostoUnitario) VALUES (@Nome, @Quantita, @Unita, @CostoUnitario)";
             MySqlCommand command = new(query, connessione);
 
             command.Parameters.AddWithValue("@Nome", nuovoMateriale.Nome);
-            command.Parameters.AddWithValue("@Quantità", nuovoMateriale.Quantità);
-            command.Parameters.AddWithValue("@Unità", nuovoMateriale.Unità);
+            command.Parameters.AddWithValue("@Quantita", nuovoMateriale.Quantita);
+            command.Parameters.AddWithValue("@Unita", nuovoMateriale.Unita);
             command.Parameters.AddWithValue("@CostoUnitario", nuovoMateriale.CostoUnitario);
 
             int result = command.ExecuteNonQuery();
@@ -89,12 +91,12 @@ public class MaterialeService
             var connessione = GetConnection();
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
-            string query = "UPDATE materiali SET Nome = @Nome, Quantità = @Quantità, Unità = @Unità, CostoUnitario = @CostoUnitario WHERE IdMateriale = @IdMateriale";
+            string query = "UPDATE materiali SET Nome = @Nome, Quantita = @Quantita, Unita = @Unita, CostoUnitario = @CostoUnitario WHERE IdMateriale = @IdMateriale";
             MySqlCommand command = new(query, connessione);
 
             command.Parameters.AddWithValue("@Nome", materialeAggiornato.Nome);
-            command.Parameters.AddWithValue("@Quantità", materialeAggiornato.Quantità);
-            command.Parameters.AddWithValue("@Unità", materialeAggiornato.Unità);
+            command.Parameters.AddWithValue("@Quantita", materialeAggiornato.Quantita);
+            command.Parameters.AddWithValue("@Unita", materialeAggiornato.Unita);
             command.Parameters.AddWithValue("@CostoUnitario", materialeAggiornato.CostoUnitario);
             command.Parameters.AddWithValue("@IdMateriale", materialeAggiornato.IdMateriale);
 
@@ -136,7 +138,7 @@ public class MaterialeService
         }
     }    
 
-    public void AssegnaMaterialeACantiere(int cantiereId, int materialeId, int quantitàUtilizzata)
+    public void AssegnaMaterialeACantiere(int cantiereId, int materialeId, int quantitaUtilizzata)
     {
 
         try
@@ -145,7 +147,7 @@ public class MaterialeService
             connessione.Open();
             Console.WriteLine("Connessione al database effettuata.");
 
-            // Verifica se il materiale esiste e ha quantità sufficiente
+            // Verifica se il materiale esiste e ha quantita sufficiente
             string queryMateriale = "SELECT * FROM materiali WHERE IdMateriale = @IdMateriale";
             using (MySqlCommand commandMateriale = new(queryMateriale, connessione))
             {
@@ -157,10 +159,10 @@ public class MaterialeService
                         throw new InvalidOperationException("Materiale non trovato.");
                     }
 
-                    int quantitàDisponibile = reader.GetInt32("Quantità");
-                    if (quantitàDisponibile < quantitàUtilizzata)
+                    int quantitaDisponibile = reader.GetInt32("Quantita");
+                    if (quantitaDisponibile < quantitaUtilizzata)
                     {
-                        throw new InvalidOperationException("Quantità insufficiente di materiale.");
+                        throw new InvalidOperationException("Quantita insufficiente di materiale.");
                     }
 
                     // Crea un oggetto Materiale aggiornato
@@ -168,8 +170,8 @@ public class MaterialeService
                     {
                         IdMateriale = reader.GetInt32("IdMateriale"),
                         Nome = reader.GetString("Nome"),
-                        Quantità = quantitàDisponibile - quantitàUtilizzata,
-                        Unità = reader.GetString("Unità"),
+                        Quantita = quantitaDisponibile - quantitaUtilizzata,
+                        Unita = reader.GetString("Unita"),
                         CostoUnitario = reader.GetDouble("CostoUnitario")
                     };
 
@@ -179,12 +181,12 @@ public class MaterialeService
             }
 
             // Assegna il materiale al cantiere
-            string queryAssegnaMateriale = "INSERT INTO materialecantiere (IdCantiere, IdMateriale, QuantitàUtilizzata) VALUES (@IdCantiere, @IdMateriale, @QuantitàUtilizzata)";
+            string queryAssegnaMateriale = "INSERT INTO materialecantiere (IdCantiere, IdMateriale, QuantitaUtilizzata) VALUES (@IdCantiere, @IdMateriale, @QuantitaUtilizzata)";
             using (MySqlCommand commandAssegnaMateriale = new(queryAssegnaMateriale, connessione))
             {
                 commandAssegnaMateriale.Parameters.AddWithValue("@IdCantiere", cantiereId);
                 commandAssegnaMateriale.Parameters.AddWithValue("@IdMateriale", materialeId);
-                commandAssegnaMateriale.Parameters.AddWithValue("@QuantitàUtilizzata", quantitàUtilizzata);
+                commandAssegnaMateriale.Parameters.AddWithValue("@QuantitaUtilizzata", quantitaUtilizzata);
                 int esecuzioneCommand = commandAssegnaMateriale.ExecuteNonQuery();
                 if (esecuzioneCommand > 0)
                 {
@@ -205,7 +207,7 @@ public class MaterialeService
         }
     }
 
-    public void RimuoviMaterialeDaCantiere(int cantiereId, int materialeId, int quantitàDaRimuovere)
+    public void RimuoviMaterialeDaCantiere(int cantiereId, int materialeId, int quantitaDaRimuovere)
     {
         MaterialeCantiere materialeCantiere = null;
         try
@@ -215,7 +217,7 @@ public class MaterialeService
             Console.WriteLine("Connessione al database effettuata.");
 
             // Seleziona la entry dalla table materialecantiere che ha idcantiere e idmateriale corrispondente
-            string queryCantiere = "SELECT Quantità FROM materialecantiere WHERE IdCantiere = @IdCantiere AND IdMateriale = @IdMateriale";
+            string queryCantiere = "SELECT Quantita FROM materialecantiere WHERE IdCantiere = @IdCantiere AND IdMateriale = @IdMateriale";
             MySqlCommand command = new(queryCantiere, connessione);     
             command.Parameters.AddWithValue("@IdCantiere", cantiereId); 
             command.Parameters.AddWithValue("@IdMateriale", materialeId);
@@ -228,7 +230,7 @@ public class MaterialeService
                     {
                         IdCantiere = reader.GetInt32("IdCantiere"),
                         IdMateriale = reader.GetInt32("IdMateriale"),
-                        QuantitàUtilizzata = reader.GetInt32("QuantitàUtilizzata")
+                        QuantitaUtilizzata = reader.GetInt32("QuantitaUtilizzata")
                     };
                 }
             }
@@ -242,12 +244,12 @@ public class MaterialeService
             throw new InvalidOperationException("Materiale non assegnato a questo cantiere.");
         }
 
-        if (materialeCantiere.QuantitàUtilizzata < quantitàDaRimuovere)
+        if (materialeCantiere.QuantitaUtilizzata < quantitaDaRimuovere)
         {
-            throw new InvalidOperationException("Quantità da rimuovere superiore alla quantità utilizzata.");
+            throw new InvalidOperationException("Quantita da rimuovere superiore alla quantita utilizzata.");
         }
 
-        materialeCantiere.QuantitàUtilizzata -= quantitàDaRimuovere;
+        materialeCantiere.QuantitaUtilizzata -= quantitaDaRimuovere;
 
     }    
 }

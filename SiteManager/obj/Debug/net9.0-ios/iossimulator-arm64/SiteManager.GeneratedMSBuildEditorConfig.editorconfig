@@ -84,6 +84,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = SiteManager.SchedaCantiere
 build_metadata.AdditionalFiles.TargetPath = SchedaCantierePage.xaml
 build_metadata.AdditionalFiles.RelativePath = SchedaCantierePage.xaml
 
+[/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/StatistichePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SiteManager.StatistichePage.xaml
+build_metadata.AdditionalFiles.TargetPath = StatistichePage.xaml
+build_metadata.AdditionalFiles.RelativePath = StatistichePage.xaml
+
 [/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/TasksPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SiteManager.TasksPage.xaml

@@ -56,7 +56,7 @@
                 <Button
                     Padding="20"
                     x:Name="RepPageBtn"
-                    ImageSource="finance_icon.png"
+                    ImageSource="tasks_icon.png"
                     SemanticProperties.Hint="Reporting page"
                     Clicked="ReportingPageClicked"
                     HorizontalOptions="Fill"
@@ -64,6 +64,19 @@
                     HeightRequest="120"
                     BackgroundColor="SteelBlue" />
             </VerticalStackLayout>
+            <VerticalStackLayout  Grid.Row="2" Grid.Column="0" Margin="10">
+                <Label Text="Statistiche" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
+                <Button
+                    Padding="20"
+                    x:Name="StatPageBtn"
+                    ImageSource="finance_icon.png"
+                    SemanticProperties.Hint="Statistiche page"
+                    Clicked="StatistichePageClicked"
+                    HorizontalOptions="Fill"
+                    WidthRequest="120"
+                    HeightRequest="120"
+                    BackgroundColor="SteelBlue" />
+            </VerticalStackLayout>            
         </Grid>
     </VerticalStackLayout>
 
