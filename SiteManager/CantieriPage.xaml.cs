@@ -41,7 +41,6 @@ public partial class CantieriPage : ContentPage
     {
         if (sender is Button button && button.CommandParameter is Cantiere selectedCantiere)
         {
-            //var context = new DataContext();
             await Navigation.PushAsync(new TasksPage(selectedCantiere));
         }
         else
@@ -98,13 +97,6 @@ public partial class CantieriPage : ContentPage
         {
             await DisplayAlert("Errore", "Seleziona un cantiere valido.", "OK");
         }
-        /*         var button = sender as Button;
-                var cantiere = button?.BindingContext as Cantiere;
-                if (cantiere != null)
-                {
-                    // Logica per visualizzare i dettagli del cantiere
-                    DisplayAlert("Dettagli Cantiere", $"Citta: {cantiere.Citta}\nCommittente: {cantiere.Committente}\nData inizio: {cantiere.DataInizio.ToShortDateString()}\nScadenza: {cantiere.Scadenza.ToShortDateString()}", "OK");
-                } */
     }
 
     private async void GestisciCantiere_Clicked(object sender, EventArgs e)

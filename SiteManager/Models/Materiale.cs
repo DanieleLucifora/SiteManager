@@ -9,5 +9,4 @@ public class Materiale
     public required int Quantita { get; set; }
     public required string Unita { get; set; }
     public required double CostoUnitario { get; set; }
-    public List<MaterialeCantiere> materialiCantiere = [];
 }

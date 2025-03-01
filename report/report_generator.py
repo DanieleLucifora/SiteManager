@@ -1,3 +1,5 @@
+import argparse #per accettare i parametri in ingresso
+import json
 from reportlab.pdfgen import canvas as canvas
 from reportlab.lib.pagesizes import A4
 from datetime import datetime
@@ -40,7 +42,8 @@ class Cursore():
 cursore = Cursore()
 pdf = canvas.Canvas("Sample", pagesize = A4)
 
-def crea_report(cantiere):
+def crea_report(cantiere, tasks, materiali):
+    cantiere = Cantiere(cantiere, tasks, materiali)
     global pdf
     timestamp = datetime.now() 
     data = timestamp.strftime("%d-%m-%Y")
@@ -48,7 +51,6 @@ def crea_report(cantiere):
     stampa_titolo(cantiere.nome, data)
     stampa_sezione("Task Completati:", cantiere.tasks, None)
     stampa_sezione("Materiali utilizzati:", cantiere.materiali, "kg")
-    stampa_sezione("Costi:", cantiere.costi, "€")
     pdf.save()
 
 def stampa_titolo(nome, data):
@@ -77,8 +79,19 @@ def stampa_lista(lista):
     pdf.setFont("Helvetica", 12)
     for entrata in lista:
         aggiorna_cursore()
-        pdf.drawString(cursore.x, cursore.y, "- " + entrata)
-        cursore.y -= INTERLINEA
+        if isinstance(entrata, dict):
+            for chiave, valore in entrata.items():
+                # Se la chiave è "Materiale", filtriamo solo i campi ammessi
+                if chiave == "Materiale" and isinstance(valore, dict):
+                    valore = {k: valore[k] for k in ["Nome", "Unita", "CostoUnitario"] if k in valore}
+
+                # Stampiamo solo le chiavi consentite
+                if chiave in ["Descrizione", "Data", "QuantitaUtilizzata", "Materiale"]:
+                    pdf.drawString(cursore.x, cursore.y, f"- {chiave}: {valore}")
+                    cursore.y -= INTERLINEA
+        else:
+            pdf.drawString(cursore.x, cursore.y, "- " + entrata)
+            cursore.y -= INTERLINEA
 
 def stampa_dizionario(dizionario, unità):
     global cursore, pdf
@@ -101,11 +114,10 @@ def aggiorna_cursore():
             cursore.prima_pagina = False
 
 class Cantiere():
-    def __init__(self, nome):
+    def __init__(self, nome, tasks=None, materiali=None):
         self.nome = nome
-        self.tasks = []
-        self.materiali = {}
-        self.costi = {}
+        self.tasks = tasks if tasks is not None else []
+        self.materiali = materiali if materiali is not None else {}
     
     def aggiungi_task(self, task):
         if len(task) > 42:
@@ -130,19 +142,22 @@ class Cantiere():
     def totale_materiali(self):
         return sum(self.materiali.values())
 
-cantiere_sofia = Cantiere("Via Santa Sofia")
 
-for i in range(10):
-    cantiere_sofia.aggiungi_task("Finito il pavimento del bagno. Commento troncato")
-    cantiere_sofia.aggiungi_task("Finito il muro della sala da pranzo.")
-    cantiere_sofia.aggiungi_task("Finito il tetto del garage.")
 
-cantiere_sofia.aggiungi_materiale("Acciaio", 10)
-cantiere_sofia.aggiungi_materiale("Cemento", 20)
-cantiere_sofia.aggiungi_materiale("Vetro", 30)
+def main():
+    parser = argparse.ArgumentParser(description="Genera un report PDF per un cantiere.")
+    parser.add_argument("cantiere", type=str, help="Nome del cantiere")
+    parser.add_argument("tasks", type=str, help="Lista delle tasks in formato JSON")
+    parser.add_argument("materiali", type=str, help="Dizionario dei materiali in formato JSON")
 
-cantiere_sofia.aggiungi_costi("Benzina", 10)
-cantiere_sofia.aggiungi_costi("Cavi", 20)
-cantiere_sofia.aggiungi_costi("Mattonelle", 30)
+    
+    args = parser.parse_args()
+    
+    tasks = json.loads(args.tasks)
+    materiali = json.loads(args.materiali)
 
-crea_report(cantiere_sofia)
+    
+    crea_report(args.cantiere, tasks, materiali)
+
+if __name__ == "__main__":
+    main()

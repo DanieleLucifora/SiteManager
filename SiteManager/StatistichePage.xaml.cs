@@ -9,7 +9,8 @@ namespace SiteManager;
 public partial class StatistichePage : ContentPage
 {
 	private readonly CantiereService _cantiereService;
-	public ObservableCollection<Cantiere> CantieriList { get; set; }	
+	public ObservableCollection<Cantiere> CantieriList { get; set; }
+	
 	public StatistichePage()
 	{
 		InitializeComponent();
@@ -29,7 +30,6 @@ public partial class StatistichePage : ContentPage
 		CantieriCollectionView.ItemsSource = CantieriList;
 	}
 
-	//Metodo da rivedere !!!
 	private async void GeneraStatistiche_Clicked(object sender, EventArgs e)
 	{
 		if (sender is Button button && button.CommandParameter is Cantiere selectedCantiere)
@@ -37,40 +37,48 @@ public partial class StatistichePage : ContentPage
 			bool conferma = await DisplayAlert("Conferma", $"Vuoi visualizzare le statistiche per il cantiere di {selectedCantiere.Citta}?", "Si", "No");
 			if (conferma)
 			{
-				try
+				var materiali = MaterialeCantiereService.OttieniMaterialeCantiere(selectedCantiere.IdCantiere);
+				
+				if (!materiali.Any())
 				{
-					using (HttpClient client = new HttpClient())
-					{
-						var payload = new
-						{
-							cantiere = selectedCantiere.Citta  // Passiamo il nome della citta al server
-						};
-
-						var jsonContent = new StringContent(
-							JsonConvert.SerializeObject(payload),
-							Encoding.UTF8,
-							"application/json"
-						);
-
-						string serverUrl = "http://localhost:5002/statistiche"; // URL API del server Flask
-						HttpResponseMessage response = await client.PostAsync(serverUrl, jsonContent);
-						string result = await response.Content.ReadAsStringAsync();
-
-						if (response.IsSuccessStatusCode)
-						{
-							await DisplayAlert("Statistiche Generate", $"Le statistiche sono state create con successo:\n{result}", "OK");
-						}
-						else
-						{
-							await DisplayAlert("Errore", $"Errore nella generazione delle statistiche:\n{result}", "OK");
-						}
-					}
+					StatisticheResultLabel.Text = "Nessun materiale trovato per questo cantiere.";
+					return;
 				}
-				catch (Exception ex)
+
+				Console.WriteLine("Materiali trovati:");
+				foreach (var materiale in materiali)
 				{
-					await DisplayAlert("Errore", $"Si è verificato un errore:\n{ex.Message}", "OK");
+					Console.WriteLine($"ID: {materiale.IdMateriale}, Nome: {materiale.Materiale.Nome}, Quantità: {materiale.QuantitaUtilizzata}");
+				}
+
+				var jsonPayload = JsonConvert.SerializeObject(new { materiali });
+				/* esempio di json inviato nella richiesta HTTP
+				{
+				"IdMaterialeCantiere": 1,
+				"IdCantiere": 1,
+				"IdMateriale": 1,
+				"QuantitaUtilizzata": 50,
+				"Materiale": {
+					"IdMateriale": 1,
+					"Nome": "Cemento",
+					"Quantita": 100,
+					"Unita": "kg",
+					"CostoUnitario": 5.0
+				}*/
+				using (HttpClient client = new HttpClient())
+				{
+					var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+					string serverUrl = "http://localhost:5002/calcolaCostoMateriali";
+					HttpResponseMessage response = await client.PostAsync(serverUrl, content);
+					string result = await response.Content.ReadAsStringAsync();
+
+					StatisticheResultLabel.Text = response.IsSuccessStatusCode 
+						? $"Costo totale materiali: {result} €" 
+						: $"Errore: {result}";
 				}
 			}
 		}
 	}
+
 }

@@ -1,0 +1,29 @@
+# Usa un'immagine base con un compilatore C++ e gli strumenti necessari
+FROM gcc:latest
+
+# Installa le dipendenze necessarie
+RUN apt-get update && apt-get install -y \
+    libmariadb-dev-compat \
+    libmariadb-dev \
+    libasio-dev \
+    cmake \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Crea una directory per l'applicazione
+WORKDIR /app
+
+# Copia il file sorgente nell'immagine
+COPY statistiche/statistiche.cpp .
+
+# Clona la libreria Crow
+RUN git clone https://github.com/CrowCpp/Crow.git
+
+# Compila l'applicazione
+RUN g++ -std=c++17 -o app statistiche.cpp -I/app/Crow/include -I/usr/include/mariadb
+
+# Espone la porta su cui il server ascolterà
+EXPOSE 5002
+
+# Comando per eseguire l'applicazione
+CMD ["./app"]

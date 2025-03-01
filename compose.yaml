@@ -29,7 +29,15 @@ services:
       - mysqldb
     restart: always
 
-#da aggiungere container statistiche
+  statistiche:
+    build:
+      context: .
+      dockerfile: statistiche/Dockerfile.statistiche
+    ports:
+      - "5002:5002"
+    depends_on:
+      - mysqldb
+    restart: always
 
 volumes:
   db-data:

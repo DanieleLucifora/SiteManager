@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SiteManager.CantieriPage"
              Title="CantieriPage">
-    <Grid RowDefinitions="0.05*,.5*,.1*,.38*,.15*">
-        <Button Text="Ordina Cantieri" Grid.Row="0" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue" HorizontalOptions="End"/>
+    <Grid RowDefinitions=".55*,.1*,.38*,.15*">
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
                 <CollectionView x:Name="CantieriCollectionView" SelectionMode="None" HeightRequest="400">

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import subprocess
 import os
+import json
 
 app = Flask(__name__)
 
@@ -11,13 +12,19 @@ SCRIPT_PATH = os.path.join(os.getcwd(), "report_generator.py")
 def genera_report():
     data = request.json
     cantiere = data.get("cantiere")
+    tasks = data.get("tasks")
+    materiali = data.get("materiali")
 
-    if not cantiere:
+    if not cantiere or tasks is None or materiali is None:
         return jsonify({"status": "error", "message": "Cantiere non specificato"}), 400
 
     try:
         result = subprocess.run(
-            ["python3", SCRIPT_PATH], 
+            ["python3", SCRIPT_PATH, 
+                cantiere, 
+                json.dumps(tasks), 
+                json.dumps(materiali)
+            ], 
             capture_output=True, text=True
         )
 

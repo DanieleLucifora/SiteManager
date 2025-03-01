@@ -53,6 +53,7 @@
 /Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/bin/Debug/net9.0-ios/iossimulator-arm64/publish/../SiteManager.app/Microsoft.Maui.Essentials.dll
 /Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/bin/Debug/net9.0-ios/iossimulator-arm64/publish/../SiteManager.app/Microsoft.Maui.Graphics.dll
 /Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/bin/Debug/net9.0-ios/iossimulator-arm64/publish/../SiteManager.app/MySql.Data.dll
+/Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/bin/Debug/net9.0-ios/iossimulator-arm64/publish/../SiteManager.app/Newtonsoft.Json.dll
 /Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/bin/Debug/net9.0-ios/iossimulator-arm64/publish/../SiteManager.app/System.Configuration.ConfigurationManager.dll
 /Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/bin/Debug/net9.0-ios/iossimulator-arm64/publish/../SiteManager.app/System.Diagnostics.EventLog.dll
 /Users/danielelucifora/Desktop/SiteManager/SiteManager/SiteManager/bin/Debug/net9.0-ios/iossimulator-arm64/publish/../SiteManager.app/System.Security.Cryptography.ProtectedData.dll

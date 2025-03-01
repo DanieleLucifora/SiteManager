@@ -39,11 +39,16 @@ public partial class ReportingPage : ContentPage
 			{
 				try
 				{
+					var tasks = TasksService.OttieniTasks(selectedCantiere);
+                    var materiali = MaterialeCantiereService.OttieniMaterialeCantiere(selectedCantiere.IdCantiere);
+
 					using (HttpClient client = new HttpClient())
 					{
 						var payload = new
 						{
-							cantiere = selectedCantiere.Citta  // Passiamo il nome della citta al server
+							cantiere = selectedCantiere.Citta,  // Passiamo il nome della citta al server
+							tasks = tasks,
+                            materiali = materiali
 						};
 
 						var jsonContent = new StringContent(
@@ -58,7 +63,7 @@ public partial class ReportingPage : ContentPage
 
 						if (response.IsSuccessStatusCode)
 						{
-							await DisplayAlert("Report Generato", $"Il report è stato creato con successo:\n{result}", "OK");
+							await DisplayAlert("Report Generato", $"Il report è stato creato con successo!\nScaricalo dalla cartella /app del container report.", "OK");
 						}
 						else
 						{

@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SiteManager.StatistichePage"
              Title="StatistichePage">
-    <VerticalStackLayout>
+    <Grid RowDefinitions="auto, auto">
+    <VerticalStackLayout Grid.Row="0">
         <ScrollView>
             <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
                 <CollectionView x:Name="CantieriCollectionView" SelectionMode="None" HeightRequest="400">
@@ -29,5 +30,13 @@
                 </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
-    </VerticalStackLayout>    
+    </VerticalStackLayout>
+            <Label x:Name="StatisticheResultLabel" 
+               Grid.Row="1"
+               Text="Le statistiche verranno mostrate qui"
+               FontSize="22"
+               FontFamily="Roboto"
+               VerticalOptions="Center"
+               HorizontalOptions="Center" />
+    </Grid>    
 </ContentPage>
