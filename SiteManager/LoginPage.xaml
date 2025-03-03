@@ -21,7 +21,7 @@
                 <Label  FontAttributes="Bold"
                         FontFamily="bold"
                         FontSize="25"
-                        Text="Benventuto!"
+                        Text="Benvenuto!"
                         TextColor="SteelBlue"/>
                 <Label  FontFamily="medium"
                         Text="Login to continue"

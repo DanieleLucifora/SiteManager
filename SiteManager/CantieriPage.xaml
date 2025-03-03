@@ -4,7 +4,7 @@
              x:Class="SiteManager.CantieriPage"
              Title="CantieriPage">
     <Grid RowDefinitions=".55*,.1*,.38*,.15*">
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
                 <CollectionView x:Name="CantieriCollectionView" SelectionMode="None" HeightRequest="400">
                     <CollectionView.ItemTemplate>
@@ -34,7 +34,7 @@
             </VerticalStackLayout>
         </ScrollView>
         <Button 
-            Grid.Row="2"
+            Grid.Row="1"
             Text="Nuovo cantiere" 
             Clicked="AggiungiCantiere_Clicked" 
             HeightRequest="50"
@@ -43,7 +43,7 @@
             BackgroundColor="SteelBlue"
             HorizontalOptions="Center"/>
 
-        <StackLayout x:Name="FormStackLayout" IsVisible="False" Spacing="10" Grid.Row="3" Margin="30,10,30,0">
+        <StackLayout x:Name="FormStackLayout" IsVisible="False" Spacing="10" Grid.Row="2" Margin="30,10,30,0">
             <Entry x:Name="CittaEntry" Placeholder="Citta" />
             <Entry x:Name="CommittenteEntry" Placeholder="Committente" />
             <Label Text="Data inizio cantiere:" />
@@ -51,7 +51,7 @@
             <Label Text="Scadenza cantiere:" />
             <DatePicker x:Name="ScadenzaPicker"/>
         </StackLayout>
-           <Button x:Name="SalvaCantiereBtn" Text="Salva" Clicked="SalvaCantiere_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="10" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-           <Button x:Name="AggiornaCantiereBtn" Text="Aggiorna" Clicked="AggiornaCantiere_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="10" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+           <Button x:Name="SalvaCantiereBtn" Text="Salva" Clicked="SalvaCantiere_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="10" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+           <Button x:Name="AggiornaCantiereBtn" Text="Aggiorna" Clicked="AggiornaCantiere_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="10" BackgroundColor="LightGray" TextColor="SteelBlue"/>
     </Grid>
 </ContentPage>
