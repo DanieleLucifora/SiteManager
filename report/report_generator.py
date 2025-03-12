@@ -1,5 +1,6 @@
 import argparse #per accettare i parametri in ingresso
 import json
+import sys
 from reportlab.pdfgen import canvas as canvas
 from reportlab.lib.pagesizes import A4
 from datetime import datetime
@@ -42,8 +43,7 @@ class Cursore():
 cursore = Cursore()
 pdf = canvas.Canvas("Sample", pagesize = A4)
 
-def crea_report(cantiere, tasks, materiali):
-    cantiere = Cantiere(cantiere, tasks, materiali)
+def crea_report(cantiere):
     global pdf
     timestamp = datetime.now() 
     data = timestamp.strftime("%d-%m-%Y")
@@ -79,19 +79,8 @@ def stampa_lista(lista):
     pdf.setFont("Helvetica", 12)
     for entrata in lista:
         aggiorna_cursore()
-        if isinstance(entrata, dict):
-            for chiave, valore in entrata.items():
-                # Se la chiave è "Materiale", filtriamo solo i campi ammessi
-                if chiave == "Materiale" and isinstance(valore, dict):
-                    valore = {k: valore[k] for k in ["Nome", "Unita", "CostoUnitario"] if k in valore}
-
-                # Stampiamo solo le chiavi consentite
-                if chiave in ["Descrizione", "Data", "QuantitaUtilizzata", "Materiale"]:
-                    pdf.drawString(cursore.x, cursore.y, f"- {chiave}: {valore}")
-                    cursore.y -= INTERLINEA
-        else:
-            pdf.drawString(cursore.x, cursore.y, "- " + entrata)
-            cursore.y -= INTERLINEA
+        pdf.drawString(cursore.x, cursore.y, "- " + entrata)
+        cursore.y -= INTERLINEA
 
 def stampa_dizionario(dizionario, unità):
     global cursore, pdf
@@ -116,7 +105,7 @@ def aggiorna_cursore():
 class Cantiere():
     def __init__(self, nome, tasks=None, materiali=None):
         self.nome = nome
-        self.tasks = tasks if tasks is not None else []
+        self.tasks = tasks if tasks is not None else [] #
         self.materiali = materiali if materiali is not None else {}
     
     def aggiungi_task(self, task):
@@ -142,22 +131,34 @@ class Cantiere():
     def totale_materiali(self):
         return sum(self.materiali.values())
 
+def main():    
+    #sys.argv è la lista (vettore) degli argomenti passati tramite riga di comando
+    nome_cantiere = sys.argv[1]
+    tasks_json = json.loads(sys.argv[2])    #è una lista di dizionari 'IdTasks': 0, 'Descrizione': "Rifare il tetto dell'aula D34", 'Data': etc...}
+    materiali_json = json.loads(sys.argv[3])
+    #file di log
+    #with open("log_output.txt", "w") as log_file:
+    #    log_file.write(f"Tipo di tasks_json: {type(tasks_json)}\n")
+    #    log_file.write(f"Contenuto di tasks_json: {tasks_json}\n")
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Genera un report PDF per un cantiere.")
-    parser.add_argument("cantiere", type=str, help="Nome del cantiere")
-    parser.add_argument("tasks", type=str, help="Lista delle tasks in formato JSON")
-    parser.add_argument("materiali", type=str, help="Dizionario dei materiali in formato JSON")
+    cantiere = Cantiere(nome_cantiere)
+    descrizioni = []
+    materiali = {}
 
+    for dizionario in tasks_json:
+        for chiave, valore in dizionario.items():
+            if chiave == "Descrizione":
+                cantiere.aggiungi_task(valore)
+
+    with open("log_output.txt", "w") as log_file:
+        log_file.write(f"Tipo di descrizioni: {type(descrizioni)}\n")
+        log_file.write(f"Contenuto di descrizioni: {descrizioni}\n")
     
-    args = parser.parse_args()
-    
-    tasks = json.loads(args.tasks)
-    materiali = json.loads(args.materiali)
+    #for materiale in materiali
+    #    cantiere.aggiungi_materiale(materiale, 10)
 
-    
-    crea_report(args.cantiere, tasks, materiali)
+    crea_report(cantiere)
 
 if __name__ == "__main__":
     main()

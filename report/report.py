@@ -1,13 +1,18 @@
-from flask import Flask, request, jsonify
+#Server Flask
+
+from flask import Flask, request, jsonify   #request è la richiest HTTP che arriva tramite flask
 import subprocess
-import os
+#import os
 import json
 
-app = Flask(__name__)
+app = Flask(__name__) #creazione dell'app flask
 
 # Percorso dello script Python
-SCRIPT_PATH = os.path.join(os.getcwd(), "report_generator.py")
+#SCRIPT_PATH = os.path.join(os.getcwd(), "report_generator.py")
+#os.getcwd torna la current working directory
+#os.path.join aggiunge alla cwd l'altro path: cwd/report_generator.py
 
+#decorator (quando visitiamo http://localhost:5001/genera_report viene eseguito genera_report()")
 @app.route('/genera_report', methods=['POST'])
 def genera_report():
     data = request.json
@@ -16,11 +21,12 @@ def genera_report():
     materiali = data.get("materiali")
 
     if not cantiere or tasks is None or materiali is None:
-        return jsonify({"status": "error", "message": "Cantiere non specificato"}), 400
+        return jsonify({"status": "error", "message": "Dati necessari non presenti"}), 400  #HTTP bad request
 
     try:
+        # subprocess.run fa sì che i parametri siano passati tramite riga di comando
         result = subprocess.run(
-            ["python3", SCRIPT_PATH, 
+            ["python3", "/app/report_generator.py", #sys.argv[0]
                 cantiere, 
                 json.dumps(tasks), 
                 json.dumps(materiali)
@@ -28,7 +34,7 @@ def genera_report():
             capture_output=True, text=True
         )
 
-        if result.returncode == 0:
+        if result.returncode == 0:  #eseguito con successo
             output = result.stdout.strip()
             return jsonify({"status": "success", "report": output}), 200
         else:

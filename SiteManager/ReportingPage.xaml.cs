@@ -42,13 +42,13 @@ public partial class ReportingPage : ContentPage
 					var tasks = TasksService.OttieniTasks(selectedCantiere);
                     var materiali = MaterialeCantiereService.OttieniMaterialeCantiere(selectedCantiere.IdCantiere);
 
-					using (HttpClient client = new HttpClient())
+					using (HttpClient client = new())
 					{
 						var payload = new
 						{
 							cantiere = selectedCantiere.Citta,  // Passiamo il nome della citta al server
-							tasks = tasks,
-                            materiali = materiali
+							tasks,
+                            materiali
 						};
 
 						var jsonContent = new StringContent(
