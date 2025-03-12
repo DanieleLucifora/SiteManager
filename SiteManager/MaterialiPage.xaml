@@ -42,9 +42,9 @@
 
         <StackLayout x:Name="FormStackLayout" IsVisible="False" Spacing="10" Grid.Row="2" Margin="30,10,30,0">
             <Entry x:Name="NomeEntry" Placeholder="Nome" />
-            <Entry x:Name="QuantitaEntry" Placeholder="Quantita" Keyboard="Numeric"/>
-            <Entry x:Name="UnitaEntry" Placeholder="Unita" />
-            <Entry x:Name="CostoUnitarioEntry" Placeholder="CostoUnitario" Keyboard="Numeric"/>
+            <Entry x:Name="QuantitaEntry" Placeholder="Quantità" Keyboard="Numeric"/>
+            <Entry x:Name="UnitaEntry" Placeholder="Unità" />
+            <Entry x:Name="CostoUnitarioEntry" Placeholder="Costo unitario" Keyboard="Numeric"/>
         </StackLayout>
         <Button x:Name="SalvaMaterialeBtn" Text="Salva" Clicked="SalvaMateriale_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
         <Button x:Name="AggiornaMaterialeBtn" Text="Aggiorna" Clicked="AggiornaMateriale_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
