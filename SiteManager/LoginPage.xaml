@@ -30,12 +30,14 @@
                 <Entry  Placeholder="Username"
                         x:Name="UsernameEntry"
                         VerticalOptions="Center"
-                        Margin="0,30,0,0"/>
+                        Margin="0,30,0,0"
+                        TextColor="Black"/>
                 <Entry  Placeholder="Password"
                         x:Name="PasswordEntry"
                         VerticalOptions="Center"
                         IsPassword="True"
-                        Margin="0,30,0,0"/>
+                        Margin="0,30,0,0"
+                        TextColor="Black"/>
                 <Button Margin="0,20,0,0"
                         x:Name="LoginBtn"
                         Text="Login" 
