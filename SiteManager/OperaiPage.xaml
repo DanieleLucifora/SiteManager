@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SiteManager.OperaiPage"
              Title="Operai">
-    <Grid RowDefinitions=".55*,.1*,.38*,.15*">
+    <Grid RowDefinitions="*,Auto,Auto">
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
-                <CollectionView x:Name="OperaiCollectionView" SelectionMode="None" SelectionChanged="OnSelectionChanged" HeightRequest="400">
+                <CollectionView x:Name="OperaiCollectionView" SelectionMode="None" SelectionChanged="OnSelectionChanged">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <FlexLayout>
-                                <Grid RowDefinitions="auto,auto">
-                                    <HorizontalStackLayout Grid.Row="0" Margin="0,10,0,0">
+                            <FlexLayout Direction="Row" AlignItems="Start" Wrap="NoWrap">
+                                <VerticalStackLayout Margin="5" Padding="5" WidthRequest="-1">
+                                    <HorizontalStackLayout>
                                         <Label Text="Nome:" VerticalTextAlignment="Center" />
                                         <Label Text="{Binding Nome}" VerticalTextAlignment="Center" FontSize="18" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
                                         <Label Text="Cognome:" VerticalTextAlignment="Center" />
@@ -21,39 +21,43 @@
                                         <Label Text="{Binding DataNascita}" IsVisible="Hidden"/>
                                         <Label Text="{Binding DataAssunzione}" IsVisible="Hidden"/>
                                     </HorizontalStackLayout>
-                                    <HorizontalStackLayout Grid.Row="1" Margin="0,10,0,0">
-                                        <Button Text="Visualizza" Clicked="VisualizzaOperaio_Clicked" FontSize="11"  Margin="3" Padding="0" CornerRadius="18" HeightRequest="10" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                        <Button Text="Modifica" Clicked="ModificaOperaio_Clicked" CommandParameter="{Binding}" FontSize="11"  Margin="3" Padding="0" CornerRadius="18" HeightRequest="10" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                        <Button Text="Elimina" Clicked="EliminaOperaio_Clicked" CommandParameter="{Binding}" FontSize="11"  Margin="3" Padding="0" CornerRadius="18" HeightRequest="10" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                    </HorizontalStackLayout>
-                                </Grid>
+                                </VerticalStackLayout>
+                                <HorizontalStackLayout Margin="20,0,0,0" VerticalOptions="Start" WidthRequest="-1">
+                                    <Button Text="Visualizza" Clicked="VisualizzaOperaio_Clicked" FontSize="11" Margin="3" Padding="0" CornerRadius="18" HeightRequest="10" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Modifica" Clicked="ModificaOperaio_Clicked" CommandParameter="{Binding}" FontSize="11" Margin="3" Padding="0" CornerRadius="18" HeightRequest="10" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Elimina" Clicked="EliminaOperaio_Clicked" CommandParameter="{Binding}" FontSize="11" Margin="3" Padding="0" CornerRadius="18" HeightRequest="10" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                </HorizontalStackLayout>
                             </FlexLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
-        <Button 
-            Grid.Row="1"
-            Text="Aggiungi operaio" 
-            Clicked="AggiungiOperaio_Clicked" 
-            HeightRequest="50"
-            WidthRequest="150"
-            Margin="10"
-            BackgroundColor="SteelBlue"
-            HorizontalOptions="Center"/>
-
-        <StackLayout x:Name="FormStackLayout" IsVisible="False" HeightRequest="300" Spacing="10" Grid.Row="2" Margin="30,10,30,0">
-            <Entry x:Name="NomeEntry" Placeholder="Nome" />
-            <Entry x:Name="CognomeEntry" Placeholder="Cognome" />
-            <Entry x:Name="MansioneEntry" Placeholder="Mansione" />
-            <Label Text="Data di nascita:" />
-            <DatePicker x:Name="DataNascitaPicker" />
-            <Label Text="Data di assunzione:"/>
-            <DatePicker x:Name="DataAssunzionePicker" />
+        
+        <StackLayout Grid.Row="1" Spacing="10" Margin="30,10,30,0">
+            <Button 
+                Text="Aggiungi operaio" 
+                Clicked="AggiungiOperaio_Clicked" 
+                HeightRequest="50"
+                WidthRequest="150"
+                BackgroundColor="SteelBlue"
+                HorizontalOptions="Center"
+                Margin="0,0,0,10"/>
+            
+            <StackLayout x:Name="FormStackLayout" IsVisible="False" Spacing="10">
+                <Entry x:Name="NomeEntry" Placeholder="Nome" />
+                <Entry x:Name="CognomeEntry" Placeholder="Cognome" />
+                <Entry x:Name="MansioneEntry" Placeholder="Mansione" />
+                <Label Text="Data di nascita:" />
+                <DatePicker x:Name="DataNascitaPicker" />
+                <Label Text="Data di assunzione:"/>
+                <DatePicker x:Name="DataAssunzionePicker" />
+            </StackLayout>
         </StackLayout>
-        <Button x:Name="SalvaOperaioBtn" Text="Salva" Clicked="SalvaOperaio_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-        <Button x:Name="AggiornaOperaioBtn" Text="Aggiorna" Clicked="AggiornaOperaio_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
 
+        <StackLayout Grid.Row="2" Spacing="10" Margin="30,10,30,30">
+            <Button x:Name="SalvaOperaioBtn" Text="Salva" Clicked="SalvaOperaio_Clicked" IsVisible="False" HeightRequest="50" WidthRequest="150" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+            <Button x:Name="AggiornaOperaioBtn" Text="Aggiorna" Clicked="AggiornaOperaio_Clicked" IsVisible="False" HeightRequest="50" WidthRequest="150" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+        </StackLayout>
     </Grid>
 </ContentPage>

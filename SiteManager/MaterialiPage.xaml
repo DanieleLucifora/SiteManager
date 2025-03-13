@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SiteManager.MaterialiPage"
              Title="Materiali dell'azienda">
-    <Grid RowDefinitions=".55*,.1*,.38*,.15*">
+    <Grid RowDefinitions="Auto,*,Auto,Auto">
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
-                <CollectionView x:Name="MaterialiCollectionView" SelectionMode="Single" SelectionChanged="OnSelectionChanged" HeightRequest="400">
+                <CollectionView x:Name="MaterialiCollectionView" SelectionMode="Single" SelectionChanged="OnSelectionChanged">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <FlexLayout>
-                                <Grid RowDefinitions="auto,auto">
-                                    <HorizontalStackLayout Grid.Row="0" Margin="0,10,0,0">
+                            <FlexLayout Direction="Row" AlignItems="Start" Wrap="NoWrap">
+                                <VerticalStackLayout Margin="5" Padding="5" WidthRequest="-1">
+                                    <HorizontalStackLayout>
                                         <Label Text="Nome: " VerticalTextAlignment="Center"/>
                                         <Label Text="{Binding Nome}" VerticalTextAlignment="Center" FontSize="20" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
                                         <Label Text="Quantita: " VerticalTextAlignment="Center"/>
@@ -19,18 +19,19 @@
                                         <Label Text="{Binding Unita}" IsVisible="Hidden"/>
                                         <Label Text="{Binding CostoUnitario}" IsVisible="Hidden"/>
                                     </HorizontalStackLayout>
-                                    <HorizontalStackLayout Grid.Row="1" Margin="0,10,0,0">
-                                        <Button Text="Visualizza" FontSize="11" Clicked="VisualizzaMateriale_Clicked" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                        <Button Text="Modifica" FontSize="11" Clicked="ModificaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                        <Button Text="Elimina" FontSize="11" Clicked="EliminaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                    </HorizontalStackLayout>
-                                </Grid>
+                                </VerticalStackLayout>
+                                <HorizontalStackLayout Margin="20,0,0,0" VerticalOptions="Start" WidthRequest="-1">
+                                    <Button Text="Visualizza" FontSize="11" Clicked="VisualizzaMateriale_Clicked" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Modifica" FontSize="11" Clicked="ModificaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Elimina" FontSize="11" Clicked="EliminaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                </HorizontalStackLayout>
                             </FlexLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
+        
         <Button 
             Grid.Row="1"
             Text="Aggiungi Materiale" 
@@ -46,6 +47,7 @@
             <Entry x:Name="UnitaEntry" Placeholder="Unità" />
             <Entry x:Name="CostoUnitarioEntry" Placeholder="Costo unitario" Keyboard="Numeric"/>
         </StackLayout>
+        
         <Button x:Name="SalvaMaterialeBtn" Text="Salva" Clicked="SalvaMateriale_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
         <Button x:Name="AggiornaMaterialeBtn" Text="Aggiorna" Clicked="AggiornaMateriale_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
     </Grid>
