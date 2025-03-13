@@ -6,7 +6,6 @@ namespace SiteManager;
 
 public partial class SchedaCantierePage : ContentPage
 {
-    private readonly OperaioService _operaioService;
     private readonly MaterialeService _materialeService;
     private readonly CantiereService _cantiereService;
     public ObservableCollection<Operaio> OperaiList { get; set; }
@@ -15,7 +14,6 @@ public partial class SchedaCantierePage : ContentPage
 	public SchedaCantierePage(Cantiere selectedCantiere)
 	{
 		InitializeComponent();
-        _operaioService = new OperaioService();
         _materialeService = new MaterialeService();
         _cantiereService = new CantiereService();
 		OperaiList = new ObservableCollection<Operaio>();
@@ -55,7 +53,7 @@ public partial class SchedaCantierePage : ContentPage
             if (conferma)
             {
                 selectedOperaio.CantiereId = _selectedCantiere.IdCantiere;
-                _operaioService.AssegnaOperaioACantiere(selectedOperaio);
+                OperaioService.AssegnaOperaioACantiere(selectedOperaio);
                 await DisplayAlert("Successo", "Operaio assegnato con successo.", "OK");
                 OperaiCollectionView.ItemsSource = null; 
                 OperaiCollectionView.ItemsSource = OperaiList; 
@@ -75,7 +73,7 @@ public partial class SchedaCantierePage : ContentPage
             if (conferma)
             {
                 selectedOperaio.CantiereId = null;
-                _operaioService.AggiornaOperaio(selectedOperaio);
+                OperaioService.AggiornaOperaio(selectedOperaio);
                 await DisplayAlert("Successo", "Operaio rimosso con successo.", "OK");
             }
         }
