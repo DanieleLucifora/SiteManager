@@ -1,4 +1,3 @@
-import argparse #per accettare i parametri in ingresso
 import json
 import sys
 from reportlab.pdfgen import canvas as canvas
@@ -49,8 +48,10 @@ def crea_report(cantiere):
     data = timestamp.strftime("%d-%m-%Y")
     pdf = canvas.Canvas("Report Cantiere "+ cantiere.nome + " " + data + ".pdf", pagesize = A4)
     stampa_titolo(cantiere.nome, data)
-    stampa_sezione("Task Completati:", cantiere.tasks, None)
-    stampa_sezione("Materiali utilizzati:", cantiere.materiali, "kg")
+    stampa_intestazione("Task Completati:")
+    stampa_lista(cantiere.tasks)
+    stampa_intestazione("Materiali utilizzati:")
+    stampa_lista_dizionari(cantiere.materiali)
     pdf.save()
 
 def stampa_titolo(nome, data):
@@ -59,13 +60,6 @@ def stampa_titolo(nome, data):
     pdf.drawString(COLONNA_1, ALTEZZA_INIZIO, "Report Cantiere " + nome)
     pdf.setFont("Helvetica", 12)
     pdf.drawString(COLONNA_1, ALTEZZA_INIZIO - 20, data)
-
-def stampa_sezione(titolo, collezione, unità):
-    stampa_intestazione(titolo)
-    if isinstance(collezione, dict):
-        stampa_dizionario(collezione, unità)
-    elif isinstance(collezione, list):
-        stampa_lista(collezione)
 
 def stampa_intestazione(titolo):
     global cursore, pdf
@@ -82,12 +76,21 @@ def stampa_lista(lista):
         pdf.drawString(cursore.x, cursore.y, "- " + entrata)
         cursore.y -= INTERLINEA
 
-def stampa_dizionario(dizionario, unità):
+def stampa_lista_dizionari(lista_dizionari):
+    global cursore, pdf
+    pdf.setFont("Helvetica", 12)
+    for dizionario in lista_dizionari:
+        valori = list(dizionario.values())  #lista per accedere ai campi
+        aggiorna_cursore()
+        pdf.drawString(cursore.x, cursore.y, f"- {valori[0]} {valori[1]}{valori[2]}")
+        cursore.y -= INTERLINEA
+
+def stampa_dizionario(dizionario):   # per i costi 
     global cursore, pdf
     pdf.setFont("Helvetica", 12)
     for chiave, valore in dizionario.items():
         aggiorna_cursore()
-        pdf.drawString(cursore.x, cursore.y, f"- {chiave}: {valore}{unità}")
+        pdf.drawString(cursore.x, cursore.y, f"- {chiave}: {valore}")
         cursore.y -= INTERLINEA
 
 def aggiorna_cursore():
@@ -103,21 +106,20 @@ def aggiorna_cursore():
             cursore.prima_pagina = False
 
 class Cantiere():
-    def __init__(self, nome, tasks=None, materiali=None):
+    def __init__(self, nome):
         self.nome = nome
-        self.tasks = tasks if tasks is not None else [] #
-        self.materiali = materiali if materiali is not None else {}
+        self.tasks = []
+        self.materiali = [] #lista di dizionari
+        self.costi = {}
     
     def aggiungi_task(self, task):
         if len(task) > 42:
             task = task[:42] + "..."
         self.tasks.append(task)
 
-    def aggiungi_materiale(self, materiale, quantità):
-        if materiale in self.materiali:
-            self.materiali[materiale] += quantità 
-        else:
-            self.materiali[materiale] = quantità
+    def aggiungi_materiale(self, nome, quantità, unità):    #è necessario non avere duplicati passati
+            nuovo_materiale = {"Nome": nome, "Quantità": quantità, "Unità": unità}
+            self.materiali.append(nuovo_materiale)  #Risultato: {Materiale: Metallo, Quantità 10, Unità: kg}
 
     def aggiungi_costi(self, descrizione, costo):
         if descrizione in self.costi:
@@ -128,35 +130,41 @@ class Cantiere():
     def totale_costi(self):
         return sum(self.costi.values())
 
-    def totale_materiali(self):
-        return sum(self.materiali.values())
-
 def main():    
     #sys.argv è la lista (vettore) degli argomenti passati tramite riga di comando
     nome_cantiere = sys.argv[1]
-    tasks_json = json.loads(sys.argv[2])    #è una lista di dizionari 'IdTasks': 0, 'Descrizione': "Rifare il tetto dell'aula D34", 'Data': etc...}
-    materiali_json = json.loads(sys.argv[3])
-    #file di log
-    #with open("log_output.txt", "w") as log_file:
-    #    log_file.write(f"Tipo di tasks_json: {type(tasks_json)}\n")
-    #    log_file.write(f"Contenuto di tasks_json: {tasks_json}\n")
+    lista_tasks_json = json.loads(sys.argv[2])    #è una lista di dizionari {'IdTasks': 0, 'Descrizione': "Rifare il tetto dell'aula D34", 'Data': etc...}
+    lista_materiali_json = json.loads(sys.argv[3])    #è una lista di dizionari. In ogni dizionario il valore associato alla chiave "Materiale" è a sua volta un dizionario
 
+    '''
+    #with open("log_output.txt", "w") as log_file:
+    #    log_file.write(f"Tipo di materiali_json: {type(materiali_json)}\n")
+    #    log_file.write(f"Contenuto di materiali_json: {materiali_json}\n")
+    #Tipo di materiali_json: <class 'list'>
+    #Contenuto di materiali_json: [{'IdMaterialeCantiere': 1, 'IdCantiere': 1, 'IdMateriale': 1, 'QuantitaUtilizzata': 10, 'Cantiere': None, 
+    #'Materiale': {'IdMateriale': 1, 'Nome': 'Metallo', 'Quantita': 0, 'Unita': 'kg', 'CostoUnitario': 20.0}},
+    # {'IdMaterialeCantiere': 2, 'IdCantiere': 1, 'IdMateriale': 2, 'QuantitaUtilizzata': 30, 'Cantiere': None, 
+    # 'Materiale': {'IdMateriale': 2, 'Nome': 'Vetro', 'Quantita': 0, 'Unita': 'kg', 'CostoUnitario': 20.0}}, 
+    '''
 
     cantiere = Cantiere(nome_cantiere)
-    descrizioni = []
-    materiali = {}
 
-    for dizionario in tasks_json:
+    for dizionario in lista_tasks_json:
         for chiave, valore in dizionario.items():
             if chiave == "Descrizione":
                 cantiere.aggiungi_task(valore)
 
-    with open("log_output.txt", "w") as log_file:
-        log_file.write(f"Tipo di descrizioni: {type(descrizioni)}\n")
-        log_file.write(f"Contenuto di descrizioni: {descrizioni}\n")
-    
-    #for materiale in materiali
-    #    cantiere.aggiungi_materiale(materiale, 10)
+    for dizionario in lista_materiali_json:
+        for chiave, valore in dizionario.items():
+            if chiave == "QuantitaUtilizzata":
+                quantità = valore
+            if chiave == "Materiale":
+                for c, v in valore.items(): #itero il dizionario memorizzato come valore della chiave 'Materiale'
+                    if c == "Nome":
+                        nome = v
+                    if c == "Unita":
+                        unità = v   
+        cantiere.aggiungi_materiale(nome, quantità, unità)
 
     crea_report(cantiere)
 
