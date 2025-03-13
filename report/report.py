@@ -1,16 +1,9 @@
 #Server Flask
-
 from flask import Flask, request, jsonify   #request è la richiest HTTP che arriva tramite flask
 import subprocess
-#import os
 import json
 
 app = Flask(__name__) #creazione dell'app flask
-
-# Percorso dello script Python
-#SCRIPT_PATH = os.path.join(os.getcwd(), "report_generator.py")
-#os.getcwd torna la current working directory
-#os.path.join aggiunge alla cwd l'altro path: cwd/report_generator.py
 
 #decorator (quando visitiamo http://localhost:5001/genera_report viene eseguito genera_report()")
 @app.route('/genera_report', methods=['POST'])

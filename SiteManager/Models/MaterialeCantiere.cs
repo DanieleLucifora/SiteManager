@@ -1,5 +1,3 @@
-using System;
-
 namespace SiteManager.Models;
 
 public class MaterialeCantiere
@@ -8,6 +6,6 @@ public class MaterialeCantiere
     public int IdCantiere { get; set; }  
     public int IdMateriale { get; set; }
     public int QuantitaUtilizzata { get; set; }
-    public Cantiere Cantiere { get; set; }  
-    public Materiale Materiale { get; set; }
+    public Cantiere? Cantiere { get; set; }  
+    public Materiale? Materiale { get; set; }
 }

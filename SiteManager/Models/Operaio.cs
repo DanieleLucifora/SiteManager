@@ -1,5 +1,3 @@
-using System;
-
 namespace SiteManager.Models;
 
 public class Operaio
