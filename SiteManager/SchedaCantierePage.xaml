@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SiteManager.SchedaCantierePage"
-             Title="SchedaCantierePage">
+             Title="Scheda Cantiere">
     <Grid RowDefinitions=".05*,.45*,.05*,.45*">
         <Label Text="ELENCO OPERAI" Grid.Row="0" Margin="20,20,0,0" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>
         <ScrollView Grid.Row="1">
