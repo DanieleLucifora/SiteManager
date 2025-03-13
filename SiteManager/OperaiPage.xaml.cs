@@ -1,36 +1,25 @@
-using MySql.Data.MySqlClient;
 using SiteManager.Models;
 using SiteManager.Services;
 using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace SiteManager;
 
 public partial class OperaiPage : ContentPage
 {
-    private readonly OperaioService _operaioService;
     public ObservableCollection<Operaio> OperaiList{ get; set; }
 
     public OperaiPage()
 	{
 		InitializeComponent();
-        OperaiList = new ObservableCollection<Operaio>();
+        OperaiList = [];
         BindingContext = this;		
         LoadOperai();
 	}
 
     private void LoadOperai()
     {
-        var operai = OperaioService.OttieniOperai();
-        foreach (var operaio in operai)
+        List<Operaio> operai = OperaioService.OttieniOperai();
+        foreach (Operaio operaio in operai)
         {
             OperaiList.Add(operaio);
         }        
@@ -49,7 +38,6 @@ public partial class OperaiPage : ContentPage
             FormStackLayout.IsVisible = true;
         }
     }
-
    
     private async void AggiungiOperaio_Clicked(object sender, EventArgs e)
 	{
@@ -143,7 +131,7 @@ public partial class OperaiPage : ContentPage
             
             await DisplayAlert("Dettagli Operaio", $"Id: {selectedOperaio.IdOperaio} \nNome: {selectedOperaio.Nome}\nCognome: {selectedOperaio.Cognome}\nMansione: {selectedOperaio.Mansione}\nData di Nascita: {selectedOperaio.DataNascita.ToShortDateString()}\nData di Assunzione: {selectedOperaio.DataAssunzione.ToShortDateString()}", "OK");
 
-            bool success = _operaioService.AggiornaOperaio(selectedOperaio);
+            bool success = OperaioService.AggiornaOperaio(selectedOperaio);
             if (success)
             {
                 OperaiCollectionView.ItemsSource = null;
@@ -155,7 +143,6 @@ public partial class OperaiPage : ContentPage
             {
                 await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento dell'operaio", "OK");
             }
-
         }
     }
 

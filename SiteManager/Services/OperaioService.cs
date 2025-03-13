@@ -1,56 +1,47 @@
-using System;
 using MySql.Data.MySqlClient;
 using SiteManager.Models;
 
 namespace SiteManager.Services;
 
-public class OperaioService
+public static class OperaioService
 {
     private static MySqlConnection GetConnection()
     {
-        //connessione db remoto -> docker container
         string stringaConnessione = "Server=localhost;Port=3307;Database=SiteManager;User=root;Password=1234;";
-        //connessione db locale string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         return new MySqlConnection(stringaConnessione);
     }    
 
-    public static IEnumerable<Operaio> OttieniOperai()
+    public static List<Operaio> OttieniOperai()
     {
-        var operai = new List<Operaio>();
-
+        List<Operaio> operai = [];
         try
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
-            MySqlCommand command = new("SELECT * FROM operai", connessione); // Comando = query + db
+            MySqlCommand command = new("SELECT * FROM operai", connessione);
             MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                while (reader.Read())
+                Operaio operaio = new()
                 {
-                    operai.Add(new Operaio
-                    {
-                        IdOperaio = reader.GetInt32("IdOperaio"),
-                        Nome = reader.GetString("Nome"),
-                        Cognome = reader.GetString("Cognome"),
-                        Mansione = reader.GetString("Mansione"),
-                        DataNascita = reader.GetDateTime("DataNascita"),
-                        DataAssunzione = reader.GetDateTime("DataAssunzione")
-                    });
-                }
-                Console.WriteLine("Lista operai caricata.");
+                    IdOperaio = reader.GetInt32("IdOperaio"),
+                    Nome = reader.GetString("Nome"),
+                    Cognome = reader.GetString("Cognome"),
+                    Mansione = reader.GetString("Mansione"),
+                    DataNascita = reader.GetDateTime("DataNascita"),
+                    DataAssunzione = reader.GetDateTime("DataAssunzione")
+                };
+                operai.Add(operaio);
             }
-            reader.Close(); //aggiunto dopo, verificare se funziona correttamente
-            connessione.Close(); //aggiunto dopo, verificare se funziona correttamente   
+            reader.Close();
+            connessione.Close();
             return operai;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
-            return operai;
+            return operai; //Corretto logicamente?
         }
     }
-
 
     public static bool AggiungiOperaio(Operaio nuovoOperaio)
     {
@@ -86,9 +77,8 @@ public class OperaioService
         }
     }
 
-    public bool AggiornaOperaio(Operaio operaioAggiornato)
+    public static bool AggiornaOperaio(Operaio operaioAggiornato)
     {
-
         try
         {
             var connessione = GetConnection();
@@ -142,7 +132,7 @@ public class OperaioService
         }
     }    
 
-    public bool AssegnaOperaioACantiere(Operaio operaioAggiornato)
+    public static bool AssegnaOperaioACantiere(Operaio operaioAggiornato)
     {
         try
         {
