@@ -8,13 +8,11 @@ namespace SiteManager;
 
 public partial class StatistichePage : ContentPage
 {
-	private readonly CantiereService _cantiereService;
 	public ObservableCollection<Cantiere> CantieriList { get; set; }
 	
 	public StatistichePage()
 	{
 		InitializeComponent();
-		_cantiereService = new CantiereService();
 		CantieriList = new ObservableCollection<Cantiere>();
 		CantieriCollectionView.ItemsSource = CantieriList;
 		LoadCantieri();

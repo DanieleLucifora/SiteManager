@@ -6,16 +6,12 @@ namespace SiteManager;
 
 public partial class SchedaCantierePage : ContentPage
 {
-    private readonly MaterialeService _materialeService;
-    private readonly CantiereService _cantiereService;
     public ObservableCollection<Operaio> OperaiList { get; set; }
     public ObservableCollection<Materiale> MaterialiList { get; set; }
 	private Cantiere _selectedCantiere;
 	public SchedaCantierePage(Cantiere selectedCantiere)
 	{
 		InitializeComponent();
-        _materialeService = new MaterialeService();
-        _cantiereService = new CantiereService();
 		OperaiList = new ObservableCollection<Operaio>();
 		MaterialiList = new ObservableCollection<Materiale>();
         _selectedCantiere = selectedCantiere;
@@ -90,7 +86,7 @@ public partial class SchedaCantierePage : ContentPage
             var quantitaUtilizzata = await DisplayPromptAsync("Quantita", "Inserisci la quantita da assegnare:", "OK", "Annulla", "Quantita", -1, Keyboard.Numeric);
             if (int.TryParse(quantitaUtilizzata, out int quantita))
             {
-                _materialeService.AssegnaMaterialeACantiere(_selectedCantiere.IdCantiere, selectedMateriale.IdMateriale, quantita);
+                MaterialeService.AssegnaMaterialeACantiere(_selectedCantiere.IdCantiere, selectedMateriale.IdMateriale, quantita);
                 await DisplayAlert("Successo", "Materiale assegnato con successo.", "OK");
                 LoadMateriali(); 
             }
@@ -112,7 +108,7 @@ public partial class SchedaCantierePage : ContentPage
             var quantitaUtilizzata = await DisplayPromptAsync("Quantita", "Inserisci la quantita da rimuovere:", "OK", "Annulla", "Quantita", -1, Keyboard.Numeric);
             if (int.TryParse(quantitaUtilizzata, out int quantita))
             {
-                _materialeService.RimuoviMaterialeDaCantiere(_selectedCantiere.IdCantiere, selectedMateriale.IdMateriale, quantita);
+                MaterialeService.RimuoviMaterialeDaCantiere(_selectedCantiere.IdCantiere, selectedMateriale.IdMateriale, quantita);
                 await DisplayAlert("Successo", "Materiale rimosso con successo.", "OK");
                 LoadMateriali();
             }

@@ -117,9 +117,9 @@ class Cantiere():
             task = task[:42] + "..."
         self.tasks.append(task)
 
-    def aggiungi_materiale(self, nome, quantità, unità):    #è necessario non avere duplicati passati
+    def aggiungi_materiale(self, nome, quantità, unità):               #è necessario non avere duplicati passati
             nuovo_materiale = {"Nome": nome, "Quantità": quantità, "Unità": unità}
-            self.materiali.append(nuovo_materiale)  #Risultato: {Materiale: Metallo, Quantità 10, Unità: kg}
+            self.materiali.append(nuovo_materiale)      #Risultato: {Materiale: Metallo, Quantità 10, Unità: kg}
 
     def aggiungi_costi(self, descrizione, costo):
         if descrizione in self.costi:
@@ -131,22 +131,11 @@ class Cantiere():
         return sum(self.costi.values())
 
 def main():    
-    #sys.argv è la lista (vettore) degli argomenti passati tramite riga di comando
-    nome_cantiere = sys.argv[1]
-    lista_tasks_json = json.loads(sys.argv[2])    #è una lista di dizionari {'IdTasks': 0, 'Descrizione': "Rifare il tetto dell'aula D34", 'Data': etc...}
-    lista_materiali_json = json.loads(sys.argv[3])    #è una lista di dizionari. In ogni dizionario il valore associato alla chiave "Materiale" è a sua volta un dizionario
-
-    '''
-    #with open("log_output.txt", "w") as log_file:
-    #    log_file.write(f"Tipo di materiali_json: {type(materiali_json)}\n")
-    #    log_file.write(f"Contenuto di materiali_json: {materiali_json}\n")
-    #Tipo di materiali_json: <class 'list'>
-    #Contenuto di materiali_json: [{'IdMaterialeCantiere': 1, 'IdCantiere': 1, 'IdMateriale': 1, 'QuantitaUtilizzata': 10, 'Cantiere': None, 
-    #'Materiale': {'IdMateriale': 1, 'Nome': 'Metallo', 'Quantita': 0, 'Unita': 'kg', 'CostoUnitario': 20.0}},
-    # {'IdMaterialeCantiere': 2, 'IdCantiere': 1, 'IdMateriale': 2, 'QuantitaUtilizzata': 30, 'Cantiere': None, 
-    # 'Materiale': {'IdMateriale': 2, 'Nome': 'Vetro', 'Quantita': 0, 'Unita': 'kg', 'CostoUnitario': 20.0}}, 
-    '''
-
+    nome_cantiere = sys.argv[1]                         # sys.argv è la lista (vettore) degli argomenti passati tramite riga di comando
+    lista_tasks_json = json.loads(sys.argv[2])          # è una lista di dizionari {'IdTasks': 0, 'Descrizione': "Rifare il tetto dell'aula D34", 'Data': etc...}
+    lista_materiali_json = json.loads(sys.argv[3])      # è una lista di dizionari. In ogni dizionario il valore associato alla chiave "Materiale" è a sua volta un dizionario
+                                                        # [{'IdMaterialeCantiere': 1, 'IdCantiere': 1, 'IdMateriale': 1, 'QuantitaUtilizzata': 10, 'Cantiere': None, 
+                                                        # 'Materiale': {'IdMateriale': 1, 'Nome': 'Metallo', 'Quantita': 0, 'Unita': 'kg', 'CostoUnitario': 20.0}}, ...]
     cantiere = Cantiere(nome_cantiere)
 
     for dizionario in lista_tasks_json:
@@ -159,7 +148,7 @@ def main():
             if chiave == "QuantitaUtilizzata":
                 quantità = valore
             if chiave == "Materiale":
-                for c, v in valore.items(): #itero il dizionario memorizzato come valore della chiave 'Materiale'
+                for c, v in valore.items():             # itero il dizionario memorizzato come valore della chiave 'Materiale'
                     if c == "Nome":
                         nome = v
                     if c == "Unita":

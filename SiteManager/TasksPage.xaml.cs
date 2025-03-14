@@ -1,4 +1,3 @@
-using MySql.Data.MySqlClient;
 using SiteManager.Models;
 using SiteManager.Services;
 using System.Collections.ObjectModel;
@@ -18,6 +17,7 @@ public partial class TasksPage : ContentPage
         BindingContext = this;		
         LoadTasks();		
 	}
+
     private void LoadTasks()
     {
         var tasks = TasksService.OttieniTasks(_selectedCantiere);
@@ -27,6 +27,7 @@ public partial class TasksPage : ContentPage
         }        
         TasksCollectionView.ItemsSource = TasksList;
     }
+    
     private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.FirstOrDefault() is Tasks selectedTask)

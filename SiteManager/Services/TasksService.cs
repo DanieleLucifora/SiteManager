@@ -1,46 +1,39 @@
-using System;
 using MySql.Data.MySqlClient;
 using SiteManager.Models;
 
 namespace SiteManager.Services;
 
-public class TasksService
+public static class TasksService
 {
     private static MySqlConnection GetConnection()
     {
-        //connessione db remoto -> docker container
         string stringaConnessione = "Server=localhost;Port=3307;Database=SiteManager;User=root;Password=1234;";
-        //connessione db locale string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         return new MySqlConnection(stringaConnessione);
-    }    
+    }
+
     public static IEnumerable<Tasks> OttieniTasks(Cantiere cantiere)
     {
-        var taskList = new List<Tasks>();
+        List<Tasks> tasks = [];
         try
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
-            MySqlCommand command = new("SELECT * FROM tasks WHERE CantiereId = @CantiereId", connessione); // Comando = query + db
-            command.Parameters.AddWithValue("@CantiereId", cantiere.IdCantiere);
+            string query = $"SELECT * FROM tasks WHERE CantiereId = '{cantiere.IdCantiere}'";
+            MySqlCommand command = new(query, connessione); 
             MySqlDataReader reader = command.ExecuteReader();
-            {
-                while (reader.Read())
-                {
-                    taskList.Add(new Tasks
-                    {
-                        Descrizione = reader.GetString("Descrizione")
-                    });
-                }
-                Console.WriteLine("Lista task caricata.");
-            }
 
-            return taskList;
+            while (reader.Read())
+            {
+                tasks.Add(new Tasks
+                {
+                    Descrizione = reader.GetString("Descrizione")
+                });
+            }
+            return tasks;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
-            return taskList;
+            return tasks;
         }
     }    
 
@@ -50,7 +43,6 @@ public class TasksService
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
             string query = "INSERT INTO tasks (Descrizione, Data, CantiereId) VALUES (@Descrizione, @Data, @CantiereId)";
             MySqlCommand command = new(query, connessione);
 
@@ -59,14 +51,11 @@ public class TasksService
             command.Parameters.AddWithValue("@CantiereId", task.CantiereId);
 
             int result = command.ExecuteNonQuery();
-            Console.WriteLine("Task aggiunto con successo.");
-
             connessione.Close();
             return result > 0;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
             return false;
         }
     }
@@ -77,7 +66,6 @@ public class TasksService
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
             string query = "UPDATE tasks SET Descrizione = @Descrizione, Data = @Data WHERE IdTasks = @IdTasks";
             MySqlCommand command = new(query, connessione);
 
@@ -86,14 +74,11 @@ public class TasksService
             command.Parameters.AddWithValue("@IdTasks", task.IdTasks);
 
             int result = command.ExecuteNonQuery();
-            Console.WriteLine("Task aggiornato con successo.");
-
             connessione.Close();
             return result > 0;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
             return false;
         }
     }
@@ -104,23 +89,18 @@ public class TasksService
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
             string query = "DELETE FROM tasks WHERE IdTasks = @IdTasks";
             MySqlCommand command = new(query, connessione);
 
             command.Parameters.AddWithValue("@IdTasks", IdTasks);
 
             int result = command.ExecuteNonQuery();
-            Console.WriteLine("Task eliminato con successo.");
-
             connessione.Close();
             return result > 0;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
             return false;
         }
     }
-
 }

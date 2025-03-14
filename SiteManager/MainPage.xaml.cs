@@ -17,10 +17,12 @@ public partial class MainPage : ContentPage
 	{
         await Navigation.PushAsync(new CantieriPage());
 	}
+
 	private async void MaterialiPageClicked(object sender, EventArgs e)
 	{
         await Navigation.PushAsync(new MaterialiPage());
 	}
+	
 	private async void ReportingPageClicked(object sender, EventArgs e)
 	{
         await Navigation.PushAsync(new ReportingPage());

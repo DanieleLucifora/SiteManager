@@ -4,60 +4,50 @@ using SiteManager.Models;
 
 namespace SiteManager.Services;
 
-public class MaterialeService
+public static class MaterialeService
 {
     private static MySqlConnection GetConnection()
     {
-        //connessione db remoto -> docker container
         string stringaConnessione = "Server=localhost;Port=3307;Database=SiteManager;User=root;Password=1234;";
-        //connessione db locale string stringaConnessione = "Server=localhost;Database=SiteManager;User=root;Password=1234;";
         return new MySqlConnection(stringaConnessione);
     }    
         
-    public static IEnumerable<Materiale> OttieniMateriali()
+    public static List<Materiale> OttieniMateriali()
     {
-        var materiali = new List<Materiale>();
-
+        List<Materiale> materiali = [];
         try
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
-            MySqlCommand command = new("SELECT * FROM materiali", connessione); // Comando = query + db
+            MySqlCommand command = new("SELECT * FROM materiali", connessione);
             MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                while (reader.Read())
+                materiali.Add(new Materiale
                 {
-                    materiali.Add(new Materiale
-                    {
-                        IdMateriale = reader.GetInt32("IdMateriale"),
-                        Nome = reader.GetString("Nome"),
-                        Quantita = reader.GetInt32("Quantita"),
-                        Unita = reader.GetString("Unita"),
-                        CostoUnitario = reader.GetDouble("CostoUnitario")
-                    });
-                }
-                Console.WriteLine("Lista materiali caricata.");
+                    IdMateriale = reader.GetInt32("IdMateriale"),
+                    Nome = reader.GetString("Nome"),
+                    Quantita = reader.GetInt32("Quantita"),
+                    Unita = reader.GetString("Unita"),
+                    CostoUnitario = reader.GetDouble("CostoUnitario")
+                });
             }
-            reader.Close(); //aggiunto dopo, verificare se funziona correttamente
-            connessione.Close(); //aggiunto dopo, verificare se funziona correttamente 
+            reader.Close();
+            connessione.Close();
             return materiali;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
             return materiali;
         }
     }
 
     public static bool AggiungiMateriale(Materiale nuovoMateriale)
     {
-
         try
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
             string query = "INSERT INTO materiali (Nome, Quantita, Unita, CostoUnitario) VALUES (@Nome, @Quantita, @Unita, @CostoUnitario)";
             MySqlCommand command = new(query, connessione);
 
@@ -70,27 +60,23 @@ public class MaterialeService
             if (result > 0)
             {
                 nuovoMateriale.IdMateriale = (int)command.LastInsertedId; //recupera l'id generato automaticamente dal db per utilizzarlo eventualmente in modifica ed elimina
-                Console.WriteLine("Materiale aggiunto con successo.");
                 return true;
             }
             connessione.Close();
             return false;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
             return false;
         }
     }
 
     public static bool AggiornaMateriale(Materiale materialeAggiornato)
     {
-
         try
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
             string query = "UPDATE materiali SET Nome = @Nome, Quantita = @Quantita, Unita = @Unita, CostoUnitario = @CostoUnitario WHERE IdMateriale = @IdMateriale";
             MySqlCommand command = new(query, connessione);
 
@@ -101,14 +87,11 @@ public class MaterialeService
             command.Parameters.AddWithValue("@IdMateriale", materialeAggiornato.IdMateriale);
 
             int result = command.ExecuteNonQuery();
-            Console.WriteLine("Materiale aggiornato con successo.");
-
             connessione.Close();
             return result > 0;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
             return false;
         }
     }
@@ -119,33 +102,28 @@ public class MaterialeService
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
             string query = "DELETE FROM materiali WHERE IdMateriale = @IdMateriale";
             MySqlCommand command = new(query, connessione);
 
             command.Parameters.AddWithValue("@IdMateriale", IdMateriale);
 
             int result = command.ExecuteNonQuery();
-            Console.WriteLine("Materiale eliminato con successo.");
-
             connessione.Close();
             return result > 0;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
             return false;
         }
     }    
 
-    public void AssegnaMaterialeACantiere(int cantiereId, int materialeId, int quantitaUtilizzata)
+    public static void AssegnaMaterialeACantiere(int cantiereId, int materialeId, int quantitaUtilizzata)
     {
 
         try
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
 
             // Verifica se il materiale esiste e ha quantita sufficiente
             string queryMateriale = "SELECT * FROM materiali WHERE IdMateriale = @IdMateriale";
@@ -207,9 +185,9 @@ public class MaterialeService
         }
     }
 
-    public void RimuoviMaterialeDaCantiere(int cantiereId, int materialeId, int quantitaDaRimuovere)
+    public static void RimuoviMaterialeDaCantiere(int cantiereId, int materialeId, int quantitaDaRimuovere)
     {
-        MaterialeCantiere materialeCantiere = null;
+        MaterialeCantiere? materialeCantiere = null;
         try
         {
             var connessione = GetConnection();

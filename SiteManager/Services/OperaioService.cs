@@ -16,7 +16,7 @@ public static class OperaioService
         List<Operaio> operai = [];
         try
         {
-            var connessione = GetConnection();
+            MySqlConnection connessione = GetConnection();
             connessione.Open();
             MySqlCommand command = new("SELECT * FROM operai", connessione);
             MySqlDataReader reader = command.ExecuteReader();
@@ -39,70 +39,62 @@ public static class OperaioService
         }
         catch (Exception)
         {
-            return operai; //Corretto logicamente?
+            return operai;
         }
     }
 
-    public static bool AggiungiOperaio(Operaio nuovoOperaio)
+    public static bool AggiungiOperaio(Operaio operaio)
     {
-
         try
         {
-            var connessione = GetConnection();
+            MySqlConnection connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
             string query = "INSERT INTO operai (Nome, Cognome, Mansione, DataNascita, DataAssunzione) VALUES (@Nome, @Cognome, @Mansione, @DataNascita, @DataAssunzione)";
             MySqlCommand command = new(query, connessione);
 
-            command.Parameters.AddWithValue("@Nome", nuovoOperaio.Nome);
-            command.Parameters.AddWithValue("@Cognome", nuovoOperaio.Cognome);
-            command.Parameters.AddWithValue("@Mansione", nuovoOperaio.Mansione);
-            command.Parameters.AddWithValue("@DataNascita", nuovoOperaio.DataNascita);
-            command.Parameters.AddWithValue("@DataAssunzione", nuovoOperaio.DataAssunzione);
+            command.Parameters.AddWithValue("@Nome", operaio.Nome);
+            command.Parameters.AddWithValue("@Cognome", operaio.Cognome);
+            command.Parameters.AddWithValue("@Mansione", operaio.Mansione);
+            command.Parameters.AddWithValue("@DataNascita", operaio.DataNascita);
+            command.Parameters.AddWithValue("@DataAssunzione", operaio.DataAssunzione);
 
             int result = command.ExecuteNonQuery();
-            if (result > 0)
+            if (result > 0) 
             {
-                nuovoOperaio.IdOperaio = (int)command.LastInsertedId; //recupera l'id generato automaticamente dal db per utilizzarlo eventualmente in modifica ed elimina
-                Console.WriteLine("Operaio aggiunto con successo.");
-                return true;
+                operaio.IdOperaio = (int)command.LastInsertedId;    // recupera l'id generato automaticamente dal db per utilizzarlo eventualmente in modifica ed elimina
+                return true;                                        // TODO: DA SISTEMARE
             }
             connessione.Close();
             return false;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
             return false;
         }
     }
 
-    public static bool AggiornaOperaio(Operaio operaioAggiornato)
+    public static bool AggiornaOperaio(Operaio operaio)   // TODO: DA SISTEMARE
     {
         try
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
             string query = "UPDATE operai SET Nome = @Nome, Cognome = @Cognome, Mansione = @Mansione, DataNascita = @DataNascita, DataAssunzione = @DataAssunzione WHERE IdOperaio = @IdOperaio";
             MySqlCommand command = new(query, connessione);
 
-            command.Parameters.AddWithValue("@Nome", operaioAggiornato.Nome);
-            command.Parameters.AddWithValue("@Cognome", operaioAggiornato.Cognome);
-            command.Parameters.AddWithValue("@Mansione", operaioAggiornato.Mansione);
-            command.Parameters.AddWithValue("@DataNascita", operaioAggiornato.DataNascita);
-            command.Parameters.AddWithValue("@DataAssunzione", operaioAggiornato.DataAssunzione);
-            command.Parameters.AddWithValue("@IdOperaio", operaioAggiornato.IdOperaio);
+            command.Parameters.AddWithValue("@Nome", operaio.Nome);
+            command.Parameters.AddWithValue("@Cognome", operaio.Cognome);
+            command.Parameters.AddWithValue("@Mansione", operaio.Mansione);
+            command.Parameters.AddWithValue("@DataNascita", operaio.DataNascita);
+            command.Parameters.AddWithValue("@DataAssunzione", operaio.DataAssunzione);
+            command.Parameters.AddWithValue("@IdOperaio", operaio.IdOperaio);
 
             int result = command.ExecuteNonQuery();
-            Console.WriteLine("Operaio aggiornato con successo.");
-
             connessione.Close();
             return result > 0;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
             return false;
         }
     }
@@ -111,87 +103,66 @@ public static class OperaioService
     {
         try
         {
-            var connessione = GetConnection();
+            MySqlConnection connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
             string query = "DELETE FROM operai WHERE IdOperaio = @IdOperaio";
             MySqlCommand command = new(query, connessione);
 
             command.Parameters.AddWithValue("@IdOperaio", IdOperaio);
-
             int result = command.ExecuteNonQuery();
-            Console.WriteLine("Operaio eliminato con successo.");
 
             connessione.Close();
             return result > 0;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
-            return false;
-        }
-    }    
-
-    public static bool AssegnaOperaioACantiere(Operaio operaioAggiornato)
-    {
-        try
-        {
-            var connessione = GetConnection();
-            connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
-            string query = "UPDATE operai SET Nome = @Nome, Cognome = @Cognome, Mansione = @Mansione, DataNascita = @DataNascita, DataAssunzione = @DataAssunzione, CantiereId = @CantiereId WHERE IdOperaio = @IdOperaio";
-            MySqlCommand command = new(query, connessione);
-
-            command.Parameters.AddWithValue("@Nome", operaioAggiornato.Nome);
-            command.Parameters.AddWithValue("@Cognome", operaioAggiornato.Cognome);
-            command.Parameters.AddWithValue("@Mansione", operaioAggiornato.Mansione);
-            command.Parameters.AddWithValue("@DataNascita", operaioAggiornato.DataNascita);
-            command.Parameters.AddWithValue("@DataAssunzione", operaioAggiornato.DataAssunzione);
-            command.Parameters.AddWithValue("@CantiereId", operaioAggiornato.CantiereId);
-            command.Parameters.AddWithValue("@IdOperaio", operaioAggiornato.IdOperaio);
-
-            int result = command.ExecuteNonQuery();
-            Console.WriteLine("Operaio aggiornato con successo.");
-
-            connessione.Close();
-            return result > 0;
-        }
-        catch (Exception eccezione)
-        {
-            Console.WriteLine($"Errore: {eccezione.Message}");
             return false;
         }
     }
 
-    public static bool RimuoviOperaioDaCantiere(Operaio operaioAggiornato)
+    public static bool AssegnaOperaioACantiere(Operaio operaio)
     {
         try
         {
             var connessione = GetConnection();
             connessione.Open();
-            Console.WriteLine("Connessione al database effettuata.");
-            
-            string query = "UPDATE operai SET CantiereId = NULL WHERE IdOperaio = @IdOperaio";
+            string query = "UPDATE operai SET Nome = @Nome, Cognome = @Cognome, Mansione = @Mansione, DataNascita = @DataNascita, DataAssunzione = @DataAssunzione, CantiereId = @CantiereId WHERE IdOperaio = @IdOperaio";
             MySqlCommand command = new(query, connessione);
 
-            command.Parameters.AddWithValue("@IdOperaio", operaioAggiornato.IdOperaio);
+            command.Parameters.AddWithValue("@Nome", operaio.Nome);
+            command.Parameters.AddWithValue("@Cognome", operaio.Cognome);
+            command.Parameters.AddWithValue("@Mansione", operaio.Mansione);
+            command.Parameters.AddWithValue("@DataNascita", operaio.DataNascita);
+            command.Parameters.AddWithValue("@DataAssunzione", operaio.DataAssunzione);
+            command.Parameters.AddWithValue("@CantiereId", operaio.CantiereId);
+            command.Parameters.AddWithValue("@IdOperaio", operaio.IdOperaio);
 
             int result = command.ExecuteNonQuery();
-            if (result > 0)
-            {
-                Console.WriteLine("Operaio rimosso dal cantiere con successo.");
-            }
-            else
-            {
-                Console.WriteLine("Errore: nessuna riga aggiornata nella tabella operai.");
-            }
-
             connessione.Close();
             return result > 0;
         }
-        catch (Exception eccezione)
+        catch (Exception)
         {
-            Console.WriteLine($"Errore: {eccezione.Message}");
+            return false;
+        }
+    }
+
+    public static bool RimuoviOperaioDaCantiere(Operaio operaio)
+    {
+        try
+        {
+            var connessione = GetConnection();
+            connessione.Open();
+            string query = "UPDATE operai SET CantiereId = NULL WHERE IdOperaio = @IdOperaio";
+            MySqlCommand command = new(query, connessione);
+            command.Parameters.AddWithValue("@IdOperaio", operaio.IdOperaio);
+
+            int result = command.ExecuteNonQuery();
+            connessione.Close();
+            return result > 0;
+        }
+        catch (Exception)
+        {
             return false;
         }
     }    
