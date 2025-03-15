@@ -4,82 +4,78 @@
              x:Class="SiteManager.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="10" Margin="20">
-            <Image
-                Source="sm_image.png"
-                HeightRequest="200"
-                HorizontalOptions="Center"
-                Aspect="AspectFit"
-                SemanticProperties.Description="building image" />
+        <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="Center" AlignItems="Center" Margin="20">
 
-            <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="*,*" Margin="10">
-                <VerticalStackLayout Grid.Row="0" Grid.Column="0" Margin="10">
-                    <Label Text="Cantieri" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
-                    <Button
-                        Padding="20"
-                        x:Name="CaPageBtn"
-                        ImageSource="cantieri_icon.png"
-                        SemanticProperties.Hint="Cantieri page"
-                        Clicked="CantieriPageClicked"
-                        HorizontalOptions="Center"
-                        WidthRequest="120"
-                        HeightRequest="120"
-                        BackgroundColor="SteelBlue" />
-                </VerticalStackLayout>
-                <VerticalStackLayout Grid.Row="0" Grid.Column="1" Margin="10">
-                    <Label Text="Operai" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
-                    <Button
-                        Padding="20"
-                        x:Name="OpePageBtn"
-                        ImageSource="operaio_icon.png"
-                        SemanticProperties.Hint="Operai page"
-                        Clicked="OperaiPageClicked"
-                        HorizontalOptions="Center"
-                        WidthRequest="120"
-                        HeightRequest="120"
-                        BackgroundColor="SteelBlue" />
-                </VerticalStackLayout>
-                <VerticalStackLayout Grid.Row="1" Grid.Column="0" Margin="10">
-                    <Label Text="Materiali" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
-                    <Button
-                        Padding="20"
-                        x:Name="MatPageBtn"
-                        ImageSource="tools_icon.png"
-                        SemanticProperties.Hint="Materiali page"
-                        Clicked="MaterialiPageClicked"
-                        HorizontalOptions="Center"
-                        WidthRequest="120"
-                        HeightRequest="120"
-                        BackgroundColor="SteelBlue" />
-                </VerticalStackLayout>
-                <VerticalStackLayout Grid.Row="1" Grid.Column="1" Margin="10">
-                    <Label Text="Reporting" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
-                    <Button
-                        Padding="20"
-                        x:Name="RepPageBtn"
-                        ImageSource="tasks_icon.png"
-                        SemanticProperties.Hint="Reporting page"
-                        Clicked="ReportingPageClicked"
-                        HorizontalOptions="Center"
-                        WidthRequest="120"
-                        HeightRequest="120"
-                        BackgroundColor="SteelBlue" />
-                </VerticalStackLayout>
-                <VerticalStackLayout Grid.Row="2" Grid.Column="0" Margin="10">
-                    <Label Text="Statistiche" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
-                    <Button
-                        Padding="20"
-                        x:Name="StatPageBtn"
-                        ImageSource="finance_icon.png"
-                        SemanticProperties.Hint="Statistiche page"
-                        Clicked="StatistichePageClicked"
-                        HorizontalOptions="Center"
-                        WidthRequest="120"
-                        HeightRequest="120"
-                        BackgroundColor="SteelBlue" />
-                </VerticalStackLayout>
-            </Grid>
-        </VerticalStackLayout>
+            <VerticalStackLayout Margin="10">
+                <Label Text="Cantieri" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
+                <Button
+                    Padding="20"
+                    x:Name="CaPageBtn"
+                    ImageSource="cantieri_icon.png"
+                    SemanticProperties.Hint="Cantieri page"
+                    Clicked="CantieriPageClicked"
+                    HorizontalOptions="Center"
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    BackgroundColor="SteelBlue" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Margin="10">
+                <Label Text="Operai" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
+                <Button
+                    Padding="20"
+                    x:Name="OpePageBtn"
+                    ImageSource="operaio_icon.png"
+                    SemanticProperties.Hint="Operai page"
+                    Clicked="OperaiPageClicked"
+                    HorizontalOptions="Center"
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    BackgroundColor="SteelBlue" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Margin="10">
+                <Label Text="Materiali" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
+                <Button
+                    Padding="20"
+                    x:Name="MatPageBtn"
+                    ImageSource="tools_icon.png"
+                    SemanticProperties.Hint="Materiali page"
+                    Clicked="MaterialiPageClicked"
+                    HorizontalOptions="Center"
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    BackgroundColor="SteelBlue" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Margin="10">
+                <Label Text="Reporting" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
+                <Button
+                    Padding="20"
+                    x:Name="RepPageBtn"
+                    ImageSource="tasks_icon.png"
+                    SemanticProperties.Hint="Reporting page"
+                    Clicked="ReportingPageClicked"
+                    HorizontalOptions="Center"
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    BackgroundColor="SteelBlue" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Margin="10">
+                <Label Text="Statistiche" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
+                <Button
+                    Padding="20"
+                    x:Name="StatPageBtn"
+                    ImageSource="finance_icon.png"
+                    SemanticProperties.Hint="Statistiche page"
+                    Clicked="StatistichePageClicked"
+                    HorizontalOptions="Center"
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    BackgroundColor="SteelBlue" />
+            </VerticalStackLayout>
+        </FlexLayout>
     </ScrollView>
 
 </ContentPage>
