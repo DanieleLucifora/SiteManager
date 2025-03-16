@@ -9,18 +9,6 @@ public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
-        // Caricamento iniziale dei dati dal database
-        List<Cantiere> cantieri = CantiereService.OttieniCantieri().ToList();
-        List<Operaio> operai = OperaioService.OttieniOperai().ToList();
-        List<Tasks> tasks = new List<Tasks>();
-        List<Materiale> materiali = MaterialeService.OttieniMateriali().ToList();
-
-        // Ottiene i tasks per ciascun cantiere
-        foreach (var cantiere in cantieri)
-        {
-            tasks.AddRange(TasksService.OttieniTasks(cantiere));
-        }
-
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()

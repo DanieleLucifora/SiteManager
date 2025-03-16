@@ -131,6 +131,7 @@ public partial class CantieriPage : ContentPage
             // Rendi visibile il form e il pulsante di aggiornamento
             FormStackLayout.IsVisible = true;
             AggiornaCantiereBtn.IsVisible = true;
+            NuovoCantiereBtn.IsVisible = false;
             SalvaCantiereBtn.IsVisible = false; // Nascondi il pulsante di salvataggio se necessario
 
             await Task.CompletedTask;
@@ -159,6 +160,8 @@ public partial class CantieriPage : ContentPage
                 CantieriCollectionView.ItemsSource = null;
                 CantieriCollectionView.ItemsSource = CantieriList;
                 await DisplayAlert("Successo", "Cantiere aggiornato con successo", "OK");
+                FormStackLayout.IsVisible = false;
+                SalvaCantiereBtn.IsVisible = false;
                 ClearForm();
             }
             else
