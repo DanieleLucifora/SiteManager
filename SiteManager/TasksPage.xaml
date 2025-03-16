@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SiteManager.TasksPage"
-             Title="Task del Cantiere">
-    <Grid RowDefinitions="Auto,*,Auto,Auto">
-        <Label Text="Elenco Task:" Grid.Row="0" Margin="20,20,0,0" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>
-        
-        <ScrollView Grid.Row="1">
+             x:Class="SiteManager.TasksPage">
+
+    <Grid RowDefinitions="*,Auto,Auto">
+        <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="2" Margin="20,0,20,0">
+                <Label Text="Elenco Task:" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>
                 <CollectionView x:Name="TasksCollectionView" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -23,9 +22,9 @@
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                                 <HorizontalStackLayout Margin="20,0,0,0" VerticalOptions="Start" WidthRequest="-1">
-                                    <Button Text="Visualizza" FontSize="11" Clicked="VisualizzaTask_Clicked" CommandParameter="{Binding}" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                    <Button Text="Modifica" FontSize="11" Clicked="ModificaTask_Clicked" CommandParameter="{Binding}" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                    <Button Text="Elimina" FontSize="11" Clicked="EliminaTask_Clicked" CommandParameter="{Binding}" Margin="3" Padding="0" CornerRadius="18" HeightRequest="8" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Visualizza" FontSize="11" Clicked="VisualizzaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Modifica" FontSize="11" Clicked="ModificaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Elimina" FontSize="11" Clicked="EliminaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
                                 </HorizontalStackLayout>
                             </FlexLayout>
                         </DataTemplate>
@@ -33,24 +32,28 @@
                 </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
-        
-        <Button 
-            Grid.Row="2"
-            Text="Nuovo task" 
-            Clicked="AggiungiTask_Clicked" 
-            HeightRequest="50"
-            WidthRequest="150"
-            Margin="10"
-            BackgroundColor="SteelBlue"
-            HorizontalOptions="Center"/>
 
-        <StackLayout x:Name="FormStackLayout" IsVisible="False" HeightRequest="300" Spacing="10" Grid.Row="3" Margin="30,0,30,0">
-            <Entry x:Name="DescrizioneEntry" Placeholder="Descrizione" />
-            <Label Text="Data:" />
-            <DatePicker x:Name="DataPicker"/>
+        <StackLayout Grid.Row="1" Spacing="10" Margin="30,10,30,0">
+            <Button 
+                Grid.Row="2"
+                Text="Nuovo task" 
+                Clicked="AggiungiTask_Clicked" 
+                HeightRequest="50"
+                WidthRequest="150"
+                Margin="10"
+                BackgroundColor="SteelBlue"
+                HorizontalOptions="Center"/>
+
+            <StackLayout x:Name="FormStackLayout" IsVisible="False" Spacing="10">
+                <Entry x:Name="DescrizioneEntry" Placeholder="Descrizione" />
+                <Label Text="Data:" />
+                <DatePicker x:Name="DataPicker"/>
+            </StackLayout>
         </StackLayout>
-        
-        <Button x:Name="SalvaTaskBtn" Text="Salva" Clicked="SalvaTask_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-        <Button x:Name="AggiornaTaskBtn" Text="Aggiorna" Clicked="AggiornaTask_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+
+        <StackLayout Grid.Row="2" Spacing="10" Margin="30,10,30,30">
+            <Button x:Name="SalvaTaskBtn" Text="Salva" Clicked="SalvaTask_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+            <Button x:Name="AggiornaTaskBtn" Text="Aggiorna" Clicked="AggiornaTask_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+        </StackLayout>
     </Grid>
 </ContentPage>
