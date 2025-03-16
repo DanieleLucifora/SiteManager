@@ -52,6 +52,7 @@ public partial class CantieriPage : ContentPage
 	{
 		FormStackLayout.IsVisible = true;
         SalvaCantiereBtn.IsVisible = true;
+        NuovoCantiereBtn.IsVisible = false;
         AggiornaCantiereBtn.IsVisible = false;
         ClearForm();
         await Task.CompletedTask;
@@ -79,6 +80,8 @@ public partial class CantieriPage : ContentPage
         {
             CantieriList.Add(nuovoCantiere);
             await DisplayAlert("Successo", "Cantiere aggiunto con successo", "OK");
+            FormStackLayout.IsVisible = false;
+            SalvaCantiereBtn.IsVisible = false;
             ClearForm();
         }
         else

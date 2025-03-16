@@ -11,19 +11,18 @@
                             <FlexLayout Direction="Row" AlignItems="Start" Wrap="NoWrap">
                                 <Grid RowDefinitions="auto,auto">
                                     <HorizontalStackLayout Grid.Row="0" Margin="0,10,0,0">
-                                        <Label Text="Citta: " VerticalTextAlignment="Center" />
-                                        <Label Text="{Binding Citta}" VerticalTextAlignment="Center" FontSize="20" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                                        <Label Text="Committente: " VerticalTextAlignment="Center"/>
-                                        <Label Text="{Binding Committente}" VerticalTextAlignment="Center" FontSize="20"  Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                                        <Label Text="{Binding DataInizio}" IsVisible="Hidden"/>
-                                        <Label Text="{Binding Scadenza}" IsVisible="Hidden"/>
+                                        <Label Text="Città:" VerticalTextAlignment="Center"/>
+                                        <Label Text="{Binding Citta}" VerticalTextAlignment="Center" Margin="5,0,0,0" />
+                                        <Label Text=" - Committente:" VerticalTextAlignment="Center"/>
+                                        <Label Text="{Binding Committente}" VerticalTextAlignment="Center" Margin="5,0,0,0" />
+
                                     </HorizontalStackLayout>
                                     <HorizontalStackLayout Grid.Row="1" Margin="0,10,0,0">
-                                        <Button Text="Task" FontSize="11" Clicked="TasksCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                        <Button Text="Dettagli" FontSize="11" Clicked="VisualizzaCantiere_Clicked" CommandParameter="{Binding}" Margin="3"  BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                        <Button Text="Assegna" FontSize="11" Clicked="GestisciCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                        <Button Text="Modifica" FontSize="11" Clicked="ModificaCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                        <Button Text="Elimina" FontSize="11" Clicked="EliminaCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                        <Button Text="Task"  Clicked="TasksCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                                        <Button Text="Dettagli"  Clicked="VisualizzaCantiere_Clicked" CommandParameter="{Binding}" Margin="3"  BackgroundColor="SteelBlue"/>
+                                        <Button Text="Assegna" Clicked="GestisciCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                                        <Button Text="Modifica" Clicked="ModificaCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                                        <Button Text="Elimina" Clicked="EliminaCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                                     </HorizontalStackLayout>
                                 </Grid>
                             </FlexLayout>
@@ -35,15 +34,17 @@
 
         <StackLayout Grid.Row="1" Spacing="10" Margin="30,10,30,0">
             <Button 
+                x:Name="NuovoCantiereBtn"
                 Grid.Row="1"
                 Text="Nuovo cantiere" 
                 Clicked="AggiungiCantiere_Clicked"
                 Margin="10"
+                IsVisible="True"
                 BackgroundColor="SteelBlue"
                 HorizontalOptions="Center"/>
 
             <StackLayout x:Name="FormStackLayout" IsVisible="False" Spacing="10">
-                <Entry x:Name="CittaEntry" Placeholder="Citta" />
+                <Entry x:Name="CittaEntry" Placeholder="Città" />
                 <Entry x:Name="CommittenteEntry" Placeholder="Committente" />
                 <Label Text="Data inizio cantiere:" />
                 <DatePicker x:Name="DataInizioPicker"/>
@@ -53,8 +54,8 @@
         </StackLayout>
 
         <StackLayout Grid.Row="2" Spacing="10" Margin="30,10,30,30">
-            <Button x:Name="SalvaCantiereBtn" Text="Salva" Clicked="SalvaCantiere_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="10" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-            <Button x:Name="AggiornaCantiereBtn" Text="Aggiorna" Clicked="AggiornaCantiere_Clicked" IsVisible="False" Grid.Row="3" HeightRequest="50" WidthRequest="150" Margin="10" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+            <Button x:Name="SalvaCantiereBtn" Text="Salva" Clicked="SalvaCantiere_Clicked" IsVisible="False" Grid.Row="3" Margin="10" BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
+            <Button x:Name="AggiornaCantiereBtn" Text="Aggiorna" Clicked="AggiornaCantiere_Clicked" IsVisible="False" Grid.Row="3" Margin="10" BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
         </StackLayout>
     </Grid>
 </ContentPage>
