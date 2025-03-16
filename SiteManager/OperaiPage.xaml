@@ -22,9 +22,9 @@
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                                 <HorizontalStackLayout Margin="20,0,0,0" VerticalOptions="Start" WidthRequest="-1">
-                                    <Button Text="Visualizza" Clicked="VisualizzaOperaio_Clicked" FontSize="11" Margin="3" Padding="0" CornerRadius="18" HeightRequest="10" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                    <Button Text="Modifica" Clicked="ModificaOperaio_Clicked" CommandParameter="{Binding}" FontSize="11" Margin="3" Padding="0" CornerRadius="18" HeightRequest="10" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                    <Button Text="Elimina" Clicked="EliminaOperaio_Clicked" CommandParameter="{Binding}" FontSize="11" Margin="3" Padding="0" CornerRadius="18" HeightRequest="10" WidthRequest="60" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Visualizza" Clicked="VisualizzaOperaio_Clicked" FontSize="11" Margin="3"  BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Modifica" Clicked="ModificaOperaio_Clicked" CommandParameter="{Binding}" FontSize="11" Margin="3"  BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Elimina" Clicked="EliminaOperaio_Clicked" CommandParameter="{Binding}" FontSize="11" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
                                 </HorizontalStackLayout>
                             </FlexLayout>
                         </DataTemplate>
@@ -34,11 +34,10 @@
         </ScrollView>
         
         <StackLayout Grid.Row="1" Spacing="10" Margin="30,10,30,0">
-            <Button 
+            <Button
+                Grid.Row="1"
                 Text="Aggiungi operaio" 
                 Clicked="AggiungiOperaio_Clicked" 
-                HeightRequest="50"
-                WidthRequest="150"
                 BackgroundColor="SteelBlue"
                 HorizontalOptions="Center"
                 Margin="0,0,0,10"/>
