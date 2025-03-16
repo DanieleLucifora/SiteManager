@@ -82,6 +82,7 @@ public partial class CantieriPage : ContentPage
             await DisplayAlert("Successo", "Cantiere aggiunto con successo", "OK");
             FormStackLayout.IsVisible = false;
             SalvaCantiereBtn.IsVisible = false;
+            NuovoCantiereBtn.IsVisible = true;
             ClearForm();
         }
         else
@@ -162,6 +163,8 @@ public partial class CantieriPage : ContentPage
                 await DisplayAlert("Successo", "Cantiere aggiornato con successo", "OK");
                 FormStackLayout.IsVisible = false;
                 SalvaCantiereBtn.IsVisible = false;
+                AggiornaCantiereBtn.IsVisible = false;
+                NuovoCantiereBtn.IsVisible = true;
                 ClearForm();
             }
             else

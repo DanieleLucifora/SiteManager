@@ -52,6 +52,7 @@ public partial class TasksPage : ContentPage
 	{
 		FormStackLayout.IsVisible = true;
         SalvaTaskBtn.IsVisible = true;
+        NuovoTaskBtn.IsVisible = false;
         AggiornaTaskBtn.IsVisible = false;
         ClearForm();
         await Task.CompletedTask;
@@ -75,6 +76,9 @@ public partial class TasksPage : ContentPage
         {
             TasksList.Add(nuovaTask);
             await DisplayAlert("Successo", "Task aggiunto con successo", "OK");
+            NuovoTaskBtn.IsVisible = true;
+            FormStackLayout.IsVisible = false;
+            SalvaTaskBtn.IsVisible = false;
             ClearForm();
         }
         else

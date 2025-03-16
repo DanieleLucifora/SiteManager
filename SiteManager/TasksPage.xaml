@@ -13,18 +13,16 @@
                             <FlexLayout Direction="Row" AlignItems="Start" Wrap="NoWrap">
                                 <VerticalStackLayout Margin="5" Padding="5" WidthRequest="-1">
                                     <HorizontalStackLayout>
-                                        <Label Text="Descrizione:" VerticalTextAlignment="Center" />
-                                        <Label Text="{Binding Descrizione}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                        <Label Text="{Binding Descrizione}" VerticalTextAlignment="Center" FontFamily="Roboto" />
                                     </HorizontalStackLayout>
                                     <HorizontalStackLayout>
-                                        <Label Text="Data:" VerticalTextAlignment="Center" />
-                                        <Label Text="{Binding Data}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                        <Label Text="{Binding Data}" VerticalTextAlignment="Center" />
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                                 <HorizontalStackLayout Margin="20,0,0,0" VerticalOptions="Start" WidthRequest="-1">
-                                    <Button Text="Visualizza" FontSize="11" Clicked="VisualizzaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                    <Button Text="Modifica" FontSize="11" Clicked="ModificaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                    <Button Text="Elimina" FontSize="11" Clicked="EliminaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                    <Button Text="Visualizza" Clicked="VisualizzaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                                    <Button Text="Modifica" Clicked="ModificaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                                    <Button Text="Elimina" Clicked="EliminaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                                 </HorizontalStackLayout>
                             </FlexLayout>
                         </DataTemplate>
@@ -35,12 +33,12 @@
 
         <StackLayout Grid.Row="1" Spacing="10" Margin="30,10,30,0">
             <Button 
+                x:Name="NuovoTaskBtn"
                 Grid.Row="2"
                 Text="Nuovo task" 
                 Clicked="AggiungiTask_Clicked" 
-                HeightRequest="50"
-                WidthRequest="150"
                 Margin="10"
+                IsVisible="True"
                 BackgroundColor="SteelBlue"
                 HorizontalOptions="Center"/>
 
@@ -52,8 +50,8 @@
         </StackLayout>
 
         <StackLayout Grid.Row="2" Spacing="10" Margin="30,10,30,30">
-            <Button x:Name="SalvaTaskBtn" Text="Salva" Clicked="SalvaTask_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-            <Button x:Name="AggiornaTaskBtn" Text="Aggiorna" Clicked="AggiornaTask_Clicked" IsVisible="False" Grid.Row="4" HeightRequest="50" WidthRequest="150" Margin="30,30,30,0" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+            <Button x:Name="SalvaTaskBtn" Text="Salva" Clicked="SalvaTask_Clicked" IsVisible="False" Grid.Row="4" Margin="30,30,30,0" BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
+            <Button x:Name="AggiornaTaskBtn" Text="Aggiorna" Clicked="AggiornaTask_Clicked" IsVisible="False" Grid.Row="4" Margin="30,30,30,0" BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
         </StackLayout>
     </Grid>
 </ContentPage>
