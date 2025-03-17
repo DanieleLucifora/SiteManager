@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SiteManager.MainPage">
+             x:Class="SiteManager.MainPage"
+             Title=" SiteManager">
 
     <ScrollView>
-        <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="Center" AlignItems="Center" Margin="20">
-
-            <VerticalStackLayout Margin="10">
+        <FlexLayout Wrap="Wrap" JustifyContent="Center" AlignItems="Center" Margin="150">
+            <VerticalStackLayout Margin="35">
                 <Label Text="Cantieri" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
                 <Button
                     Padding="20"
@@ -15,12 +15,12 @@
                     SemanticProperties.Hint="Cantieri page"
                     Clicked="CantieriPageClicked"
                     HorizontalOptions="Center"
-                    WidthRequest="100"
-                    HeightRequest="100"
+                    WidthRequest="150"
+                    HeightRequest="150"
                     BackgroundColor="SteelBlue" />
             </VerticalStackLayout>
 
-            <VerticalStackLayout Margin="10">
+            <VerticalStackLayout Margin="35">
                 <Label Text="Operai" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
                 <Button
                     Padding="20"
@@ -29,12 +29,12 @@
                     SemanticProperties.Hint="Operai page"
                     Clicked="OperaiPageClicked"
                     HorizontalOptions="Center"
-                    WidthRequest="100"
-                    HeightRequest="100"
+                    WidthRequest="150"
+                    HeightRequest="150"
                     BackgroundColor="SteelBlue" />
             </VerticalStackLayout>
 
-            <VerticalStackLayout Margin="10">
+            <VerticalStackLayout Margin="35">
                 <Label Text="Materiali" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
                 <Button
                     Padding="20"
@@ -43,12 +43,12 @@
                     SemanticProperties.Hint="Materiali page"
                     Clicked="MaterialiPageClicked"
                     HorizontalOptions="Center"
-                    WidthRequest="100"
-                    HeightRequest="100"
+                    WidthRequest="150"
+                    HeightRequest="150"
                     BackgroundColor="SteelBlue" />
             </VerticalStackLayout>
 
-            <VerticalStackLayout Margin="10">
+            <VerticalStackLayout Margin="35">
                 <Label Text="Reporting" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
                 <Button
                     Padding="20"
@@ -57,12 +57,12 @@
                     SemanticProperties.Hint="Reporting page"
                     Clicked="ReportingPageClicked"
                     HorizontalOptions="Center"
-                    WidthRequest="100"
-                    HeightRequest="100"
+                    WidthRequest="150"
+                    HeightRequest="150"
                     BackgroundColor="SteelBlue" />
             </VerticalStackLayout>
 
-            <VerticalStackLayout Margin="10">
+            <VerticalStackLayout Margin="35">
                 <Label Text="Statistiche" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
                 <Button
                     Padding="20"
@@ -71,8 +71,8 @@
                     SemanticProperties.Hint="Statistiche page"
                     Clicked="StatistichePageClicked"
                     HorizontalOptions="Center"
-                    WidthRequest="100"
-                    HeightRequest="100"
+                    WidthRequest="150"
+                    HeightRequest="150"
                     BackgroundColor="SteelBlue" />
             </VerticalStackLayout>
         </FlexLayout>
