@@ -24,7 +24,7 @@ public partial class TasksPage : ContentPage
         foreach (var task in tasks)
         {
             TasksList.Add(task);
-        }        
+        }
         TasksCollectionView.ItemsSource = TasksList;
     }
     
@@ -119,8 +119,8 @@ public partial class TasksPage : ContentPage
             // Aggiorna i dati del cantiere con i valori del form
             selectedTask.Descrizione = DescrizioneEntry.Text;
             selectedTask.Data = DataPicker.Date;
-            
-            DisplayAlert("Dettagli Task", $"Descizione: {selectedTask.Descrizione} \nData: {selectedTask.Data.ToShortDateString()}", "OK");
+         
+            DisplayAlert("Dettagli Task", $"Id Task: {selectedTask.IdTasks}\nDescrizione: {selectedTask.Descrizione} \nData: {selectedTask.Data.ToShortDateString()}", "OK");
 
             bool success = TasksService.AggiornaTask(selectedTask);
             if (success)
@@ -128,16 +128,15 @@ public partial class TasksPage : ContentPage
                 TasksCollectionView.ItemsSource = null;
                 TasksCollectionView.ItemsSource = TasksList;
                 await DisplayAlert("Successo", "Task aggiornato con successo", "OK");
-                FormStackLayout.IsVisible = false;
-                AggiornaTaskBtn.IsVisible = false;
-                NuovoTaskBtn.IsVisible = true;
-                ClearForm();
             }
             else
             {
                 await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento del task", "OK");
-            }
-
+            }    
+            FormStackLayout.IsVisible = false;
+            AggiornaTaskBtn.IsVisible = false;
+            NuovoTaskBtn.IsVisible = true;
+            ClearForm();
         }
     }
     private async void EliminaTask_Clicked(object sender, EventArgs e)

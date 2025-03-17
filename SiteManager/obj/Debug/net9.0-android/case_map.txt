@@ -1,0 +1,10 @@
+appicon/icon;appicon/icon
+images/background_login;images/background_login
+images/cantieri_icon;images/cantieri_icon
+images/finance_icon;images/finance_icon
+images/home_icon;images/home_icon
+images/operaio_icon;images/operaio_icon
+images/sm_logo;images/sm_logo
+images/tasks_icon;images/tasks_icon
+images/tools_icon;images/tools_icon
+raw/aboutassets;raw/AboutAssets

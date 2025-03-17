@@ -11,7 +11,7 @@ public static class TasksService
         return new MySqlConnection(stringaConnessione);
     }
 
-    public static IEnumerable<Tasks> OttieniTasks(Cantiere cantiere)
+    public static List<Tasks> OttieniTasks(Cantiere cantiere)
     {
         List<Tasks> tasks = [];
         try
@@ -26,7 +26,9 @@ public static class TasksService
             {
                 tasks.Add(new Tasks
                 {
-                    Descrizione = reader.GetString("Descrizione")
+                    IdTasks = reader.GetInt32("IdTask"),
+                    Descrizione = reader.GetString("Descrizione"),
+                    Data = reader.GetDateTime("Data")
                 });
             }
             return tasks;
@@ -66,7 +68,7 @@ public static class TasksService
         {
             var connessione = GetConnection();
             connessione.Open();
-            string query = "UPDATE tasks SET Descrizione = @Descrizione, Data = @Data WHERE IdTasks = @IdTasks";
+            string query = "UPDATE tasks SET Descrizione = @Descrizione, Data = @Data WHERE IdTask = @IdTasks";
             MySqlCommand command = new(query, connessione);
 
             command.Parameters.AddWithValue("@Descrizione", task.Descrizione);
