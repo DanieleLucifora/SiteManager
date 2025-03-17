@@ -152,12 +152,12 @@ public partial class OperaiPage : ContentPage
             bool success = OperaioService.AggiornaOperaio(selectedOperaio);
             if (success)
             {
-                OperaiCollectionView.ItemsSource = null;
-                OperaiCollectionView.ItemsSource = OperaiList;
-                await DisplayAlert("Successo", "Operaio aggiornato con successo", "OK");
                 AggiungiOperaioBtn.IsVisible = true;
                 FormStackLayout.IsVisible = false;
                 AggiornaOperaioBtn.IsVisible = false;
+                OperaiCollectionView.ItemsSource = null;
+                OperaiCollectionView.ItemsSource = OperaiList;
+                await DisplayAlert("Successo", "Operaio aggiornato con successo", "OK");
                 ClearForm();
             }
             else

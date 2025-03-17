@@ -147,12 +147,12 @@ public partial class MaterialiPage : ContentPage
             bool success = MaterialeService.AggiornaMateriale(selectedMateriale);
             if (success)
             {
-                MaterialiCollectionView.ItemsSource = null;
-                MaterialiCollectionView.ItemsSource = MaterialiList;
-                await DisplayAlert("Successo", "Materiale aggiornato con successo", "OK");
                 AggiungiMaterialeBtn.IsVisible = true;
                 FormStackLayout.IsVisible = false;
                 AggiornaMaterialeBtn.IsVisible = false;
+                MaterialiCollectionView.ItemsSource = null;
+                MaterialiCollectionView.ItemsSource = MaterialiList;
+                await DisplayAlert("Successo", "Materiale aggiornato con successo", "OK");
                 ClearForm();
             }
             else

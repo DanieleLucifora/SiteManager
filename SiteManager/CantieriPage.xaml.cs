@@ -171,13 +171,14 @@ public partial class CantieriPage : ContentPage
             bool success = CantiereService.AggiornaCantiere(selectedCantiere);
             if (success)
             {
-                CantieriCollectionView.ItemsSource = null;
-                CantieriCollectionView.ItemsSource = CantieriList;
-                await DisplayAlert("Successo", "Cantiere aggiornato con successo", "OK");
                 FormStackLayout.IsVisible = false;
                 SalvaCantiereBtn.IsVisible = false;
                 AggiornaCantiereBtn.IsVisible = false;
-                NuovoCantiereBtn.IsVisible = true;
+                NuovoCantiereBtn.IsVisible = true;                
+                CantieriCollectionView.ItemsSource = null;
+                CantieriCollectionView.ItemsSource = CantieriList;
+                await DisplayAlert("Successo", "Cantiere aggiornato con successo", "OK");
+                LoadCantieri();
                 ClearForm();
             }
             else
