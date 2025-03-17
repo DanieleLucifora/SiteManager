@@ -101,6 +101,7 @@ public partial class TasksPage : ContentPage
             // Rendi visibile il form e il pulsante di aggiornamento
             FormStackLayout.IsVisible = true;
             AggiornaTaskBtn.IsVisible = true;
+            NuovoTaskBtn.IsVisible = false;
             SalvaTaskBtn.IsVisible = false; // Nascondi il pulsante di salvataggio se necessario
 
             await Task.CompletedTask;
@@ -127,6 +128,9 @@ public partial class TasksPage : ContentPage
                 TasksCollectionView.ItemsSource = null;
                 TasksCollectionView.ItemsSource = TasksList;
                 await DisplayAlert("Successo", "Task aggiornato con successo", "OK");
+                FormStackLayout.IsVisible = false;
+                AggiornaTaskBtn.IsVisible = false;
+                NuovoTaskBtn.IsVisible = true;
                 ClearForm();
             }
             else

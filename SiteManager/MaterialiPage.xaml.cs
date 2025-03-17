@@ -43,6 +43,7 @@ public partial class MaterialiPage : ContentPage
 		FormStackLayout.IsVisible = true;
         SalvaMaterialeBtn.IsVisible = true;
         AggiornaMaterialeBtn.IsVisible = false;
+        AggiungiMaterialeBtn.IsVisible = false;
         ClearForm();
         await Task.CompletedTask;
 	}
@@ -69,6 +70,9 @@ public partial class MaterialiPage : ContentPage
         {
             MaterialiList.Add(nuovoMateriale);
             await DisplayAlert("Successo", "Materiale aggiunto con successo", "OK");
+            AggiungiMaterialeBtn.IsVisible = true;
+            FormStackLayout.IsVisible = false;
+            SalvaMaterialeBtn.IsVisible = false;
             ClearForm();
         }
         else
@@ -105,6 +109,7 @@ public partial class MaterialiPage : ContentPage
             FormStackLayout.IsVisible = true;
             AggiornaMaterialeBtn.IsVisible = true;
             SalvaMaterialeBtn.IsVisible = false; // Nascondi il pulsante di salvataggio se necessario
+            AggiungiMaterialeBtn.IsVisible = false;
 
             await Task.CompletedTask;
         }
@@ -131,7 +136,10 @@ public partial class MaterialiPage : ContentPage
             {
                 MaterialiCollectionView.ItemsSource = null;
                 MaterialiCollectionView.ItemsSource = MaterialiList;
-         await DisplayAlert("Successo", "Materiale aggiornato con successo", "OK");
+                await DisplayAlert("Successo", "Materiale aggiornato con successo", "OK");
+                AggiungiMaterialeBtn.IsVisible = true;
+                FormStackLayout.IsVisible = false;
+                AggiornaMaterialeBtn.IsVisible = false;
                 ClearForm();
             }
             else

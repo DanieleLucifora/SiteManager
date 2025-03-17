@@ -44,6 +44,7 @@ public partial class OperaiPage : ContentPage
 		FormStackLayout.IsVisible = true;
         SalvaOperaioBtn.IsVisible = true;
         AggiornaOperaioBtn.IsVisible = false;
+        AggiungiOperaioBtn.IsVisible = false;
         ClearForm();
         await Task.CompletedTask;
 	}
@@ -72,6 +73,9 @@ public partial class OperaiPage : ContentPage
         {
             OperaiList.Add(nuovoOperaio);
             await DisplayAlert("Successo", "Operaio aggiunto con successo", "OK");
+            AggiungiOperaioBtn.IsVisible = true;
+            FormStackLayout.IsVisible = false;
+            SalvaOperaioBtn.IsVisible = false;
             ClearForm();
         }
         else
@@ -109,6 +113,7 @@ public partial class OperaiPage : ContentPage
             FormStackLayout.IsVisible = true;
             AggiornaOperaioBtn.IsVisible = true;
             SalvaOperaioBtn.IsVisible = false; // Nascondi il pulsante di salvataggio se necessario
+            AggiungiOperaioBtn.IsVisible = false;
 
             await Task.CompletedTask;
         }
@@ -137,6 +142,9 @@ public partial class OperaiPage : ContentPage
                 OperaiCollectionView.ItemsSource = null;
                 OperaiCollectionView.ItemsSource = OperaiList;
                 await DisplayAlert("Successo", "Operaio aggiornato con successo", "OK");
+                AggiungiOperaioBtn.IsVisible = true;
+                FormStackLayout.IsVisible = false;
+                AggiornaOperaioBtn.IsVisible = false;
                 ClearForm();
             }
             else

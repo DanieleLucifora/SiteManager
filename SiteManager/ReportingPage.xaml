@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SiteManager.ReportingPage">
+             x:Class="SiteManager.ReportingPage"
+             Title="Reporting">
+
     <VerticalStackLayout>
         <ScrollView>
             <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
                 <CollectionView x:Name="CantieriCollectionView" SelectionMode="None" HeightRequest="400">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <FlexLayout>
-                                <Grid RowDefinitions="auto,auto">
-                                        <HorizontalStackLayout Grid.Row="0" Margin="0,10,0,0">
-                                            <Label Text="Citta: " VerticalTextAlignment="Center" />
-                                            <Label Text="{Binding Citta}" VerticalTextAlignment="Center" FontSize="20" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                                            <Label Text="Committente: " VerticalTextAlignment="Center"/>
-                                            <Label Text="{Binding Committente}" VerticalTextAlignment="Center" FontSize="20"  Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                                            <Label Text="{Binding DataInizio}" IsVisible="Hidden"/>
-                                            <Label Text="{Binding Scadenza}" IsVisible="Hidden"/>
-                                        </HorizontalStackLayout>
-                                        <HorizontalStackLayout Grid.Row="1" Margin="0,10,0,0">
-                                            <Button Text="Genera report" FontSize="11" Clicked="GeneraReport_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" FontAttributes="Bold" TextColor="SteelBlue"/>                                            
-                                        </HorizontalStackLayout>
-                                </Grid>
-                            </FlexLayout>
+                            <Grid ColumnDefinitions="*,auto" Padding="5">
+                                <VerticalStackLayout>
+                                    <HorizontalStackLayout Grid.Row="0" Margin="0,10,0,0">
+                                        <Label Text="Citta: " VerticalTextAlignment="Center" />
+                                        <Label Text="{Binding Citta}" VerticalTextAlignment="Center" FontSize="20" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                        <Label Text="Committente: " VerticalTextAlignment="Center"/>
+                                        <Label Text="{Binding Committente}" VerticalTextAlignment="Center" FontSize="20"  Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                        <Label Text="{Binding DataInizio}" IsVisible="Hidden"/>
+                                        <Label Text="{Binding Scadenza}" IsVisible="Hidden"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                                <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">
+                                    <Button Text="Genera report" Clicked="GeneraReport_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                                </HorizontalStackLayout>
+                            </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

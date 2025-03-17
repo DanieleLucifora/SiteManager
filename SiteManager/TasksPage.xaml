@@ -10,21 +10,21 @@
                 <CollectionView x:Name="TasksCollectionView" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <FlexLayout Direction="Row" AlignItems="Start" Wrap="NoWrap">
+                            <Grid ColumnDefinitions="*,auto" Padding="5">
                                 <VerticalStackLayout Margin="5" Padding="5" WidthRequest="-1">
                                     <HorizontalStackLayout>
-                                        <Label Text="{Binding Descrizione}" VerticalTextAlignment="Center" FontFamily="Roboto" />
+                                        <Label Text="{Binding Descrizione}" VerticalTextAlignment="Center" FontSize="16" FontFamily="Roboto" />
                                     </HorizontalStackLayout>
                                     <HorizontalStackLayout>
-                                        <Label Text="{Binding Data}" VerticalTextAlignment="Center" />
+                                        <Label Text="{Binding Data}" VerticalTextAlignment="Center" TextColor="SteelBlue" />
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
-                                <HorizontalStackLayout Margin="20,0,0,0" VerticalOptions="Start" WidthRequest="-1">
+                                <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start" WidthRequest="-1">
                                     <Button Text="Visualizza" Clicked="VisualizzaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                                     <Button Text="Modifica" Clicked="ModificaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                                     <Button Text="Elimina" Clicked="EliminaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                                 </HorizontalStackLayout>
-                            </FlexLayout>
+                            </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

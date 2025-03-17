@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SiteManager.OperaiPage">
+             x:Class="SiteManager.OperaiPage"
+             Title="Operai">
+    
     <Grid RowDefinitions="*,Auto,Auto">
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
                 <CollectionView x:Name="OperaiCollectionView" SelectionMode="None" SelectionChanged="OnSelectionChanged">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <FlexLayout Direction="Row" AlignItems="Start" Wrap="NoWrap">
-                                <VerticalStackLayout Margin="5" Padding="5" WidthRequest="-1">
+                            <Grid ColumnDefinitions="*,auto" Padding="5">
+                                <VerticalStackLayout >
                                     <HorizontalStackLayout>
                                         <Label Text="Nome:" VerticalTextAlignment="Center" />
                                         <Label Text="{Binding Nome}" VerticalTextAlignment="Center" FontSize="18" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
@@ -21,12 +23,12 @@
                                         <Label Text="{Binding DataAssunzione}" IsVisible="Hidden"/>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
-                                <HorizontalStackLayout Margin="20,0,0,0" VerticalOptions="Start" WidthRequest="-1">
-                                    <Button Text="Visualizza" Clicked="VisualizzaOperaio_Clicked" FontSize="11" Margin="3"  BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                    <Button Text="Modifica" Clicked="ModificaOperaio_Clicked" CommandParameter="{Binding}" FontSize="11" Margin="3"  BackgroundColor="LightGray" TextColor="SteelBlue"/>
-                                    <Button Text="Elimina" Clicked="EliminaOperaio_Clicked" CommandParameter="{Binding}" FontSize="11" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+                                <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">
+                                    <Button Text="Visualizza" Clicked="VisualizzaOperaio_Clicked"  Margin="3"  BackgroundColor="SteelBlue"/>
+                                    <Button Text="Modifica" Clicked="ModificaOperaio_Clicked" CommandParameter="{Binding}"  Margin="3"  BackgroundColor="SteelBlue"/>
+                                    <Button Text="Elimina" Clicked="EliminaOperaio_Clicked" CommandParameter="{Binding}"  Margin="3" BackgroundColor="SteelBlue"/>
                                 </HorizontalStackLayout>
-                            </FlexLayout>
+                            </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
@@ -35,8 +37,10 @@
         
         <StackLayout Grid.Row="1" Spacing="10" Margin="30,10,30,0">
             <Button
+                x:Name="AggiungiOperaioBtn"
                 Grid.Row="1"
                 Text="Aggiungi operaio" 
+                IsVisible="True"
                 Clicked="AggiungiOperaio_Clicked" 
                 BackgroundColor="SteelBlue"
                 HorizontalOptions="Center"
@@ -54,8 +58,8 @@
         </StackLayout>
 
         <StackLayout Grid.Row="2" Spacing="10" Margin="30,10,30,30">
-            <Button x:Name="SalvaOperaioBtn" Text="Salva" Clicked="SalvaOperaio_Clicked" IsVisible="False" HeightRequest="50" WidthRequest="150" BackgroundColor="LightGray" TextColor="SteelBlue"/>
-            <Button x:Name="AggiornaOperaioBtn" Text="Aggiorna" Clicked="AggiornaOperaio_Clicked" IsVisible="False" HeightRequest="50" WidthRequest="150" BackgroundColor="LightGray" TextColor="SteelBlue"/>
+            <Button x:Name="SalvaOperaioBtn" Text="Salva" Clicked="SalvaOperaio_Clicked" IsVisible="False"  BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
+            <Button x:Name="AggiornaOperaioBtn" Text="Aggiorna" Clicked="AggiornaOperaio_Clicked" IsVisible="False"  BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
         </StackLayout>
     </Grid>
 </ContentPage>

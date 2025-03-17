@@ -4,7 +4,7 @@
             x:Class="SiteManager.SchedaCantierePage"  
             Title="Scheda Cantiere">  
    <Grid RowDefinitions="auto,*,auto,*">  
-       <Label Text="ELENCO OPERAI" Grid.Row="0" Margin="20,20,0,0" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>  
+       <Label Text="Elenco Operai" Grid.Row="0" Margin="20,20,0,0" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>  
        <CollectionView x:Name="OperaiCollectionView" Grid.Row="1" SelectionMode="None" Margin="20,0,20,0">  
            <CollectionView.ItemTemplate>  
                <DataTemplate>  
@@ -22,15 +22,15 @@
                            </HorizontalStackLayout>  
                        </VerticalStackLayout>  
                        <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">  
-                           <Button Text="Assegna" FontSize="11" Clicked="AssegnaOperaio_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>  
-                           <Button Text="Rimuovi" FontSize="11" Clicked="RimuoviOperaio_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>  
+                           <Button Text="Assegna" Clicked="AssegnaOperaio_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>  
+                           <Button Text="Rimuovi" Clicked="RimuoviOperaio_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>  
                        </HorizontalStackLayout>  
                    </Grid>  
                </DataTemplate>  
            </CollectionView.ItemTemplate>  
        </CollectionView>  
          
-       <Label Text="ELENCO MATERIALI" Grid.Row="2" Margin="20,20,0,0" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>  
+       <Label Text="Elenco Materiali" Grid.Row="2" Margin="20,20,0,0" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>  
        <CollectionView x:Name="MaterialiCollectionView" Grid.Row="3" SelectionMode="None" Margin="20,0,20,0">  
            <CollectionView.ItemTemplate>  
                <DataTemplate>  
@@ -46,7 +46,7 @@
                            </HorizontalStackLayout>  
                        </VerticalStackLayout>  
                        <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">  
-                           <Button Text="Assegna" FontSize="11" Clicked="AssegnaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="LightGray" TextColor="SteelBlue"/>  
+                           <Button Text="Assegna" Clicked="AssegnaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>  
                        </HorizontalStackLayout>  
                    </Grid>  
                </DataTemplate>  
