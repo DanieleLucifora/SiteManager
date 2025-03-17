@@ -21,7 +21,20 @@ public partial class MaterialiPage : ContentPage
         var materiali = MaterialeService.OttieniMateriali();
         foreach (var materiale in materiali)
         {
-            MaterialiList.Add(materiale);
+            bool materialeEsistente = false;
+            foreach (var iMateriale in MaterialiList)
+            {
+                if (iMateriale.IdMateriale == materiale.IdMateriale)
+                {
+                    materialeEsistente = true;
+                    break;
+                }
+            }
+
+            if (!materialeEsistente)
+            {
+                MaterialiList.Add(materiale);  
+            }
         }        
         MaterialiCollectionView.ItemsSource = MaterialiList;
 	}
@@ -68,11 +81,11 @@ public partial class MaterialiPage : ContentPage
 
         if (success)
         {
-            MaterialiList.Add(nuovoMateriale);
             await DisplayAlert("Successo", "Materiale aggiunto con successo", "OK");
             AggiungiMaterialeBtn.IsVisible = true;
             FormStackLayout.IsVisible = false;
             SalvaMaterialeBtn.IsVisible = false;
+            LoadMateriali();
             ClearForm();
         }
         else

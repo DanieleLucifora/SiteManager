@@ -53,8 +53,13 @@ public static class TasksService
             command.Parameters.AddWithValue("@CantiereId", task.CantiereId);
 
             int result = command.ExecuteNonQuery();
+            if (result > 0)
+            {
+                task.IdTasks = (int)command.LastInsertedId; //recupera l'id generato automaticamente dal db per utilizzarlo eventualmente in modifica ed elimina
+                return true;
+            }
             connessione.Close();
-            return result > 0;
+            return false;
         }
         catch (Exception)
         {
@@ -91,10 +96,10 @@ public static class TasksService
         {
             var connessione = GetConnection();
             connessione.Open();
-            string query = "DELETE FROM tasks WHERE IdTasks = @IdTasks";
+            string query = "DELETE FROM tasks WHERE IdTask = @IdTask";
             MySqlCommand command = new(query, connessione);
 
-            command.Parameters.AddWithValue("@IdTasks", IdTasks);
+            command.Parameters.AddWithValue("@IdTask", IdTasks);
 
             int result = command.ExecuteNonQuery();
             connessione.Close();

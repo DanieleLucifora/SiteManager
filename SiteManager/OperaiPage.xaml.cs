@@ -21,7 +21,20 @@ public partial class OperaiPage : ContentPage
         List<Operaio> operai = OperaioService.OttieniOperai();
         foreach (Operaio operaio in operai)
         {
-            OperaiList.Add(operaio);
+            bool operaioEsistente = false;
+            foreach (var iOperaio in OperaiList)
+            {
+                if (iOperaio.IdOperaio == operaio.IdOperaio)
+                {
+                    operaioEsistente = true;
+                    break;
+                }
+            }
+
+            if (!operaioEsistente)
+            {
+                OperaiList.Add(operaio);
+            }            
         }        
         OperaiCollectionView.ItemsSource = OperaiList;
     }
@@ -71,11 +84,11 @@ public partial class OperaiPage : ContentPage
 
         if (success)
         {
-            OperaiList.Add(nuovoOperaio);
             await DisplayAlert("Successo", "Operaio aggiunto con successo", "OK");
             AggiungiOperaioBtn.IsVisible = true;
             FormStackLayout.IsVisible = false;
             SalvaOperaioBtn.IsVisible = false;
+            LoadOperai();
             ClearForm();
         }
         else

@@ -23,7 +23,20 @@ public partial class TasksPage : ContentPage
         var tasks = TasksService.OttieniTasks(_selectedCantiere);
         foreach (var task in tasks)
         {
-            TasksList.Add(task);
+            bool taskEsistente = false;
+            foreach (var iTask in TasksList)
+            {
+                if (iTask.IdTasks == task.IdTasks)
+                {
+                    taskEsistente = true;
+                    break;
+                }
+            }
+
+            if (!taskEsistente)
+            {
+                TasksList.Add(task);
+            }
         }
         TasksCollectionView.ItemsSource = TasksList;
     }
@@ -74,11 +87,11 @@ public partial class TasksPage : ContentPage
 
         if (success)
         {
-            TasksList.Add(nuovaTask);
             await DisplayAlert("Successo", "Task aggiunto con successo", "OK");
             NuovoTaskBtn.IsVisible = true;
             FormStackLayout.IsVisible = false;
             SalvaTaskBtn.IsVisible = false;
+            LoadTasks();
             ClearForm();
         }
         else

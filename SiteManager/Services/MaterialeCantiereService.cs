@@ -14,7 +14,7 @@ namespace SiteManager.Services
             return new MySqlConnection(stringaConnessione);
         }
 
-        public static IEnumerable<MaterialeCantiere> OttieniMaterialeCantiere(int idCantiere)
+        public static List<MaterialeCantiere> OttieniMaterialeCantiere(int idCantiere)
         {
             var materialiUtilizzati = new List<MaterialeCantiere>();
 

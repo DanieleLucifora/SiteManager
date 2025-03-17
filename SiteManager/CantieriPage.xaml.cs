@@ -21,7 +21,20 @@ public partial class CantieriPage : ContentPage
         var cantieri = CantiereService.OttieniCantieri();
         foreach (var cantiere in cantieri)
         {
-            CantieriList.Add(cantiere);
+            bool cantiereEsistente = false;
+            foreach (var iCantiere in CantieriList)
+            {
+                if (iCantiere.IdCantiere == cantiere.IdCantiere)
+                {
+                    cantiereEsistente = true;
+                    break;
+                }
+            }
+
+            if (!cantiereEsistente)
+            {
+                CantieriList.Add(cantiere);   
+            }
         }        
         CantieriCollectionView.ItemsSource = CantieriList;
     }
@@ -78,11 +91,11 @@ public partial class CantieriPage : ContentPage
 
         if (success)
         {
-            CantieriList.Add(nuovoCantiere);
             await DisplayAlert("Successo", "Cantiere aggiunto con successo", "OK");
             FormStackLayout.IsVisible = false;
             SalvaCantiereBtn.IsVisible = false;
             NuovoCantiereBtn.IsVisible = true;
+            LoadCantieri();
             ClearForm();
         }
         else
