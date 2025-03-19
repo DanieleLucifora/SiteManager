@@ -19,9 +19,10 @@
 
                                     </HorizontalStackLayout>
                                     <HorizontalStackLayout Grid.Row="1" Margin="0,10,0,0">
-                                        <Button Text="Task"  Clicked="TasksCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                                        <Button Text="Task completate"  Clicked="TasksCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                                         <Button Text="Dettagli"  Clicked="VisualizzaCantiere_Clicked" CommandParameter="{Binding}" Margin="3"  BackgroundColor="SteelBlue"/>
                                         <Button Text="Assegna" Clicked="GestisciCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                                        <Button Text="Chiusura giornata" Clicked="ChiusuraGiornata_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                                         <Button Text="Modifica" Clicked="ModificaCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                                         <Button Text="Elimina" Clicked="EliminaCantiere_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                                     </HorizontalStackLayout>

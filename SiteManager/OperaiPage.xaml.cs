@@ -45,7 +45,7 @@ public partial class OperaiPage : ContentPage
         {
             NomeEntry.Text = selectedOperaio.Nome;
             CognomeEntry.Text = selectedOperaio.Cognome;
-            MansioneEntry.Text = selectedOperaio.Mansione;
+            MansioneLabel.Text = selectedOperaio.Mansione;
             DataNascitaPicker.Date = selectedOperaio.DataNascita;
             DataAssunzionePicker.Date = selectedOperaio.DataAssunzione;
             FormStackLayout.IsVisible = true;
@@ -67,7 +67,8 @@ public partial class OperaiPage : ContentPage
         
         string nome = NomeEntry.Text; 
         string cognome = CognomeEntry.Text; 
-        string mansione = MansioneEntry.Text; 
+        string mansione = MansioneLabel.Text; 
+        decimal costoOrario = decimal.Parse(CostoOrarioLabel.Text.Replace(" €/h", "")); // Estrai il valore numerico
         DateTime dataNascita = DataNascitaPicker.Date; 
         DateTime dataAssunzione = DataAssunzionePicker.Date; 
 
@@ -76,6 +77,7 @@ public partial class OperaiPage : ContentPage
             Nome = nome,
             Cognome = cognome,
             Mansione = mansione,
+            CostoOrario = costoOrario,
             DataNascita = dataNascita,
             DataAssunzione = dataAssunzione
         };
@@ -115,7 +117,7 @@ public partial class OperaiPage : ContentPage
             // Popola i campi del form con i dati dell'operaio selezionato
             NomeEntry.Text = selectedOperaio.Nome;
             CognomeEntry.Text = selectedOperaio.Cognome;
-            MansioneEntry.Text = selectedOperaio.Mansione;
+            MansioneLabel.Text = selectedOperaio.Mansione;
             DataNascitaPicker.Date = selectedOperaio.DataNascita;
             DataAssunzionePicker.Date = selectedOperaio.DataAssunzione;
 
@@ -143,7 +145,7 @@ public partial class OperaiPage : ContentPage
             // Aggiorna i dati dell'operaio con i valori del form
             selectedOperaio.Nome = NomeEntry.Text;
             selectedOperaio.Cognome = CognomeEntry.Text;
-            selectedOperaio.Mansione = MansioneEntry.Text;
+            selectedOperaio.Mansione = MansioneLabel.Text;
             selectedOperaio.DataNascita = DataNascitaPicker.Date;
             selectedOperaio.DataAssunzione = DataAssunzionePicker.Date;
             
@@ -187,13 +189,43 @@ public partial class OperaiPage : ContentPage
                 }                  
             }             
         }
-    } 
+    }
+
+    private void SelezionaMansione_Clicked(object sender, EventArgs e)
+    {
+        MostraMansioni();
+    }
+
+    private async void MostraMansioni()
+    {
+        Dictionary<string, decimal> mansioni = new Dictionary<string, decimal>
+        {
+            {"Muratore", 12.00m}, 
+            {"Elettricista", 15.00m}, 
+            {"Idraulico", 15.00m}, 
+            {"Carpentiere", 13.50m},
+            {"Geometra", 16.50m},
+            {"Architetto", 25.50m},
+            {"Ingegnere", 32.00m}
+        };
+
+        string[] mansioniArray = mansioni.Keys.ToArray();
+        
+        string mansione = await DisplayActionSheet("Seleziona mansione", "Annulla", null, mansioniArray);
+        if (!string.IsNullOrEmpty(mansione) && mansione != "Annulla")
+        {
+            decimal costoOrario = mansioni[mansione];            
+            MansioneLabel.Text = mansione;
+            CostoOrarioLabel.Text = costoOrario.ToString("0.00") + " €/h";            
+        }
+    }
 
 	private void ClearForm()
     {
         NomeEntry.Text = string.Empty;
         CognomeEntry.Text = string.Empty;
-        MansioneEntry.Text = string.Empty;
+        MansioneLabel.Text = string.Empty;
+        CostoOrarioLabel.Text = string.Empty;
         DataNascitaPicker.Date = DateTime.Now;
         DataAssunzionePicker.Date = DateTime.Now;
     }	

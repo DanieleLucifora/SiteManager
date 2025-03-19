@@ -61,7 +61,20 @@ public partial class CantieriPage : ContentPage
             await DisplayAlert("Errore", "Seleziona un cantiere prima di procedere.", "OK");
         }        
     }
-	private async void AggiungiCantiere_Clicked(object sender, EventArgs e)
+    
+    private async void ChiusuraGiornata_Clicked(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.CommandParameter is Cantiere selectedCantiere)
+        {
+            await Navigation.PushAsync(new ChiusuraGiornataPage(selectedCantiere));
+        }
+        else
+        {
+            await DisplayAlert("Errore", "Seleziona un cantiere prima di procedere.", "OK");
+        }        
+    }
+
+    private async void AggiungiCantiere_Clicked(object sender, EventArgs e)
 	{
 		FormStackLayout.IsVisible = true;
         SalvaCantiereBtn.IsVisible = true;

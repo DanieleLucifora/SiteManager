@@ -3,19 +3,22 @@ using SiteManager.Services;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using System.Text;
+using SkiaSharp;
+using Microcharts;
+using Microcharts.Maui;
 
 namespace SiteManager;
 
 public partial class StatistichePage : ContentPage
 {
 	public ObservableCollection<Cantiere> CantieriList { get; set; }
-	
+
 	public StatistichePage()
 	{
 		InitializeComponent();
 		CantieriList = new ObservableCollection<Cantiere>();
 		CantieriCollectionView.ItemsSource = CantieriList;
-		LoadCantieri();
+        LoadCantieri();
 	}
 
 	private void LoadCantieri()
@@ -35,48 +38,103 @@ public partial class StatistichePage : ContentPage
 			bool conferma = await DisplayAlert("Conferma", $"Vuoi visualizzare le statistiche per il cantiere di {selectedCantiere.Citta}?", "Si", "No");
 			if (conferma)
 			{
-				var materiali = MaterialeCantiereService.OttieniMaterialeCantiere(selectedCantiere.IdCantiere);
-				
-				if (!materiali.Any())
+				try
 				{
-					StatisticheResultLabel.Text = "Nessun materiale trovato per questo cantiere.";
-					return;
+					var operai = OperaioService.OttieniOperaiCantiere(selectedCantiere.IdCantiere);
+					var materiali = MaterialeCantiereService.OttieniMaterialeCantiere(selectedCantiere.IdCantiere);
+					var presenze = PresenzaService.OttieniPresenze(selectedCantiere);
+					var spese = SpesaService.OttieniSpese(selectedCantiere);
+
+					using (HttpClient client = new HttpClient())
+					{
+						var payload = new
+						{
+							cantiere = selectedCantiere.Citta, 
+							operai,
+                            materiali,
+							presenze,
+							spese
+						};
+
+						var jsonContent = new StringContent(
+							JsonConvert.SerializeObject(payload),
+							Encoding.UTF8,
+							"application/json"
+						);
+
+						string serverUrl = "http://localhost:5002/calcolaStatistiche";
+						HttpResponseMessage response = await client.PostAsync(serverUrl, jsonContent);
+						string resultJson = await response.Content.ReadAsStringAsync();
+						
+						if (response.IsSuccessStatusCode)
+						{
+
+							dynamic result = JsonConvert.DeserializeObject(resultJson);
+							
+							double costoMateriali = result.costoMateriali;
+							double costoPersonale = result.costoPersonale;
+							double speseCantiere = result.speseCantiere;
+							double totale = result.totale;				
+
+							await DisplayAlert("Statistiche Generate", $"Le statistiche sono state create con successo!", "OK");
+
+							StatisticheResultLabel.Text = $"Totale: {totale:F2} €";			
+
+							GeneraGraficoATorta(costoMateriali, costoPersonale, speseCantiere);		
+
+							spaceChartView.IsVisible = true;
+						}
+						else
+						{
+							await DisplayAlert("Errore", $"Errore nella generazione delle statistiche:\n{resultJson}", "OK");
+						}
+					}
 				}
-
-				Console.WriteLine("Materiali trovati:");
-				foreach (var materiale in materiali)
+				catch (Exception ex)
 				{
-					Console.WriteLine($"ID: {materiale.IdMateriale}, Nome: {materiale.Materiale.Nome}, Quantità: {materiale.QuantitaUtilizzata}");
-				}
-
-				var jsonPayload = JsonConvert.SerializeObject(new { materiali });
-				/* esempio di json inviato nella richiesta HTTP
-				{
-				"IdMaterialeCantiere": 1,
-				"IdCantiere": 1,
-				"IdMateriale": 1,
-				"QuantitaUtilizzata": 50,
-				"Materiale": {
-					"IdMateriale": 1,
-					"Nome": "Cemento",
-					"Quantita": 100,
-					"Unita": "kg",
-					"CostoUnitario": 5.0
-				}*/
-				using (HttpClient client = new HttpClient())
-				{
-					var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-					string serverUrl = "http://localhost:5002/calcolaCostoMateriali";
-					HttpResponseMessage response = await client.PostAsync(serverUrl, content);
-					string result = await response.Content.ReadAsStringAsync();
-
-					StatisticheResultLabel.Text = response.IsSuccessStatusCode 
-						? $"Costo totale materiali: {result} €" 
-						: $"Errore: {result}";
+					await DisplayAlert("Errore", $"Si è verificato un errore:\n{ex.Message}", "OK");
 				}
 			}
 		}
 	}
+
+	private void GeneraGraficoATorta(double costoMateriali, double costoPersonale, double speseCantiere)
+    {
+        var entries = new[]
+        {
+            new ChartEntry((float)costoMateriali)
+            {
+                Label = "Materiali",
+                ValueLabel = $"{costoMateriali:F2} €",
+                Color = SKColor.Parse("#4CAF50"),
+                TextColor = SKColor.Parse("#4CAF50")
+            },
+            new ChartEntry((float)costoPersonale)
+            {
+                Label = "Personale",
+                ValueLabel = $"{costoPersonale:F2} €",
+                Color = SKColor.Parse("#5C6BC0"),
+                TextColor = SKColor.Parse("#5C6BC0")
+            },
+            new ChartEntry((float)speseCantiere)
+            {
+                Label = "Spese",
+                ValueLabel = $"{speseCantiere:F2} €",
+                Color = SKColor.Parse("#FFA726"),
+                TextColor = SKColor.Parse("#FFA726")
+            }
+        };
+
+        var chart = new PieChart
+        {
+            Entries = entries,
+            BackgroundColor = SKColors.Transparent,
+            LabelTextSize = 40,
+            HoleRadius = 0f,
+            LabelMode = LabelMode.RightOnly
+        };
+
+        chartView.Chart = chart;
+    }
 
 }

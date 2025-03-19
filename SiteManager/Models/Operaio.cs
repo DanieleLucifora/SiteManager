@@ -6,6 +6,7 @@ public class Operaio
     public required string Nome { get; set; }
     public required string Cognome { get; set; }
     public required string Mansione { get; set; }
+    public decimal CostoOrario { get; set; }
     public DateTime DataNascita { get; set; }
     public DateTime DataAssunzione { get; set; }
     public int? CantiereId { get; set; }

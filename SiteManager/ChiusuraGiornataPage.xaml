@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SiteManager.OperaiPage"
-             Title=" Operai">
+             x:Class="SiteManager.ChiusuraGiornataPage"
+             Title="ChiusuraGiornataPage">
     
     <Grid RowDefinitions="*,Auto,Auto">
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
-                <CollectionView x:Name="OperaiCollectionView" SelectionMode="None" SelectionChanged="OnSelectionChanged">
+                <CollectionView x:Name="OperaiCollectionView" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnDefinitions="*,auto" Padding="5">
@@ -24,9 +24,7 @@
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                                 <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">
-                                    <Button Text="Visualizza" Clicked="VisualizzaOperaio_Clicked"  Margin="3"  BackgroundColor="SteelBlue"/>
-                                    <Button Text="Modifica" Clicked="ModificaOperaio_Clicked" CommandParameter="{Binding}"  Margin="3"  BackgroundColor="SteelBlue"/>
-                                    <Button Text="Elimina" Clicked="EliminaOperaio_Clicked" CommandParameter="{Binding}"  Margin="3" BackgroundColor="SteelBlue"/>
+                                    <Button Text="Ore lavorate" Clicked="OreLavorate_Clicked"  Margin="3"  BackgroundColor="SteelBlue"/>
                                 </HorizontalStackLayout>
                             </Grid>
                         </DataTemplate>
@@ -37,31 +35,23 @@
         
         <StackLayout Grid.Row="1" Spacing="10" Margin="30,10,30,0">
             <Button
-                x:Name="AggiungiOperaioBtn"
+                x:Name="AggiungiSpesaBtn"
                 Grid.Row="1"
-                Text="Aggiungi operaio" 
+                Text="Aggiungi spesa" 
                 IsVisible="True"
-                Clicked="AggiungiOperaio_Clicked" 
+                Clicked="AggiungiSpesa_Clicked" 
                 BackgroundColor="SteelBlue"
                 HorizontalOptions="Center"
                 Margin="0,0,0,10"/>
             
             <StackLayout x:Name="FormStackLayout" IsVisible="False" Spacing="10">
-                <Entry x:Name="NomeEntry" Placeholder="Nome" />
-                <Entry x:Name="CognomeEntry" Placeholder="Cognome" />
-                <Button x:Name="SelezionaMansione" Text="Seleziona mansione" Clicked="SelezionaMansione_Clicked" BackgroundColor="SteelBlue" HorizontalOptions="Start" Margin="3"/>
-                <Label x:Name="MansioneLabel" />
-                <Label x:Name="CostoOrarioLabel" Text="" />
-                <Label Text="Data di nascita:" />
-                <DatePicker x:Name="DataNascitaPicker" />
-                <Label Text="Data di assunzione:"/>
-                <DatePicker x:Name="DataAssunzionePicker" />
+                <Entry x:Name="DescrizioneEntry" Placeholder="Descrizione" />
+                <Entry x:Name="CostoEntry" Placeholder="Costo" />
             </StackLayout>
         </StackLayout>
 
         <StackLayout Grid.Row="2" Spacing="10" Margin="30,10,30,30">
-            <Button x:Name="SalvaOperaioBtn" Text="Salva" Clicked="SalvaOperaio_Clicked" IsVisible="False"  BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
-            <Button x:Name="AggiornaOperaioBtn" Text="Aggiorna" Clicked="AggiornaOperaio_Clicked" IsVisible="False"  BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
+            <Button x:Name="SalvaSpesaBtn" Text="Salva" Clicked="SalvaSpesa_Clicked" IsVisible="False"  BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
         </StackLayout>
     </Grid>
 </ContentPage>

@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using SiteManager.Models;
 using SiteManager.Services;
+using Microcharts.Maui;
 
 namespace SiteManager;
 
@@ -16,10 +17,12 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+			})
+			// Registra Microcharts.Maui
+            .UseMicrocharts();
 
 		#if DEBUG
-				builder.Logging.AddDebug();
+						builder.Logging.AddDebug();
 		#endif
 
 		return builder.Build();
