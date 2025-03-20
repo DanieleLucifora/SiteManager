@@ -30,7 +30,8 @@ public static class OperaioService
                     Mansione = reader.GetString("Mansione"),
                     CostoOrario = reader.GetDecimal("CostoOrario"),
                     DataNascita = reader.GetDateTime("DataNascita"),
-                    DataAssunzione = reader.GetDateTime("DataAssunzione")
+                    DataAssunzione = reader.GetDateTime("DataAssunzione"),
+                    CantiereId = reader.IsDBNull(reader.GetOrdinal("CantiereId")) ? (int?)null : reader.GetInt32("CantiereId")
                 };
                 operai.Add(operaio);
             }
@@ -115,7 +116,7 @@ public static class OperaioService
         {
             var connessione = GetConnection();
             connessione.Open();
-            string query = "UPDATE operai SET Nome = @Nome, Cognome = @Cognome, Mansione = @Mansione, CostoOrario = @CostoOrario, DataNascita = @DataNascita, DataAssunzione = @DataAssunzione WHERE IdOperaio = @IdOperaio";
+            string query = "UPDATE operai SET Nome = @Nome, Cognome = @Cognome, Mansione = @Mansione, CostoOrario = @CostoOrario, DataNascita = @DataNascita, DataAssunzione = @DataAssunzione, CantiereId = @CantiereId WHERE IdOperaio = @IdOperaio";
             MySqlCommand command = new(query, connessione);
 
             command.Parameters.AddWithValue("@Nome", operaio.Nome);
@@ -124,6 +125,7 @@ public static class OperaioService
             command.Parameters.AddWithValue("@CostoOrario", operaio.CostoOrario);
             command.Parameters.AddWithValue("@DataNascita", operaio.DataNascita);
             command.Parameters.AddWithValue("@DataAssunzione", operaio.DataAssunzione);
+            command.Parameters.AddWithValue("@CantiereId", operaio.CantiereId ?? Convert.DBNull);
             command.Parameters.AddWithValue("@IdOperaio", operaio.IdOperaio);
 
             int result = command.ExecuteNonQuery();

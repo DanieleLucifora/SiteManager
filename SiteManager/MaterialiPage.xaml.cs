@@ -63,7 +63,15 @@ public partial class MaterialiPage : ContentPage
 
     private async void SalvaMateriale_Clicked(object sender, EventArgs e)
     {
-        
+        if (string.IsNullOrWhiteSpace(NomeEntry.Text) || 
+            string.IsNullOrWhiteSpace(QuantitaEntry.Text) || 
+            string.IsNullOrWhiteSpace(UnitaEntry.Text) || 
+            string.IsNullOrWhiteSpace(CostoUnitarioEntry.Text))
+        {
+            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            return;
+        }
+
         string nome = NomeEntry.Text; 
         int Quantita = int.Parse(QuantitaEntry.Text); 
         string Unita = UnitaEntry.Text; 
