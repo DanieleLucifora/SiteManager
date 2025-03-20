@@ -39,14 +39,16 @@ public partial class ReportingPage : ContentPage
 				{
 					var tasks = TasksService.OttieniTasks(selectedCantiere);
                     var materiali = MaterialeCantiereService.OttieniMaterialeCantiere(selectedCantiere.IdCantiere);
+                    var costi = SpesaService.OttieniSpese(selectedCantiere);
 
-					using (HttpClient client = new())
+                    using (HttpClient client = new())
 					{
 						var payload = new
 						{
 							cantiere = selectedCantiere.Citta,  // Passiamo il nome della citta al server
 							tasks,
-                            materiali
+                            materiali,
+							costi
 						};
 
 						var jsonContent = new StringContent(

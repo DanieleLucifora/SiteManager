@@ -12,8 +12,9 @@ def genera_report():
     cantiere = data.get("cantiere")
     tasks = data.get("tasks")
     materiali = data.get("materiali")
+    costi = data.get("costi")
 
-    if not cantiere or tasks is None or materiali is None:
+    if not cantiere or tasks is None or materiali is None or costi is None:
         return jsonify({"status": "error", "message": "Dati necessari non presenti"}), 400  #HTTP bad request
 
     try:
@@ -22,7 +23,8 @@ def genera_report():
             ["python3", "/app/report_generator.py", #sys.argv[0]
                 cantiere, 
                 json.dumps(tasks), 
-                json.dumps(materiali)
+                json.dumps(materiali),
+                json.dumps(costi)
             ], 
             capture_output=True, text=True
         )
@@ -33,6 +35,7 @@ def genera_report():
         else:
             return jsonify({"status": "error", "message": result.stderr.strip()}), 500
     except Exception as e:
+
         return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":

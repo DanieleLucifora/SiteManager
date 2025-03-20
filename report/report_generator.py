@@ -52,6 +52,8 @@ def crea_report(cantiere):
     stampa_lista(cantiere.tasks)
     stampa_intestazione("Materiali utilizzati:")
     stampa_lista_dizionari(cantiere.materiali)
+    stampa_intestazione("Costi:")
+    stampa_dizionario(cantiere.costi, "€")
     pdf.save()
 
 def stampa_titolo(nome, data):
@@ -80,17 +82,17 @@ def stampa_lista_dizionari(lista_dizionari):
     global cursore, pdf
     pdf.setFont("Helvetica", 12)
     for dizionario in lista_dizionari:
-        valori = list(dizionario.values())  #lista per accedere ai campi
+        valori = list(dizionario.values())              #lista per accedere ai campi
         aggiorna_cursore()
         pdf.drawString(cursore.x, cursore.y, f"- {valori[0]} {valori[1]}{valori[2]}")
         cursore.y -= INTERLINEA
 
-def stampa_dizionario(dizionario):   # per i costi 
+def stampa_dizionario(dizionario, unità):
     global cursore, pdf
     pdf.setFont("Helvetica", 12)
     for chiave, valore in dizionario.items():
         aggiorna_cursore()
-        pdf.drawString(cursore.x, cursore.y, f"- {chiave}: {valore}")
+        pdf.drawString(cursore.x, cursore.y, f"- {chiave}: {valore}{unità}")
         cursore.y -= INTERLINEA
 
 def aggiorna_cursore():
@@ -109,7 +111,7 @@ class Cantiere():
     def __init__(self, nome):
         self.nome = nome
         self.tasks = []
-        self.materiali = [] #lista di dizionari
+        self.materiali = []                             #lista di dizionari
         self.costi = {}
     
     def aggiungi_task(self, task):
@@ -117,7 +119,7 @@ class Cantiere():
             task = task[:42] + "..."
         self.tasks.append(task)
 
-    def aggiungi_materiale(self, nome, quantità, unità):               #è necessario non avere duplicati passati
+    def aggiungi_materiale(self, nome, quantità, unità):#è necessario non avere duplicati passati
             nuovo_materiale = {"Nome": nome, "Quantità": quantità, "Unità": unità}
             self.materiali.append(nuovo_materiale)      #Risultato: {Materiale: Metallo, Quantità 10, Unità: kg}
 
@@ -136,6 +138,8 @@ def main():
     lista_materiali_json = json.loads(sys.argv[3])      # è una lista di dizionari. In ogni dizionario il valore associato alla chiave "Materiale" è a sua volta un dizionario
                                                         # [{'IdMaterialeCantiere': 1, 'IdCantiere': 1, 'IdMateriale': 1, 'QuantitaUtilizzata': 10, 'Cantiere': None, 
                                                         # 'Materiale': {'IdMateriale': 1, 'Nome': 'Metallo', 'Quantita': 0, 'Unita': 'kg', 'CostoUnitario': 20.0}}, ...]
+    lista_costi_json = json.loads(sys.argv[4])          # è una lista di dizionari. [{"IdSpesa": 1,"Descrizione": "Benzina","Data": "2025-03-20T00:00:00","Costo": 100.0, etc...,
+
     cantiere = Cantiere(nome_cantiere)
 
     for dizionario in lista_tasks_json:
@@ -154,6 +158,14 @@ def main():
                     if c == "Unita":
                         unità = v   
         cantiere.aggiungi_materiale(nome, quantità, unità)
+
+    for dizionario in lista_costi_json:
+        for chiave, valore in dizionario.items():
+            if chiave == "Descrizione":
+                descrizione = valore
+            if chiave == "Costo":
+                costo = valore
+        cantiere.aggiungi_costi(descrizione, costo)
 
     crea_report(cantiere)
 
