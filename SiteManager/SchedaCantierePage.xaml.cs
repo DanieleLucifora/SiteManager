@@ -16,16 +16,24 @@ public partial class SchedaCantierePage : ContentPage
 		MaterialiList = new ObservableCollection<Materiale>();
         _selectedCantiere = selectedCantiere;
         BindingContext = this;		
-        LoadOperai();
+        LoadOperai(_selectedCantiere.IdCantiere);
 		LoadMateriali();
 	}
 
-    private void LoadOperai()
+    private void LoadOperai(int idCantiere)
     {
         var operai = OperaioService.OttieniOperai();
         foreach (var operaio in operai)
         {
             OperaiList.Add(operaio);
+            if(operaio.CantiereId.HasValue && operaio.CantiereId.Value == idCantiere) 
+            {
+                operaio.BackgroundColor = Colors.Honeydew;   
+            }
+            else
+            {
+                operaio.BackgroundColor = Colors.Transparent;
+            }
         }
         OperaiCollectionView.ItemsSource = OperaiList;
     }
@@ -49,6 +57,7 @@ public partial class SchedaCantierePage : ContentPage
             if (conferma)
             {
                 selectedOperaio.CantiereId = _selectedCantiere.IdCantiere;
+                selectedOperaio.BackgroundColor = Colors.Honeydew;
                 OperaioService.AssegnaOperaioACantiere(selectedOperaio);
                 await DisplayAlert("Successo", "Operaio assegnato con successo.", "OK");
                 OperaiCollectionView.ItemsSource = null; 
@@ -71,6 +80,9 @@ public partial class SchedaCantierePage : ContentPage
                 selectedOperaio.CantiereId = null;
                 OperaioService.AggiornaOperaio(selectedOperaio);
                 await DisplayAlert("Successo", "Operaio rimosso con successo.", "OK");
+                selectedOperaio.BackgroundColor = Colors.Transparent;
+                OperaiCollectionView.ItemsSource = null;
+                OperaiCollectionView.ItemsSource = OperaiList;
             }
         }
         else

@@ -11,4 +11,6 @@ public class Operaio
     public DateTime DataAssunzione { get; set; }
     public int? CantiereId { get; set; }
     public Cantiere? Cantiere { get; set; }
+
+    public Color BackgroundColor { get; set; } = Colors.Transparent;
 }

@@ -96,7 +96,13 @@ public partial class ChiusuraGiornataPage : ContentPage
 
     private async void SalvaSpesa_Clicked(object sender, EventArgs e)
     {
-        
+        if (string.IsNullOrWhiteSpace(DescrizioneEntry.Text) || 
+            string.IsNullOrWhiteSpace(CostoEntry.Text))
+        {
+            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            return;
+        }
+
         string descrizione = DescrizioneEntry.Text; 
         decimal costo = decimal.Parse(CostoEntry.Text.Replace(" €", "")); // Estrai il valore numerico
 

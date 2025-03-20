@@ -72,6 +72,12 @@ public partial class TasksPage : ContentPage
 	}
     private async void SalvaTask_Clicked(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(DescrizioneEntry.Text))
+        {
+            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            return;
+        }        
+        
         string descrizione = DescrizioneEntry.Text;
         DateTime data = DataPicker.Date;
         int cantiereId = _selectedCantiere.IdCantiere;

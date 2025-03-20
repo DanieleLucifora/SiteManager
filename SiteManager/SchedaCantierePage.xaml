@@ -8,7 +8,7 @@
        <CollectionView x:Name="OperaiCollectionView" Grid.Row="1" SelectionMode="None" Margin="20,0,20,0">  
            <CollectionView.ItemTemplate>  
                <DataTemplate>  
-                   <Grid ColumnDefinitions="*,auto" Padding="5">  
+                   <Grid ColumnDefinitions="*,auto" Padding="5" BackgroundColor="{Binding BackgroundColor}">  
                        <VerticalStackLayout>  
                            <HorizontalStackLayout>  
                                <Label Text="Nome:" VerticalTextAlignment="Center" />  

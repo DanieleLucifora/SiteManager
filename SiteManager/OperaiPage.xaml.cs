@@ -64,7 +64,15 @@ public partial class OperaiPage : ContentPage
 
     private async void SalvaOperaio_Clicked(object sender, EventArgs e)
     {
-        
+        if (string.IsNullOrWhiteSpace(NomeEntry.Text) || 
+            string.IsNullOrWhiteSpace(CognomeEntry.Text) || 
+            string.IsNullOrWhiteSpace(MansioneLabel.Text) || 
+            string.IsNullOrWhiteSpace(CostoOrarioLabel.Text))
+        {
+            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            return;
+        }
+
         string nome = NomeEntry.Text; 
         string cognome = CognomeEntry.Text; 
         string mansione = MansioneLabel.Text; 

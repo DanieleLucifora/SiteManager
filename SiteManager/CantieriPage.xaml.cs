@@ -86,7 +86,13 @@ public partial class CantieriPage : ContentPage
 
     private async void SalvaCantiere_Clicked(object sender, EventArgs e)
     {
-        
+        if (string.IsNullOrWhiteSpace(CittaEntry.Text) || 
+            string.IsNullOrWhiteSpace(CommittenteEntry.Text))
+        {
+            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            return;
+        }
+
         string citta = CittaEntry.Text; 
         string committente = CommittenteEntry.Text;  
         DateTime dataInizio = DataInizioPicker.Date; 
