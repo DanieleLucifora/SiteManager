@@ -5,7 +5,7 @@
              x:Class="SiteManager.StatistichePage"
              Title=" Statistiche">
 
-    <Grid RowDefinitions="auto, auto, auto">
+    <Grid RowDefinitions="*, auto, auto">
         <VerticalStackLayout Grid.Row="0">
             <ScrollView>
                 <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
@@ -33,12 +33,12 @@
                 </VerticalStackLayout>
             </ScrollView>
         </VerticalStackLayout>
-        <Frame x:Name="spaceChartView" Grid.Row="1" IsVisible="False" Margin="20" Padding="10" BorderColor="LightGray" CornerRadius="10" HeightRequest="350" HorizontalOptions="Center">
+        <ContentView x:Name="spaceChartView" Grid.Row="1" IsVisible="False" HorizontalOptions="Center">
             <VerticalStackLayout>
-                <Label Text="Costi cantiere" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,10"/>
-                <microcharts:ChartView x:Name="chartView" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Costi cantiere" FontSize="18" HorizontalOptions="Center" Margin="0,0,0,10"/>
+                <microcharts:ChartView x:Name="chartView" HeightRequest="500" WidthRequest="500" HorizontalOptions="Center" VerticalOptions="Center"/>
             </VerticalStackLayout>
-        </Frame>
-        <Label x:Name="StatisticheResultLabel" Grid.Row="2" Text="Le statistiche verranno mostrate qui" FontSize="22" Margin="10" FontFamily="Roboto" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </ContentView>
+        <Label x:Name="StatisticheResultLabel" Grid.Row="2" Text="Le statistiche verranno mostrate qui" FontSize="18" Margin="10" FontFamily="Roboto" VerticalOptions="Center" HorizontalOptions="Center"/>
     </Grid>    
 </ContentPage>

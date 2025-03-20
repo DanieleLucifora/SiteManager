@@ -107,21 +107,21 @@ public partial class StatistichePage : ContentPage
                 Label = "Materiali",
                 ValueLabel = $"{costoMateriali:F2} €",
                 Color = SKColor.Parse("#4CAF50"),
-                TextColor = SKColor.Parse("#4CAF50")
+                ValueLabelColor = SKColor.Parse("#4CAF50") // Set the color of the value label
             },
             new ChartEntry((float)costoPersonale)
             {
                 Label = "Personale",
                 ValueLabel = $"{costoPersonale:F2} €",
                 Color = SKColor.Parse("#5C6BC0"),
-                TextColor = SKColor.Parse("#5C6BC0")
+                ValueLabelColor = SKColor.Parse("#5C6BC0") // Set the color of the value label
             },
             new ChartEntry((float)speseCantiere)
             {
                 Label = "Spese",
                 ValueLabel = $"{speseCantiere:F2} €",
                 Color = SKColor.Parse("#FFA726"),
-                TextColor = SKColor.Parse("#FFA726")
+                ValueLabelColor = SKColor.Parse("#FFA726") // Set the color of the value label
             }
         };
 
@@ -129,9 +129,6 @@ public partial class StatistichePage : ContentPage
         {
             Entries = entries,
             BackgroundColor = SKColors.Transparent,
-            LabelTextSize = 40,
-            HoleRadius = 0f,
-            LabelMode = LabelMode.RightOnly
         };
 
         chartView.Chart = chart;
