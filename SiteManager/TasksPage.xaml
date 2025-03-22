@@ -6,7 +6,7 @@
     <Grid RowDefinitions="*,Auto,Auto">
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="2" Margin="20,0,20,0">
-                <Label Text="Elenco Task:" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>
+                <Label Text="Elenco Task completate:" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>
                 <CollectionView x:Name="TasksCollectionView" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
