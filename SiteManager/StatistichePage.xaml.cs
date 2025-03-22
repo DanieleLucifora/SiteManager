@@ -40,6 +40,8 @@ public partial class StatistichePage : ContentPage
 			{
 				try
 				{
+					chartView.Chart = null;
+
 					var operai = OperaioService.OttieniOperaiCantiere(selectedCantiere.IdCantiere);
 					var materiali = MaterialeCantiereService.OttieniMaterialeCantiere(selectedCantiere.IdCantiere);
 					var presenze = PresenzaService.OttieniPresenze(selectedCantiere);
