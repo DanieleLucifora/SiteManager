@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using MySql.Data.MySqlClient;
-using SiteManager.Models;
-using SiteManager.Services;
 using Microcharts.Maui;
 
 namespace SiteManager;

@@ -1,4 +1,3 @@
-using MySql.Data.MySqlClient;
 using SiteManager.Models;
 using SiteManager.Services;
 using System.Collections.ObjectModel;
@@ -7,12 +6,12 @@ namespace SiteManager;
 
 public partial class MaterialiPage : ContentPage
 {
-	public ObservableCollection<Materiale> MaterialiList{ get; set; }
+	public ObservableCollection<Materiale> MaterialiList { get; set; }
+
 	public MaterialiPage()
 	{
 		InitializeComponent();
-		MaterialiList = new ObservableCollection<Materiale>();
-        BindingContext = this;		
+		MaterialiList = [];	
         LoadMateriali();
 	}
 
@@ -21,25 +20,12 @@ public partial class MaterialiPage : ContentPage
         var materiali = MaterialeService.OttieniMateriali();
         foreach (var materiale in materiali)
         {
-            bool materialeEsistente = false;
-            foreach (var iMateriale in MaterialiList)
-            {
-                if (iMateriale.IdMateriale == materiale.IdMateriale)
-                {
-                    materialeEsistente = true;
-                    break;
-                }
-            }
-
-            if (!materialeEsistente)
-            {
-                MaterialiList.Add(materiale);  
-            }
+            MaterialiList.Add(materiale); 
         }        
         MaterialiCollectionView.ItemsSource = MaterialiList;
 	}
    
-    private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void OnSelectionChanged(object sender, SelectionChangedEventArgs e) //
     {
         if (e.CurrentSelection.FirstOrDefault() is Materiale selectedMateriale)
         {
@@ -51,14 +37,13 @@ public partial class MaterialiPage : ContentPage
         }
     }
 
-	private async void AggiungiMateriale_Clicked(object sender, EventArgs e)
+	private void AggiungiMateriale_Clicked(object sender, EventArgs e)
 	{
 		FormStackLayout.IsVisible = true;
         SalvaMaterialeBtn.IsVisible = true;
         AggiornaMaterialeBtn.IsVisible = false;
         AggiungiMaterialeBtn.IsVisible = false;
         ClearForm();
-        await Task.CompletedTask;
 	}
 
     private async void SalvaMateriale_Clicked(object sender, EventArgs e)
@@ -93,7 +78,7 @@ public partial class MaterialiPage : ContentPage
             AggiungiMaterialeBtn.IsVisible = true;
             FormStackLayout.IsVisible = false;
             SalvaMaterialeBtn.IsVisible = false;
-            LoadMateriali();
+            MaterialiList.Add(nuovoMateriale);
             ClearForm();
         }
         else
@@ -102,57 +87,51 @@ public partial class MaterialiPage : ContentPage
         }
     }
 
-    private void VisualizzaMateriale_Clicked(object sender, EventArgs e)
+    private async void VisualizzaMateriale_Clicked(object sender, EventArgs e)
     {
-        var button = sender as Button;
-        var materiale = button?.BindingContext as Materiale;
+        Button button = (Button)sender;
+        Materiale materiale = (Materiale)button.BindingContext;
         if (materiale != null)
         {
-            // Logica per visualizzare i dettagli del materiale
-            DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantita: {materiale.Quantita.ToString()}\nUnita: {materiale.Unita}\nData di Nascita: {materiale.CostoUnitario.ToString()}", "OK");
+            await DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantita: {materiale.Quantita.ToString()}" +
+                                $"\nUnita: {materiale.Unita}\nData di Nascita: {materiale.CostoUnitario.ToString()}", "OK");
         }
     }
 
-    private async void ModificaMateriale_Clicked(object sender, EventArgs e)
+    private void ModificaMateriale_Clicked(object sender, EventArgs e)
 	{
-        if (sender is Button button && button.CommandParameter is Materiale selectedMateriale)
-        {
-            // Popola i campi del form con i dati del materiale selezionato
-            NomeEntry.Text = selectedMateriale.Nome;
-            QuantitaEntry.Text = selectedMateriale.Quantita.ToString();
-            UnitaEntry.Text = selectedMateriale.Unita;
-            CostoUnitarioEntry.Text = selectedMateriale.CostoUnitario.ToString();
+        Button button = (Button)sender;
+        Materiale materiale = (Materiale)button.CommandParameter;
 
-            // Imposta il BindingContext del pulsante AggiornaMaterialeBtn
-            AggiornaMaterialeBtn.BindingContext = selectedMateriale;
+        NomeEntry.Text = materiale.Nome;
+        QuantitaEntry.Text = materiale.Quantita.ToString();
+        UnitaEntry.Text = materiale.Unita;
+        CostoUnitarioEntry.Text = materiale.CostoUnitario.ToString();
 
-            // Rendi visibile il form e il pulsante di aggiornamento
-            FormStackLayout.IsVisible = true;
-            AggiornaMaterialeBtn.IsVisible = true;
-            SalvaMaterialeBtn.IsVisible = false; // Nascondi il pulsante di salvataggio se necessario
-            AggiungiMaterialeBtn.IsVisible = false;
+        AggiornaMaterialeBtn.BindingContext = materiale;
 
-            await Task.CompletedTask;
-        }
-        else
-        {
-            await DisplayAlert("Errore", "Nessun materiale selezionato", "OK");
-        }
+        FormStackLayout.IsVisible = true;
+        AggiornaMaterialeBtn.IsVisible = true;
+        SalvaMaterialeBtn.IsVisible = false;
+        AggiungiMaterialeBtn.IsVisible = false;
 	}
 
     private async void AggiornaMateriale_Clicked(object sender, EventArgs e)
     {
-        if (AggiornaMaterialeBtn.BindingContext is Materiale selectedMateriale)
+        Materiale materiale = (Materiale)AggiornaMaterialeBtn.BindingContext;   //La logica non funziona
+                                                                                //Viene aggiornato il materiale nella lista
+                                                                                //Anche se il database non viene cambiato
         {
-            // Aggiorna i dati del materiale con i valori del form
-            selectedMateriale.Nome = NomeEntry.Text;
-            selectedMateriale.Quantita = int.Parse(QuantitaEntry.Text);
-            selectedMateriale.Unita = UnitaEntry.Text;
-            selectedMateriale.CostoUnitario = double.Parse(CostoUnitarioEntry.Text);
+            materiale.Nome = NomeEntry.Text;
+            materiale.Quantita = int.Parse(QuantitaEntry.Text);
+            materiale.Unita = UnitaEntry.Text;
+            materiale.CostoUnitario = double.Parse(CostoUnitarioEntry.Text);
             
-            await DisplayAlert("Dettagli materiale", $"Id: {selectedMateriale.IdMateriale} \nNome: {selectedMateriale.Nome}\nQuantita: {selectedMateriale.Quantita}\nUnita: {selectedMateriale.Unita}\nData di Nascita: {selectedMateriale.CostoUnitario.ToString()}", "OK");
+            await DisplayAlert("Dettagli materiale", $"Id: {materiale.IdMateriale} \nNome: {materiale.Nome}\nQuantita: {materiale.Quantita}\n" +
+                                $"Unita: {materiale.Unita}\nData di Nascita: {materiale.CostoUnitario}", "OK");
 
-            bool success = MaterialeService.AggiornaMateriale(selectedMateriale);
+            bool success = MaterialeService.AggiornaMateriale(materiale);
+
             if (success)
             {
                 AggiungiMaterialeBtn.IsVisible = true;
@@ -173,24 +152,23 @@ public partial class MaterialiPage : ContentPage
 
     private async void EliminaMateriale_Clicked(object sender, EventArgs e)
     {
-        if (sender is Button button && button.CommandParameter is Materiale selectedMateriale)
+        Button button = (Button)sender;
+        Materiale materiale = (Materiale)button.CommandParameter;
+
+        bool conferma = await DisplayAlert("Conferma Eliminazione", $"Sei sicuro di voler cancellare il {materiale.Nome}?", "Si", "No");
+        if (conferma)
         {
-            bool conferma = await DisplayAlert("Conferma Eliminazione", $"Sei sicuro di voler cancellare il  {selectedMateriale.Nome}?", "Si", "No");
-            if (conferma)
+            bool success = MaterialeService.EliminaMateriale(materiale.IdMateriale);
+            if (success)
             {
-                bool success = MaterialeService.EliminaMateriale(selectedMateriale.IdMateriale);
-                if (success)
-                {
-                    MaterialiList.Remove(selectedMateriale);
-                    await DisplayAlert("Successo", "Materiale cancellato con successo", "OK"); 
-                    ClearForm();                
-                }
-                else
-                {
-                    await DisplayAlert("Errore", "Si è verificato un errore durante la cancellazione del materiale", "OK");
-                }                  
-            }             
-        }
+                MaterialiList.Remove(materiale);
+                await DisplayAlert("Successo", "Materiale cancellato con successo", "OK");  
+            }
+            else
+            {
+                await DisplayAlert("Errore", "Si è verificato un errore durante la cancellazione del materiale", "OK");
+            }                  
+        }             
     } 
 
 	private void ClearForm()

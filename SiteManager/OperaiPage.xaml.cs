@@ -11,31 +11,19 @@ public partial class OperaiPage : ContentPage
     public OperaiPage()
 	{
 		InitializeComponent();
-        OperaiList = [];
-        BindingContext = this;		
+        OperaiList = [];	
         LoadOperai();
 	}
 
     private void LoadOperai()
     {
         List<Operaio> operai = OperaioService.OttieniOperai();
+
         foreach (Operaio operaio in operai)
         {
-            bool operaioEsistente = false;
-            foreach (var iOperaio in OperaiList)
-            {
-                if (iOperaio.IdOperaio == operaio.IdOperaio)
-                {
-                    operaioEsistente = true;
-                    break;
-                }
-            }
+            OperaiList.Add(operaio); 
+        }
 
-            if (!operaioEsistente)
-            {
-                OperaiList.Add(operaio);
-            }            
-        }        
         OperaiCollectionView.ItemsSource = OperaiList;
     }
     
@@ -52,14 +40,13 @@ public partial class OperaiPage : ContentPage
         }
     }
    
-    private async void AggiungiOperaio_Clicked(object sender, EventArgs e)
+    private void AggiungiOperaio_Clicked(object sender, EventArgs e)
 	{
 		FormStackLayout.IsVisible = true;
         SalvaOperaioBtn.IsVisible = true;
         AggiornaOperaioBtn.IsVisible = false;
         AggiungiOperaioBtn.IsVisible = false;
         ClearForm();
-        await Task.CompletedTask;
 	}
 
     private async void SalvaOperaio_Clicked(object sender, EventArgs e)
@@ -98,7 +85,7 @@ public partial class OperaiPage : ContentPage
             AggiungiOperaioBtn.IsVisible = true;
             FormStackLayout.IsVisible = false;
             SalvaOperaioBtn.IsVisible = false;
-            LoadOperai();
+            OperaiList.Add(nuovoOperaio);
             ClearForm();
         }
         else
@@ -109,94 +96,89 @@ public partial class OperaiPage : ContentPage
 
     private void VisualizzaOperaio_Clicked(object sender, EventArgs e)
     {
-        var button = sender as Button;
-        var operaio = button?.BindingContext as Operaio;
+        Button button = (Button)sender;
+        Operaio operaio = (Operaio)button.BindingContext;
         if (operaio != null)
         {
-            // Logica per visualizzare i dettagli dell'operaio
-            DisplayAlert("Dettagli Operaio", $"Nome: {operaio.Nome}\nCognome: {operaio.Cognome}\nMansione: {operaio.Mansione}\nData di Nascita: {operaio.DataNascita.ToShortDateString()}\nData di Assunzione: {operaio.DataAssunzione.ToShortDateString()}", "OK");
+            DisplayAlert("Dettagli Operaio", $"Nome: {operaio.Nome}\nCognome: {operaio.Cognome}\nMansione: {operaio.Mansione}\n" +
+                        $"Data di Nascita: {operaio.DataNascita.ToShortDateString()}\nData di Assunzione: " +
+                        $"{operaio.DataAssunzione.ToShortDateString()}", "OK");
         }
     }
 
-    private async void ModificaOperaio_Clicked(object sender, EventArgs e)
+    private void ModificaOperaio_Clicked(object sender, EventArgs e)
 	{
-        if (sender is Button button && button.CommandParameter is Operaio selectedOperaio)
-        {
-            // Popola i campi del form con i dati dell'operaio selezionato
-            NomeEntry.Text = selectedOperaio.Nome;
-            CognomeEntry.Text = selectedOperaio.Cognome;
-            MansioneLabel.Text = selectedOperaio.Mansione;
-            DataNascitaPicker.Date = selectedOperaio.DataNascita;
-            DataAssunzionePicker.Date = selectedOperaio.DataAssunzione;
+        Button button = (Button)sender;
+        Operaio operaio = (Operaio)button.CommandParameter;
+        
+        NomeEntry.Text = operaio.Nome;
+        CognomeEntry.Text = operaio.Cognome;
+        MansioneLabel.Text = operaio.Mansione;
+        DataNascitaPicker.Date = operaio.DataNascita;
+        DataAssunzionePicker.Date = operaio.DataAssunzione;
 
-            // Imposta il BindingContext del pulsante AggiornaOperaioBtn
-            AggiornaOperaioBtn.BindingContext = selectedOperaio;
+        AggiornaOperaioBtn.BindingContext = operaio;
 
-            // Rendi visibile il form e il pulsante di aggiornamento
-            FormStackLayout.IsVisible = true;
-            AggiornaOperaioBtn.IsVisible = true;
-            SalvaOperaioBtn.IsVisible = false; // Nascondi il pulsante di salvataggio se necessario
-            AggiungiOperaioBtn.IsVisible = false;
-
-            await Task.CompletedTask;
-        }
-        else
-        {
-            await DisplayAlert("Errore", "Nessun operaio selezionato", "OK");
-        }
+        FormStackLayout.IsVisible = true;
+        AggiornaOperaioBtn.IsVisible = true;
+        SalvaOperaioBtn.IsVisible = false;
+        AggiungiOperaioBtn.IsVisible = false;
 	}
 
     private async void AggiornaOperaio_Clicked(object sender, EventArgs e)
     {
-        if (AggiornaOperaioBtn.BindingContext is Operaio selectedOperaio)
-        {
-            // Aggiorna i dati dell'operaio con i valori del form
-            selectedOperaio.Nome = NomeEntry.Text;
-            selectedOperaio.Cognome = CognomeEntry.Text;
-            selectedOperaio.Mansione = MansioneLabel.Text;
-            selectedOperaio.DataNascita = DataNascitaPicker.Date;
-            selectedOperaio.DataAssunzione = DataAssunzionePicker.Date;
-            
-            await DisplayAlert("Dettagli Operaio", $"Id: {selectedOperaio.IdOperaio} \nNome: {selectedOperaio.Nome}\nCognome: {selectedOperaio.Cognome}\nMansione: {selectedOperaio.Mansione}\nData di Nascita: {selectedOperaio.DataNascita.ToShortDateString()}\nData di Assunzione: {selectedOperaio.DataAssunzione.ToShortDateString()}", "OK");
+        Operaio operaio = (Operaio)AggiornaOperaioBtn.BindingContext;
 
-            bool success = OperaioService.AggiornaOperaio(selectedOperaio);
-            if (success)
-            {
-                AggiungiOperaioBtn.IsVisible = true;
-                FormStackLayout.IsVisible = false;
-                AggiornaOperaioBtn.IsVisible = false;
-                OperaiCollectionView.ItemsSource = null;
-                OperaiCollectionView.ItemsSource = OperaiList;
-                await DisplayAlert("Successo", "Operaio aggiornato con successo", "OK");
-                ClearForm();
-            }
-            else
-            {
-                await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento dell'operaio", "OK");
-            }
+        operaio.Nome = NomeEntry.Text;                          //la logica di aggiornamento avviene anche se fallisce l'aggiunta
+        operaio.Cognome = CognomeEntry.Text;
+        operaio.Mansione = MansioneLabel.Text;
+        operaio.DataNascita = DataNascitaPicker.Date;
+        operaio.DataAssunzione = DataAssunzionePicker.Date;
+            
+        await DisplayAlert("Dettagli Operaio", $"Id: {operaio.IdOperaio} \nNome: {operaio.Nome}\nCognome: {operaio.Cognome}\n" +
+                            $"Mansione: {operaio.Mansione}\nData di Nascita: {operaio.DataNascita.ToShortDateString()}\n" +
+                            $"Data di Assunzione: {operaio.DataAssunzione.ToShortDateString()}", "OK");
+
+        bool success = OperaioService.AggiornaOperaio(operaio);
+
+        if (success)
+        {
+            AggiungiOperaioBtn.IsVisible = true;
+            FormStackLayout.IsVisible = false;
+            AggiornaOperaioBtn.IsVisible = false;
+            OperaiCollectionView.ItemsSource = null;
+            OperaiCollectionView.ItemsSource = OperaiList;
+            await DisplayAlert("Successo", "Operaio aggiornato con successo", "OK");
+            ClearForm();
+        }
+        else
+        {
+            await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento dell'operaio", "OK");
         }
     }
 
     private async void EliminaOperaio_Clicked(object sender, EventArgs e)
     {
-        if (sender is Button button && button.CommandParameter is Operaio selectedOperaio)
+        Button button = (Button)sender;
+        Operaio operaio = (Operaio)button.CommandParameter;
+
+        bool conferma = await DisplayAlert("Conferma Eliminazione", $"Sei sicuro di voler cancellare l'operaio {operaio.Nome} {operaio.Cognome}?", "Si", "No");
+        
+        if (conferma)
         {
-            bool conferma = await DisplayAlert("Conferma Eliminazione", $"Sei sicuro di voler cancellare l'operaio {selectedOperaio.Nome} {selectedOperaio.Cognome}?", "Si", "No");
-            if (conferma)
+            bool success = OperaioService.EliminaOperaio(operaio.IdOperaio);
+
+            if (success)
             {
-                bool success = OperaioService.EliminaOperaio(selectedOperaio.IdOperaio);
-                if (success)
-                {
-                    OperaiList.Remove(selectedOperaio);
-                    await DisplayAlert("Successo", "Operaio cancellato con successo", "OK"); 
-                    ClearForm();                
-                }
-                else
-                {
-                    await DisplayAlert("Errore", "Si è verificato un errore durante la cancellazione dell'operaio", "OK");
-                }                  
-            }             
-        }
+                OperaiList.Remove(operaio);
+                await DisplayAlert("Successo", "Operaio cancellato con successo", "OK"); 
+                ClearForm();                
+            }
+            else
+            {
+                await DisplayAlert("Errore", "Si è verificato un errore durante la cancellazione dell'operaio", "OK");
+            }                  
+        }             
     }
 
     private void SelezionaMansione_Clicked(object sender, EventArgs e)
@@ -218,8 +200,8 @@ public partial class OperaiPage : ContentPage
         };
 
         string[] mansioniArray = mansioni.Keys.ToArray();
-        
         string mansione = await DisplayActionSheet("Seleziona mansione", "Annulla", null, mansioniArray);
+
         if (!string.IsNullOrEmpty(mansione) && mansione != "Annulla")
         {
             decimal costoOrario = mansioni[mansione];            

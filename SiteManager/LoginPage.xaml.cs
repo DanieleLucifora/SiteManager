@@ -6,10 +6,10 @@ public partial class LoginPage : ContentPage
     {
         InitializeComponent();
         UsernameEntry.Completed += (s, e) => PasswordEntry.Focus();
-        PasswordEntry.Completed += (s, e) => LoginButton_Clicked(s, e);
+        PasswordEntry.Completed += (s, e) => LoginButton_Clicked(null, EventArgs.Empty);
     }
 
-    private async void LoginButton_Clicked(object sender, EventArgs e)
+    private async void LoginButton_Clicked(object? sender, EventArgs e)
     {
         string username = UsernameEntry.Text;
         string password = PasswordEntry.Text;

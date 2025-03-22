@@ -4,7 +4,7 @@ public partial class App : Application
 {
 	public App()
 	{
-		InitializeComponent();
+		InitializeComponent();	//Inizializza i componenti XAML
 	}
 
 	protected override Window CreateWindow(IActivationState? activationState)

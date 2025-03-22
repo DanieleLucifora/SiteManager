@@ -8,27 +8,29 @@ public partial class SchedaCantierePage : ContentPage
 {
     public ObservableCollection<Operaio> OperaiList { get; set; }
     public ObservableCollection<Materiale> MaterialiList { get; set; }
-	private Cantiere _selectedCantiere;
+
+	private readonly Cantiere cantiere;
+
 	public SchedaCantierePage(Cantiere selectedCantiere)
 	{
 		InitializeComponent();
-		OperaiList = new ObservableCollection<Operaio>();
-		MaterialiList = new ObservableCollection<Materiale>();
-        _selectedCantiere = selectedCantiere;
-        BindingContext = this;		
-        LoadOperai(_selectedCantiere.IdCantiere);
+        OperaiList = [];
+		MaterialiList = [];
+        cantiere = selectedCantiere;
+        LoadOperai();
 		LoadMateriali();
 	}
 
-    private void LoadOperai(int idCantiere)
+    private void LoadOperai()
     {
-        var operai = OperaioService.OttieniOperai();
-        foreach (var operaio in operai)
+        List<Operaio> operai = OperaioService.OttieniOperai();
+        foreach (Operaio operaio in operai)
         {
             OperaiList.Add(operaio);
-            if(operaio.CantiereId.HasValue && operaio.CantiereId.Value == idCantiere) 
+
+            if(operaio.CantiereId.HasValue && operaio.CantiereId.Value == cantiere.IdCantiere) 
             {
-                operaio.BackgroundColor = Colors.Honeydew;   
+                operaio.BackgroundColor = Colors.DarkSlateGray;
             }
             else
             {
@@ -40,8 +42,8 @@ public partial class SchedaCantierePage : ContentPage
 
     private void LoadMateriali()
     {
-        var materiali = MaterialeService.OttieniMateriali();
-        MaterialiList.Clear();
+        List<Materiale> materiali = MaterialeService.OttieniMateriali();
+
         foreach (var materiale in materiali)
         {
             MaterialiList.Add(materiale);
@@ -51,76 +53,66 @@ public partial class SchedaCantierePage : ContentPage
 
     private async void AssegnaOperaio_Clicked(object sender, EventArgs e)
     {
-        if (sender is Button button && button.CommandParameter is Operaio selectedOperaio)
+        Button button = (Button)sender;
+        Operaio operaio = (Operaio)button.CommandParameter;
+
+        bool conferma = await DisplayAlert("Conferma", $"Sei sicuro di voler assegnare {operaio.Nome} {operaio.Cognome} al cantiere?", "Sì", "No");
+        if (conferma)
         {
-            bool conferma = await DisplayAlert("Conferma", $"Sei sicuro di voler assegnare {selectedOperaio.Nome} {selectedOperaio.Cognome} al cantiere?", "Sì", "No");
-            if (conferma)
-            {
-                selectedOperaio.CantiereId = _selectedCantiere.IdCantiere;
-                selectedOperaio.BackgroundColor = Colors.Honeydew;
-                OperaioService.AssegnaOperaioACantiere(selectedOperaio);
-                await DisplayAlert("Successo", "Operaio assegnato con successo.", "OK");
-                OperaiCollectionView.ItemsSource = null; 
-                OperaiCollectionView.ItemsSource = OperaiList; 
-            }
-        }
-        else
-        {
-            await DisplayAlert("Errore", "Seleziona un operaio valido.", "OK");
+            operaio.CantiereId = cantiere.IdCantiere;
+            operaio.BackgroundColor = Colors.DarkSlateGray;
+            OperaioService.AssegnaOperaioACantiere(operaio);
+            await DisplayAlert("Successo", "Operaio assegnato con successo.", "OK");
+            OperaiCollectionView.ItemsSource = null; 
+            OperaiCollectionView.ItemsSource = OperaiList; 
         }
     }
 
     private async void RimuoviOperaio_Clicked(object sender, EventArgs e)
     {
-        if (sender is Button button && button.CommandParameter is Operaio selectedOperaio)
+        Button button = (Button)sender;
+        Operaio operaio = (Operaio)button.CommandParameter;
+
+        bool conferma = await DisplayAlert("Conferma", $"Sei sicuro di voler rimuovere {operaio.Nome} {operaio.Cognome} dal cantiere?", "Sì", "No");
+        if (conferma)
         {
-            bool conferma = await DisplayAlert("Conferma", $"Sei sicuro di voler rimuovere {selectedOperaio.Nome} {selectedOperaio.Cognome} dal cantiere?", "Sì", "No");
-            if (conferma)
-            {
-                selectedOperaio.CantiereId = null;
-                OperaioService.AggiornaOperaio(selectedOperaio);
-                await DisplayAlert("Successo", "Operaio rimosso con successo.", "OK");
-                selectedOperaio.BackgroundColor = Colors.Transparent;
-                OperaiCollectionView.ItemsSource = null;
-                OperaiCollectionView.ItemsSource = OperaiList;
-            }
-        }
-        else
-        {
-            await DisplayAlert("Errore", "Seleziona un operaio valido.", "OK");
+            operaio.CantiereId = null;
+            OperaioService.AggiornaOperaio(operaio);
+            await DisplayAlert("Successo", "Operaio rimosso dal cantiere con successo.", "OK");
+            operaio.BackgroundColor = Colors.Transparent;
+            OperaiCollectionView.ItemsSource = null;
+            OperaiCollectionView.ItemsSource = OperaiList;
         }
     }
 
     private async void AssegnaMateriale_Clicked(object sender, EventArgs e)
     {
-        if (sender is Button button && button.CommandParameter is Materiale selectedMateriale)
+        Button button = (Button)sender;
+        Materiale materiale = (Materiale)button.CommandParameter;
+
+        var quantitaUtilizzata = await DisplayPromptAsync("Quantita", "Inserisci la quantita da assegnare:", "OK", "Annulla", "Quantita", -1, Keyboard.Numeric);
+        
+        if (int.TryParse(quantitaUtilizzata, out int quantita))
         {
-            var quantitaUtilizzata = await DisplayPromptAsync("Quantita", "Inserisci la quantita da assegnare:", "OK", "Annulla", "Quantita", -1, Keyboard.Numeric);
-            if (int.TryParse(quantitaUtilizzata, out int quantita))
-            {
-                MaterialeService.AssegnaMaterialeACantiere(_selectedCantiere.IdCantiere, selectedMateriale.IdMateriale, quantita);
-                await DisplayAlert("Successo", "Materiale assegnato con successo.", "OK");
-                LoadMateriali(); 
-            }
-            else
-            {
-                await DisplayAlert("Errore", "Inserisci una quantita valida.", "OK");
-            }
+            MaterialeService.AssegnaMaterialeACantiere(cantiere.IdCantiere, materiale.IdMateriale, quantita);
+            await DisplayAlert("Successo", "Materiale assegnato con successo.", "OK");
+            MaterialiList.Clear();
+            LoadMateriali();
         }
         else
         {
-            await DisplayAlert("Errore", "Seleziona un materiale valido.", "OK");
+            await DisplayAlert("Errore", "Inserisci una quantità valida.", "OK");
         }
     }
 
-    private async void RimuoviMateriale_Clicked(object sender, EventArgs e)
+    private async void RimuoviMateriale_Clicked(object sender, EventArgs e) //Non utilizzato
     {
         if (sender is Button button && button.CommandParameter is Materiale selectedMateriale)
         {
             var quantitaUtilizzata = await DisplayPromptAsync("Quantita", "Inserisci la quantita da rimuovere:", "OK", "Annulla", "Quantita", -1, Keyboard.Numeric);
             if (int.TryParse(quantitaUtilizzata, out int quantita))
             {
-                MaterialeService.RimuoviMaterialeDaCantiere(_selectedCantiere.IdCantiere, selectedMateriale.IdMateriale, quantita);
+                MaterialeService.RimuoviMaterialeDaCantiere(cantiere.IdCantiere, selectedMateriale.IdMateriale, quantita);
                 await DisplayAlert("Successo", "Materiale rimosso con successo.", "OK");
                 LoadMateriali();
             }

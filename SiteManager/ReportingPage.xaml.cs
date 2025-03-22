@@ -13,8 +13,7 @@ public partial class ReportingPage : ContentPage
 	public ReportingPage()
 	{
 		InitializeComponent();
-		CantieriList = new ObservableCollection<Cantiere>();
-		CantieriCollectionView.ItemsSource = CantieriList;
+		CantieriList = [];
 		LoadCantieri();
 	}
 
@@ -30,51 +29,51 @@ public partial class ReportingPage : ContentPage
 
 	private async void GeneraReport_Clicked(object sender, EventArgs e)
 	{
-		if (sender is Button button && button.CommandParameter is Cantiere selectedCantiere)
+		Button button = (Button)sender;
+		Cantiere cantiere = (Cantiere)button.CommandParameter;
+
+		bool conferma = await DisplayAlert("Conferma", $"Vuoi generare il report del cantiere di {cantiere.Citta}?", "Si", "No");
+
+		if (conferma)
 		{
-			bool conferma = await DisplayAlert("Conferma", $"Vuoi generare il report del cantiere di {selectedCantiere.Citta}?", "Si", "No");
-			if (conferma)
+			try
 			{
-				try
-				{
-					var tasks = TasksService.OttieniTasks(selectedCantiere);
-                    var materiali = MaterialeCantiereService.OttieniMaterialeCantiere(selectedCantiere.IdCantiere);
-                    var costi = SpesaService.OttieniSpese(selectedCantiere);
+				List<Tasks> tasks = TasksService.OttieniTasks(cantiere);
+                List<MaterialeCantiere> materiali = MaterialeCantiereService.OttieniMaterialeCantiere(cantiere.IdCantiere);
+                List<Spesa> costi = SpesaService.OttieniSpese(cantiere);
 
-                    using (HttpClient client = new())
-					{
-						var payload = new
-						{
-							cantiere = selectedCantiere.Citta,  // Passiamo il nome della citta al server
-							tasks,
-                            materiali,
-							costi
-						};
+				using HttpClient client = new();
+                var payload = new	//tipo anonimo
+                {
+                    cantiere = cantiere.Citta,
+                    tasks,
+                    materiali,
+                    costi
+                };
 
-						var jsonContent = new StringContent(
-							JsonConvert.SerializeObject(payload),
-							Encoding.UTF8,
-							"application/json"
-						);
+                StringContent jsonContent = new(
+                    JsonConvert.SerializeObject(payload),
+                    Encoding.UTF8,
+                    "application/json"
+                );
 
-						string serverUrl = "http://localhost:5001/genera_report"; // URL API del server Flask
-						HttpResponseMessage response = await client.PostAsync(serverUrl, jsonContent);
-						string result = await response.Content.ReadAsStringAsync();
+                string serverUrl = "http://localhost:5001/genera_report"; // URL API del server Flask
+                HttpResponseMessage response = await client.PostAsync(serverUrl, jsonContent);
+                string result = await response.Content.ReadAsStringAsync();
 
-						if (response.IsSuccessStatusCode)
-						{
-							await DisplayAlert("Report Generato", $"Il report è stato creato con successo!\nScaricalo dalla cartella /app del container report.", "OK");
-						}
-						else
-						{
-							await DisplayAlert("Errore", $"Errore nella generazione del report:\n{result}", "OK");
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					await DisplayAlert("Errore", $"Si è verificato un errore:\n{ex.Message}", "OK");
-				}
+                if (response.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Report Generato", $"Il report è stato creato con successo!\n" +
+										$"Scaricalo dalla cartella /app del container report.", "OK");
+                }
+                else
+                {
+                    await DisplayAlert("Errore", $"Errore nella generazione del report:\n{result}", "OK");
+                }
+            }
+			catch (Exception ex)
+			{
+				await DisplayAlert("Errore", $"Si è verificato un errore:\n{ex.Message}", "OK");
 			}
 		}
 	}
