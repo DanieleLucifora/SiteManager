@@ -135,7 +135,7 @@ public partial class OperaiPage : ContentPage
         operaio.DataNascita = DataNascitaPicker.Date;
         operaio.DataAssunzione = DataAssunzionePicker.Date;
             
-        await DisplayAlert("Dettagli Operaio", $"Id: {operaio.IdOperaio} \nNome: {operaio.Nome}\nCognome: {operaio.Cognome}\n" +
+        await DisplayAlert("Dettagli Operaio", $"Nome: {operaio.Nome}\nCognome: {operaio.Cognome}\n" +
                             $"Mansione: {operaio.Mansione}\nData di Nascita: {operaio.DataNascita.ToShortDateString()}\n" +
                             $"Data di Assunzione: {operaio.DataAssunzione.ToShortDateString()}", "OK");
 

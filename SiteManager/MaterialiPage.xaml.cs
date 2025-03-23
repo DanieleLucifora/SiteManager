@@ -127,7 +127,7 @@ public partial class MaterialiPage : ContentPage
             materiale.Unita = UnitaEntry.Text;
             materiale.CostoUnitario = double.Parse(CostoUnitarioEntry.Text);
             
-            await DisplayAlert("Dettagli materiale", $"Id: {materiale.IdMateriale} \nNome: {materiale.Nome}\nQuantita: {materiale.Quantita}\n" +
+            await DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantita: {materiale.Quantita}\n" +
                                 $"Unita: {materiale.Unita}\nData di Nascita: {materiale.CostoUnitario}", "OK");
 
             bool success = MaterialeService.AggiornaMateriale(materiale);

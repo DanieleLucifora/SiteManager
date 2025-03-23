@@ -15,8 +15,9 @@
                                     <HorizontalStackLayout>
                                         <Label Text="Nome: " VerticalTextAlignment="Center"/>
                                         <Label Text="{Binding Nome}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                                        <Label Text="Quantita: " VerticalTextAlignment="Center"/>
-                                        <Label Text="{Binding Quantita}" FontSize="16" VerticalTextAlignment="Center" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                        <Label Text="Quantità: " VerticalTextAlignment="Center"/>
+                                        <Label Text="{Binding Quantita}" FontSize="16" VerticalTextAlignment="Center" Margin="5,0,0,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                        <Label Text="{Binding Unita}" FontSize="16" VerticalTextAlignment="Center" FontFamily="Roboto" TextColor="SteelBlue"/>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                                 <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">

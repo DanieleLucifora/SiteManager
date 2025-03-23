@@ -132,8 +132,8 @@ public partial class CantieriPage : ContentPage
         cantiere.DataInizio = DataInizioPicker.Date;
         cantiere.Scadenza = ScadenzaPicker.Date;
             
-        await DisplayAlert("Dettagli Cantiere", "Citta: {cantiere.Citta}\nCommittente: {cantiere.Committente}\nData di inizio: " +
-                            $"{cantiere.DataInizio.ToShortDateString()}\nData di scadenza: {cantiere.Scadenza.ToShortDateString()}", "OK");
+        await DisplayAlert("Dettagli Cantiere", $"Citta: {cantiere.Citta}\nCommittente: {cantiere.Committente}\nData di inizio: " +
+                           $"{cantiere.DataInizio.ToShortDateString()}\nData di scadenza: {cantiere.Scadenza.ToShortDateString()}", "OK");
 
         bool success = CantiereService.AggiornaCantiere(cantiere);
 
