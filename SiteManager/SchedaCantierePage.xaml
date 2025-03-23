@@ -41,14 +41,15 @@
                                <Label Text="{Binding Nome}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>  
                            </HorizontalStackLayout>  
                            <HorizontalStackLayout>  
-                               <Label Text="Quantita: " VerticalTextAlignment="Center"/>  
+                               <Label Text="Quantità: " VerticalTextAlignment="Center"/>  
                                <Label Text="{Binding Quantita}" FontSize="16" VerticalTextAlignment="Center" Margin="5,0,0,0" FontFamily="Roboto" TextColor="SteelBlue"/>
                                <Label Text="{Binding Unita}" FontSize="16" VerticalTextAlignment="Center" FontFamily="Roboto" TextColor="SteelBlue"/>
                             </HorizontalStackLayout>  
                        </VerticalStackLayout>  
                        <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">  
-                           <Button Text="Assegna" Clicked="AssegnaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>  
-                       </HorizontalStackLayout>  
+                           <Button Text="Assegna" Clicked="AssegnaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                           <Button Text="Rimuovi" Clicked="RimuoviMateriale_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                        </HorizontalStackLayout>  
                    </Grid>  
                </DataTemplate>  
            </CollectionView.ItemTemplate>  
