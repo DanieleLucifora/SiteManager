@@ -46,9 +46,8 @@
                                <Label Text="{Binding Unita}" FontSize="16" VerticalTextAlignment="Center" FontFamily="Roboto" TextColor="SteelBlue"/>
                             </HorizontalStackLayout>  
                        </VerticalStackLayout>  
-                       <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">  
-                           <Button Text="Assegna" Clicked="AssegnaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
-                           <Button Text="Rimuovi" Clicked="RimuoviMateriale_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                       <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">
+                            <Button Text="Assegna" Clicked="AssegnaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                         </HorizontalStackLayout>  
                    </Grid>  
                </DataTemplate>  
