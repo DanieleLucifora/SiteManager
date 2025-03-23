@@ -93,8 +93,8 @@ public partial class MaterialiPage : ContentPage
         Materiale materiale = (Materiale)button.BindingContext;
         if (materiale != null)
         {
-            await DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantita: {materiale.Quantita.ToString()}" +
-                                $"\nUnita: {materiale.Unita}\nData di Nascita: {materiale.CostoUnitario.ToString()}", "OK");
+            await DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantità: {materiale.Quantita.ToString()}" +
+                                $"\nUnità: {materiale.Unita}\nCosto: {materiale.CostoUnitario.ToString()} €", "OK");
         }
     }
 

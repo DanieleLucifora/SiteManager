@@ -30,7 +30,7 @@ public partial class SchedaCantierePage : ContentPage
 
             if(operaio.CantiereId.HasValue && operaio.CantiereId.Value == cantiere.IdCantiere) 
             {
-                operaio.BackgroundColor = Colors.DarkSlateGray;
+                operaio.BackgroundColor = Colors.LightGreen;
             }
             else
             {
@@ -59,12 +59,21 @@ public partial class SchedaCantierePage : ContentPage
         bool conferma = await DisplayAlert("Conferma", $"Sei sicuro di voler assegnare {operaio.Nome} {operaio.Cognome} al cantiere?", "Sì", "No");
         if (conferma)
         {
-            operaio.CantiereId = cantiere.IdCantiere;
-            operaio.BackgroundColor = Colors.DarkSlateGray;
-            OperaioService.AssegnaOperaioACantiere(operaio);
-            await DisplayAlert("Successo", "Operaio assegnato con successo.", "OK");
-            OperaiCollectionView.ItemsSource = null; 
-            OperaiCollectionView.ItemsSource = OperaiList; 
+            if (operaio.CantiereId == null)
+            {
+                operaio.CantiereId = cantiere.IdCantiere;
+                operaio.BackgroundColor = Colors.LightGreen;
+                OperaioService.AssegnaOperaioACantiere(operaio);
+                await DisplayAlert("Successo", "Operaio assegnato con successo.", "OK");
+                OperaiCollectionView.ItemsSource = null; 
+                OperaiCollectionView.ItemsSource = OperaiList; 
+            }
+            else
+            {
+                await DisplayAlert("Attenzione", $"Operaio assegnato ad un altro cantiere. \nDevi prima rimuovere l'operaio dal cantiere assegnato.", "OK");
+                return;
+            }
+
         }
     }
 
@@ -90,7 +99,7 @@ public partial class SchedaCantierePage : ContentPage
         Button button = (Button)sender;
         Materiale materiale = (Materiale)button.CommandParameter;
 
-        var quantitaUtilizzata = await DisplayPromptAsync("Quantita", "Inserisci la quantita da assegnare:", "OK", "Annulla", "Quantita", -1, Keyboard.Numeric);
+        var quantitaUtilizzata = await DisplayPromptAsync("Quantità", "Inserisci la quantità da assegnare:", "OK", "Annulla", "Quantità", -1, Keyboard.Numeric);
         
         if (int.TryParse(quantitaUtilizzata, out int quantita))
         {

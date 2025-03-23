@@ -1,5 +1,4 @@
 #include "crow.h"
-#include <mysql.h>
 #include <iostream>
 #include <vector>
 
@@ -25,12 +24,29 @@ struct Spesa {
     std::string descrizione;
 };
 
-double CalcolaCostoMateriali(const std::vector<Materiale>& materiali) {
-    double costoTotale = 0.0;
-    for (const auto& materiale : materiali) {
-        costoTotale += materiale.quantita * materiale.costoUnitario;
+template<typename T>
+double calcolaSomma(const std::vector<T>& items);
+
+template<>
+double calcolaSomma(const std::vector<Materiale>& materiali) {
+    double somma = 0.0;
+    for (const Materiale& materiale : materiali) {
+        somma += materiale.quantita * materiale.costoUnitario;
     }
-    return costoTotale;
+    return somma;
+}
+
+template<>
+double calcolaSomma(const std::vector<Spesa>& spese) {
+    double somma = 0.0;
+    for (const Spesa& spesa : spese) {
+        somma += spesa.importo;
+    }
+    return somma;
+}
+
+double CalcolaCostoMateriali(const std::vector<Materiale>& materiali) {
+    return calcolaSomma<Materiale>(materiali);
 }
 
 double CalcolaCostoPersonale(const std::vector<Presenza>& presenze, const std::vector<Operaio>& operai) {
@@ -49,11 +65,7 @@ double CalcolaCostoPersonale(const std::vector<Presenza>& presenze, const std::v
 }
 
 double CalcolaTotaleSpese(const std::vector<Spesa>& spese) {
-    double totaleSpese = 0.0;
-    for (const auto& spesa : spese) {
-        totaleSpese += spesa.importo;
-    }
-    return totaleSpese;
+    return calcolaSomma<Spesa>(spese);
 }
 
 int main() {

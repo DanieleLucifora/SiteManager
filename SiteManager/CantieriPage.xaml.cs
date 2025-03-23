@@ -91,7 +91,7 @@ public partial class CantieriPage : ContentPage
     {
         Button button = (Button)sender;
         Cantiere cantiere = (Cantiere)button.BindingContext;
-        await DisplayAlert("Dettagli Cantiere", $"Citta: {cantiere.Citta}\nCommittente: {cantiere.Committente}" +
+        await DisplayAlert("Dettagli Cantiere", $"Città: {cantiere.Citta}\nCommittente: {cantiere.Committente}" +
                             $"\nData inizio: {cantiere.DataInizio.ToShortDateString()}\nScadenza: " +
                             $"{cantiere.Scadenza.ToShortDateString()}", "OK");
     }
