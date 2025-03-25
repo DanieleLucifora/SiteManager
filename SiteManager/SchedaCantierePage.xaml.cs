@@ -30,7 +30,7 @@ public partial class SchedaCantierePage : ContentPage
 
             if(operaio.CantiereId.HasValue && operaio.CantiereId.Value == cantiere.IdCantiere) 
             {
-                operaio.BackgroundColor = Colors.LightGreen;
+                operaio.BackgroundColor = Colors.DarkSlateGrey;
             }
             else
             {
@@ -62,7 +62,7 @@ public partial class SchedaCantierePage : ContentPage
             if (operaio.CantiereId == null)
             {
                 operaio.CantiereId = cantiere.IdCantiere;
-                operaio.BackgroundColor = Colors.LightGreen;
+                operaio.BackgroundColor = Colors.DarkSlateGrey;
                 OperaioService.AssegnaOperaioACantiere(operaio);
                 await DisplayAlert("Successo", "Operaio assegnato con successo.", "OK");
                 OperaiCollectionView.ItemsSource = null; 
