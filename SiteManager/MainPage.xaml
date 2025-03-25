@@ -5,7 +5,7 @@
              Title=" SiteManager">
 
     <ScrollView>
-        <FlexLayout Wrap="Wrap" JustifyContent="Center" AlignItems="Center" Margin="150">
+        <FlexLayout Wrap="Wrap" JustifyContent="Center" AlignItems="Center" Margin="50">
             <VerticalStackLayout Margin="35">
                 <Label Text="Cantieri" FontAttributes="Bold" FontFamily="bold" FontSize="Large" HorizontalOptions="Center" Margin="5" TextColor="SteelBlue"/>
                 <Button

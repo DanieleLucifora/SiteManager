@@ -112,7 +112,7 @@ public partial class TasksPage : ContentPage
         task.Descrizione = DescrizioneEntry.Text;
         task.Data = DataPicker.Date;
          
-        await DisplayAlert("Dettagli Task", $"Id Task: {task.IdTasks}\nDescrizione: {task.Descrizione} \nData: {task.Data.ToShortDateString()}", "OK");
+        await DisplayAlert("Dettagli Task", $"Descrizione: {task.Descrizione} \nData: {task.Data.ToShortDateString()}", "OK");
 
         bool success = TasksService.AggiornaTask(task);
 
