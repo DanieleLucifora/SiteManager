@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 
+using namespace std;
+
 struct Materiale {
     int idMateriale;
     int quantita;
@@ -21,14 +23,14 @@ struct Operaio {
 struct Spesa {
     int idSpesa;
     double importo;
-    std::string descrizione;
+    string descrizione;
 };
 
 template<typename T>
-double calcolaSomma(const std::vector<T>& items);
+double calcolaSomma(const vector<T>& items);
 
 template<>
-double calcolaSomma(const std::vector<Materiale>& materiali) {
+double calcolaSomma(const vector<Materiale>& materiali) {
     double somma = 0.0;
     for (const Materiale& materiale : materiali) {
         somma += materiale.quantita * materiale.costoUnitario;
@@ -37,7 +39,7 @@ double calcolaSomma(const std::vector<Materiale>& materiali) {
 }
 
 template<>
-double calcolaSomma(const std::vector<Spesa>& spese) {
+double calcolaSomma(const vector<Spesa>& spese) {
     double somma = 0.0;
     for (const Spesa& spesa : spese) {
         somma += spesa.importo;
@@ -45,11 +47,11 @@ double calcolaSomma(const std::vector<Spesa>& spese) {
     return somma;
 }
 
-double CalcolaCostoMateriali(const std::vector<Materiale>& materiali) {
+double CalcolaCostoMateriali(const vector<Materiale>& materiali) {
     return calcolaSomma<Materiale>(materiali);
 }
 
-double CalcolaCostoPersonale(const std::vector<Presenza>& presenze, const std::vector<Operaio>& operai) {
+double CalcolaCostoPersonale(const vector<Presenza>& presenze, const vector<Operaio>& operai) {
     double costoPersonale = 0.0;
     
     for (const auto& presenza : presenze) {
@@ -64,7 +66,7 @@ double CalcolaCostoPersonale(const std::vector<Presenza>& presenze, const std::v
     return costoPersonale;
 }
 
-double CalcolaTotaleSpese(const std::vector<Spesa>& spese) {
+double CalcolaTotaleSpese(const vector<Spesa>& spese) {
     return calcolaSomma<Spesa>(spese);
 }
 
@@ -78,9 +80,9 @@ int main() {
             if (!body)
                 return crow::response(400, "Errore: JSON non valido");
 
-            std::string nomeCantiere = body["cantiere"].s();
+            string nomeCantiere = body["cantiere"].s();
 
-            std::vector<Materiale> materiali;
+            vector<Materiale> materiali;
             for (const auto& item : body["materiali"]) {
                 if (!item["Materiale"].has("IdMateriale") || !item["Materiale"].has("CostoUnitario") || !item.has("QuantitaUtilizzata")) {
                     return crow::response(400, "Errore: JSON non valido per materiali");
@@ -92,7 +94,7 @@ int main() {
                 materiali.push_back(materiale);
             }
 
-            std::vector<Operaio> operai;
+            vector<Operaio> operai;
             for (const auto& item : body["operai"]) {
                 if (!item.has("IdOperaio") || !item.has("CostoOrario")) {
                     return crow::response(400, "Errore: JSON non valido per operai");
@@ -103,7 +105,7 @@ int main() {
                 operai.push_back(operaio);
             }
             
-            std::vector<Presenza> presenze;
+            vector<Presenza> presenze;
             for (const auto& item : body["presenze"]) {
                 if (!item.has("OperaioId") || !item.has("Ore")) {
                     return crow::response(400, "Errore: JSON non valido per presenze");
@@ -114,7 +116,7 @@ int main() {
                 presenze.push_back(presenza);
             }
             
-            std::vector<Spesa> spese;
+            vector<Spesa> spese;
             for (const auto& item : body["spese"]) {
                 if (!item.has("IdSpesa") || !item.has("Costo") || !item.has("Descrizione")) {
                     return crow::response(400, "Errore: JSON non valido per spese");
@@ -137,10 +139,10 @@ int main() {
             response["totale"] = costoMateriali + costoPersonale + speseCantiere;
 
             return crow::response{response};
-        } catch (const std::exception& e) {
-            std::cerr << "Errore: " << e.what() << std::endl;
-            std::cerr << "JSON ricevuto: " << req.body << std::endl;
-            return crow::response(500, std::string("Errore interno del server: ") + e.what());
+        } catch (const exception& e) {
+            cerr << "Errore: " << e.what() << endl;
+            cerr << "JSON ricevuto: " << req.body << endl;
+            return crow::response(500, string("Errore interno del server: ") + e.what());
         }
     });
 

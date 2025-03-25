@@ -17,6 +17,7 @@ public partial class LoginPage : ContentPage
         if (username == "admin" && password == "password")
         {
             await Navigation.PushAsync(new MainPage());
+            Application.Current.MainPage = new NavigationPage(new MainPage());
         }
         else
         {
