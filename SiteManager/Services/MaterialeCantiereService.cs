@@ -7,7 +7,6 @@ namespace SiteManager.Services
     {
         private static MySqlConnection GetConnection()
         {
-            // Connessione al DB
             string stringaConnessione = "Server=localhost;Port=3307;Database=SiteManager;User=root;Password=1234;";
             return new MySqlConnection(stringaConnessione);
         }
@@ -22,7 +21,6 @@ namespace SiteManager.Services
                 connessione.Open();
                 Console.WriteLine("Connessione al database effettuata.");
 
-                // Esegui la query per ottenere i dettagli dei materiali utilizzati in un cantiere
                 string query = @"
                     SELECT mc.IdMaterialeCantiere, mc.IdCantiere, mc.IdMateriale, mc.QuantitaUtilizzata, 
                         m.Nome AS MaterialeNome, m.CostoUnitario, m.Quantita, m.Unita

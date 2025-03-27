@@ -98,8 +98,8 @@ public static class OperaioService
             int result = command.ExecuteNonQuery();
             if (result > 0) 
             {
-                operaio.IdOperaio = (int)command.LastInsertedId;    // recupera l'id generato automaticamente dal db per utilizzarlo eventualmente in modifica ed elimina
-                return true;                                        // TODO: DA SISTEMARE
+                operaio.IdOperaio = (int)command.LastInsertedId;
+                return true;                                        
             }
             connessione.Close();
             return false;
@@ -110,7 +110,7 @@ public static class OperaioService
         }
     }
 
-    public static bool AggiornaOperaio(Operaio operaio)   // TODO: DA SISTEMARE
+    public static bool AggiornaOperaio(Operaio operaio)   
     {
         try
         {

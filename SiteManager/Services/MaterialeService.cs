@@ -58,7 +58,7 @@ public static class MaterialeService
             int result = command.ExecuteNonQuery();
             if (result > 0)
             {
-                nuovoMateriale.IdMateriale = (int)command.LastInsertedId; //recupera l'id generato automaticamente dal db per utilizzarlo eventualmente in modifica ed elimina
+                nuovoMateriale.IdMateriale = (int)command.LastInsertedId;
                 return true;
             }
             connessione.Close();
@@ -124,7 +124,6 @@ public static class MaterialeService
             var connessione = GetConnection();
             connessione.Open();
 
-            // Verifica se il materiale esiste e ha quantita sufficiente
             string queryMateriale = "SELECT * FROM materiali WHERE IdMateriale = @IdMateriale";
             using (MySqlCommand commandMateriale = new(queryMateriale, connessione))
             {
@@ -142,7 +141,6 @@ public static class MaterialeService
                         throw new InvalidOperationException("Quantita insufficiente di materiale.");
                     }
 
-                    // Crea un oggetto Materiale aggiornato
                     Materiale materialeAggiornato = new Materiale
                     {
                         IdMateriale = reader.GetInt32("IdMateriale"),
@@ -152,12 +150,10 @@ public static class MaterialeService
                         CostoUnitario = reader.GetDouble("CostoUnitario")
                     };
 
-                    // Chiama il metodo AggiornaMateriale
                     AggiornaMateriale(materialeAggiornato);
                 }
             }
 
-            // Assegna il materiale al cantiere
             string queryAssegnaMateriale = "INSERT INTO materialecantiere (IdCantiere, IdMateriale, QuantitaUtilizzata) VALUES (@IdCantiere, @IdMateriale, @QuantitaUtilizzata)";
             using (MySqlCommand commandAssegnaMateriale = new(queryAssegnaMateriale, connessione))
             {

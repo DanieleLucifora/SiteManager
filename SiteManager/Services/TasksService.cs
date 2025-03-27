@@ -55,7 +55,7 @@ public static class TasksService
             int result = command.ExecuteNonQuery();
             if (result > 0)
             {
-                task.IdTasks = (int)command.LastInsertedId; //recupera l'id generato automaticamente dal db per utilizzarlo eventualmente in modifica ed elimina
+                task.IdTasks = (int)command.LastInsertedId;
                 return true;
             }
             connessione.Close();

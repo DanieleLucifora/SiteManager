@@ -60,7 +60,7 @@ public class PresenzaService
             int result = command.ExecuteNonQuery();
             if (result > 0) 
             {
-                presenza.IdPresenza = (int)command.LastInsertedId;    // recupera l'id generato automaticamente dal db per utilizzarlo eventualmente in modifica ed elimina
+                presenza.IdPresenza = (int)command.LastInsertedId;    
                 return true;                                        
             }
             connessione.Close();

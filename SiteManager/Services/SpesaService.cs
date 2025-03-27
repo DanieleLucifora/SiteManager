@@ -60,7 +60,7 @@ public class SpesaService
             int result = command.ExecuteNonQuery();
             if (result > 0) 
             {
-                spesa.IdSpesa = (int)command.LastInsertedId;    // recupera l'id generato automaticamente dal db per utilizzarlo eventualmente in modifica ed elimina
+                spesa.IdSpesa = (int)command.LastInsertedId;
                 return true;                                        
             }
             connessione.Close();
