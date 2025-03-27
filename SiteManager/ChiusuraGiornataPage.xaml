@@ -6,24 +6,20 @@
     
     <Grid RowDefinitions="*,Auto,Auto">
         <ScrollView Grid.Row="0">
-            <VerticalStackLayout Spacing="2" Margin="30,30,30,0">
-                <CollectionView x:Name="OperaiCollectionView" SelectionMode="None">
+            <VerticalStackLayout Margin="30,30,30,0">
+                <CollectionView x:Name="OperaiCollectionView">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnDefinitions="*,auto" Padding="5">
-                                <VerticalStackLayout >
-                                    <HorizontalStackLayout>
-                                        <Label Text="Nome:" VerticalTextAlignment="Center" />
-                                        <Label Text="{Binding Nome}" VerticalTextAlignment="Center" FontSize="18" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                                        <Label Text="Cognome:" VerticalTextAlignment="Center" />
-                                        <Label Text="{Binding Cognome}" VerticalTextAlignment="Center" FontSize="18" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                                        <Label Text="Mansione:" VerticalTextAlignment="Center" />
-                                        <Label Text="{Binding Mansione}" VerticalTextAlignment="Center" FontSize="18" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                                        <Label Text="{Binding DataNascita}" IsVisible="Hidden"/>
-                                        <Label Text="{Binding DataAssunzione}" IsVisible="Hidden"/>
-                                    </HorizontalStackLayout>
-                                </VerticalStackLayout>
-                                <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">
+                                <HorizontalStackLayout>
+                                    <Label Text="Nome:"/>
+                                    <Label Text="{Binding Nome}" FontSize="18" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                    <Label Text="Cognome:"/>
+                                    <Label Text="{Binding Cognome}" FontSize="18" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                    <Label Text="Mansione:"/>
+                                    <Label Text="{Binding Mansione}" FontSize="18" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Column="1">
                                     <Button Text="Ore lavorate" Clicked="OreLavorate_Clicked"  Margin="3"  BackgroundColor="SteelBlue"/>
                                 </HorizontalStackLayout>
                             </Grid>
@@ -36,7 +32,6 @@
         <StackLayout Grid.Row="1" Spacing="10" Margin="30,10,30,0">
             <Button
                 x:Name="AggiungiSpesaBtn"
-                Grid.Row="1"
                 Text="Aggiungi spesa" 
                 IsVisible="True"
                 Clicked="AggiungiSpesa_Clicked" 
@@ -51,7 +46,7 @@
         </StackLayout>
 
         <StackLayout Grid.Row="2" Spacing="10" Margin="30,10,30,30">
-            <Button x:Name="SalvaSpesaBtn" Text="Salva" Clicked="SalvaSpesa_Clicked" IsVisible="False"  BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
+            <Button x:Name="SalvaSpesaBtn" Text="Salva" Clicked="SalvaSpesa_Clicked" IsVisible="False" BackgroundColor="SteelBlue" HorizontalOptions="Center"/>
         </StackLayout>
     </Grid>
 </ContentPage>

@@ -5,20 +5,16 @@
 
     <Grid RowDefinitions="*,Auto,Auto">
         <ScrollView Grid.Row="0">
-            <VerticalStackLayout Spacing="2" Margin="20,0,20,0">
+            <VerticalStackLayout Margin="20,0,20,0">
                 <Label Text="Elenco Task completate:" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>
-                <CollectionView x:Name="TasksCollectionView" SelectionMode="None">
+                <CollectionView x:Name="TasksCollectionView">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnDefinitions="*,auto" Padding="5">
-                                <VerticalStackLayout Margin="5" Padding="5" WidthRequest="-1">
-                                    <HorizontalStackLayout>
-                                        <Label Text="{Binding Descrizione}" VerticalTextAlignment="Center" FontSize="16" FontFamily="Roboto" />
-                                    </HorizontalStackLayout>
-                                    <HorizontalStackLayout>
-                                        <Label Text="{Binding Data}" VerticalTextAlignment="Center" TextColor="SteelBlue" />
-                                    </HorizontalStackLayout>
-                                </VerticalStackLayout>
+                                <HorizontalStackLayout>
+                                    <Label Text="{Binding Descrizione}" VerticalTextAlignment="Center" FontSize="16" FontFamily="Roboto" />
+                                    <Label Text="{Binding Data}" VerticalTextAlignment="Center" Margin="10,0,0,0" TextColor="SteelBlue" />
+                                </HorizontalStackLayout>
                                 <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start" WidthRequest="-1">
                                     <Button Text="Visualizza" Clicked="VisualizzaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                                     <Button Text="Modifica" Clicked="ModificaTask_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
@@ -34,10 +30,8 @@
         <StackLayout Grid.Row="1" Spacing="10" Margin="30,10,30,0">
             <Button 
                 x:Name="NuovoTaskBtn"
-                Grid.Row="2"
                 Text="Nuovo task" 
                 Clicked="AggiungiTask_Clicked" 
-                Margin="10"
                 IsVisible="True"
                 BackgroundColor="SteelBlue"
                 HorizontalOptions="Center"/>
