@@ -42,8 +42,7 @@ public partial class ReportingPage : ContentPage
                 List<MaterialeCantiere> materiali = MaterialeCantiereService.OttieniMaterialeCantiere(cantiere.IdCantiere);
                 List<Spesa> costi = SpesaService.OttieniSpese(cantiere);
 
-				using HttpClient client = new();
-                var payload = new	//tipo anonimo
+                var payload = new
                 {
                     cantiere = cantiere.Citta,
                     tasks,
@@ -57,8 +56,10 @@ public partial class ReportingPage : ContentPage
                     "application/json"
                 );
 
-                string serverUrl = "http://localhost:5001/genera_report"; // URL API del server Flask
-                HttpResponseMessage response = await client.PostAsync(serverUrl, jsonContent);
+				string urlServer = "http://localhost:5001/genera_report";
+
+				HttpClient client = new();
+                HttpResponseMessage response = await client.PostAsync(urlServer, jsonContent);
                 string result = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)

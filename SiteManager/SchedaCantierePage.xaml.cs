@@ -64,16 +64,16 @@ public partial class SchedaCantierePage : ContentPage
                 operaio.CantiereId = cantiere.IdCantiere;
                 operaio.BackgroundColor = Colors.DarkSlateGrey;
                 OperaioService.AssegnaOperaioACantiere(operaio);
+
+                OperaiCollectionView.ItemsSource = null;
+                OperaiCollectionView.ItemsSource = OperaiList;
                 await DisplayAlert("Successo", "Operaio assegnato con successo.", "OK");
-                OperaiCollectionView.ItemsSource = null; 
-                OperaiCollectionView.ItemsSource = OperaiList; 
             }
             else
             {
-                await DisplayAlert("Attenzione", $"Operaio assegnato ad un altro cantiere. \nDevi prima rimuovere l'operaio dal cantiere assegnato.", "OK");
+                await DisplayAlert("Attenzione", $"Operaio assegnato ad un altro cantiere. Rimuovere l'operaio dal cantiere assegnato.", "OK");
                 return;
             }
-
         }
     }
 
@@ -87,10 +87,12 @@ public partial class SchedaCantierePage : ContentPage
         {
             operaio.CantiereId = null;
             OperaioService.AggiornaOperaio(operaio);
-            await DisplayAlert("Successo", "Operaio rimosso dal cantiere con successo.", "OK");
             operaio.BackgroundColor = Colors.Transparent;
+
             OperaiCollectionView.ItemsSource = null;
             OperaiCollectionView.ItemsSource = OperaiList;
+            await DisplayAlert("Successo", "Operaio rimosso dal cantiere con successo.", "OK");
+
         }
     }
 
@@ -99,20 +101,18 @@ public partial class SchedaCantierePage : ContentPage
         Button button = (Button)sender;
         Materiale materiale = (Materiale)button.CommandParameter;
 
-        var quantitaUtilizzata = await DisplayPromptAsync("Quantità", "Inserisci la quantità da assegnare:", "OK", "Annulla", "Quantità", -1, Keyboard.Numeric);
+        string stringa_quantità = await DisplayPromptAsync("Quantità", "Inserisci la quantità da assegnare:", "OK", "Annulla", "Quantità");
         
-        if (int.TryParse(quantitaUtilizzata, out int quantita))
+        if (int.TryParse(stringa_quantità, out int quantità))
         {
-            MaterialeService.AssegnaMaterialeACantiere(cantiere.IdCantiere, materiale.IdMateriale, quantita);
-            await DisplayAlert("Successo", "Materiale assegnato con successo.", "OK");
+            MaterialeService.AssegnaMaterialeACantiere(cantiere.IdCantiere, materiale.IdMateriale, quantità);
             MaterialiList.Clear();
             LoadMateriali();
+            await DisplayAlert("Successo", "Materiale assegnato con successo.", "OK");
         }
         else
         {
             await DisplayAlert("Errore", "Inserisci una quantità valida.", "OK");
         }
     }
-
-
 }
