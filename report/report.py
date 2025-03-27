@@ -1,11 +1,9 @@
-#Server Flask
-from flask import Flask, request, jsonify   #request è la richiest HTTP che arriva tramite flask
+from flask import Flask, request, jsonify
 import subprocess
 import json
 
-app = Flask(__name__) #creazione dell'app flask
+app = Flask(__name__)
 
-#decorator (quando visitiamo http://localhost:5001/genera_report viene eseguito genera_report()")
 @app.route('/genera_report', methods=['POST'])
 def genera_report():
     data = request.json
@@ -15,12 +13,11 @@ def genera_report():
     costi = data.get("costi")
 
     if not cantiere or tasks is None or materiali is None or costi is None:
-        return jsonify({"status": "error", "message": "Dati necessari non presenti"}), 400  #HTTP bad request
-
+        return jsonify({"status": "error", "message": "Dati necessari non presenti"}), 400
+    
     try:
-        # subprocess.run fa sì che i parametri siano passati tramite riga di comando
         result = subprocess.run(
-            ["python3", "/app/report_generator.py", #sys.argv[0]
+            ["python3", "/app/report_generator.py",
                 cantiere, 
                 json.dumps(tasks), 
                 json.dumps(materiali),
@@ -29,7 +26,7 @@ def genera_report():
             capture_output=True, text=True
         )
 
-        if result.returncode == 0:  #eseguito con successo
+        if result.returncode == 0:
             output = result.stdout.strip()
             return jsonify({"status": "success", "report": output}), 200
         else:

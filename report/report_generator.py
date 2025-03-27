@@ -24,15 +24,13 @@ Formato del file PDF:
 
 '''
 
-COLONNA_1 = 30  #Valore di inizio sull'asse x 
+COLONNA_1 = 30
 COLONNA_2 = 310
 ALTEZZA_INIZIO = 750
 ALTEZZA_FINE = 60
 INTERLINEA = 20
 INTERLINEA_TITOLO = 10
 
-#Posizione attuale sulla pagina (x, y)
-# (0, 0) è l'angolo inferiore sinistro
 class Cursore():
     def __init__(self):
         self.x = COLONNA_1
@@ -82,7 +80,7 @@ def stampa_lista_dizionari(lista_dizionari):
     global cursore, pdf
     pdf.setFont("Helvetica", 12)
     for dizionario in lista_dizionari:
-        valori = list(dizionario.values())              #lista per accedere ai campi
+        valori = list(dizionario.values())
         aggiorna_cursore()
         pdf.drawString(cursore.x, cursore.y, f"- {valori[0]} {valori[1]}{valori[2]}")
         cursore.y -= INTERLINEA
@@ -111,7 +109,7 @@ class Cantiere():
     def __init__(self, nome):
         self.nome = nome
         self.tasks = []
-        self.materiali = []                             #lista di dizionari
+        self.materiali = []
         self.costi = {}
     
     def aggiungi_task(self, task):
@@ -119,9 +117,9 @@ class Cantiere():
             task = task[:42] + "..."
         self.tasks.append(task)
 
-    def aggiungi_materiale(self, nome, quantità, unità):#è necessario non avere duplicati passati
+    def aggiungi_materiale(self, nome, quantità, unità):
             nuovo_materiale = {"Nome": nome, "Quantità": quantità, "Unità": unità}
-            self.materiali.append(nuovo_materiale)      #Risultato: {Materiale: Metallo, Quantità 10, Unità: kg}
+            self.materiali.append(nuovo_materiale)
 
     def aggiungi_costi(self, descrizione, costo):
         if descrizione in self.costi:
@@ -152,7 +150,7 @@ def main():
             if chiave == "QuantitaUtilizzata":
                 quantità = valore
             if chiave == "Materiale":
-                for c, v in valore.items():             # itero il dizionario memorizzato come valore della chiave 'Materiale'
+                for c, v in valore.items(): 
                     if c == "Nome":
                         nome = v
                     if c == "Unita":
