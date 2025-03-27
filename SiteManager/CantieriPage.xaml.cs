@@ -39,21 +39,20 @@ public partial class CantieriPage : ContentPage
         await Navigation.PushAsync(new ChiusuraGiornataPage(cantiere));
     }
 
-    private async void AggiungiCantiere_Clicked(object sender, EventArgs e)
+    private void AggiungiCantiere_Clicked(object sender, EventArgs e)
 	{
 		FormStackLayout.IsVisible = true;
         SalvaCantiereBtn.IsVisible = true;
         NuovoCantiereBtn.IsVisible = false;
         ClearForm();
-        await Task.CompletedTask;
 	}
 
-    private async void SalvaCantiere_Clicked(object sender, EventArgs e)
+    private void SalvaCantiere_Clicked(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(CittaEntry.Text) || 
             string.IsNullOrWhiteSpace(CommittenteEntry.Text))
         {
-            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
             return;
         }
 
@@ -74,7 +73,7 @@ public partial class CantieriPage : ContentPage
 
         if (success)
         {
-            await DisplayAlert("Successo", "Cantiere aggiunto con successo", "OK");
+            DisplayAlert("Successo", "Cantiere aggiunto con successo", "OK");
             FormStackLayout.IsVisible = false;
             SalvaCantiereBtn.IsVisible = false;
             NuovoCantiereBtn.IsVisible = true;
@@ -83,15 +82,15 @@ public partial class CantieriPage : ContentPage
         }
         else
         {
-            await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta del cantiere", "OK");
+            DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta del cantiere", "OK");
         }
     }
 
-    private async void VisualizzaCantiere_Clicked(object sender, EventArgs e)
+    private void VisualizzaCantiere_Clicked(object sender, EventArgs e)
     {
         Button button = (Button)sender;
         Cantiere cantiere = (Cantiere)button.BindingContext;
-        await DisplayAlert("Dettagli Cantiere", $"Città: {cantiere.Citta}\nCommittente: {cantiere.Committente}" +
+        DisplayAlert("Dettagli Cantiere", $"Città: {cantiere.Citta}\nCommittente: {cantiere.Committente}" +
                             $"\nData inizio: {cantiere.DataInizio.ToShortDateString()}\nScadenza: " +
                             $"{cantiere.Scadenza.ToShortDateString()}", "OK");
     }
@@ -108,7 +107,7 @@ public partial class CantieriPage : ContentPage
         Button button = (Button)sender;
         Cantiere cantiere = (Cantiere)button.BindingContext;
 
-        CittaEntry.Text = cantiere.Citta;   // Popolo i campi del form
+        CittaEntry.Text = cantiere.Citta;
         CommittenteEntry.Text = cantiere.Committente;
         DataInizioPicker.Date = cantiere.DataInizio;
         ScadenzaPicker.Date = cantiere.Scadenza;
@@ -121,18 +120,17 @@ public partial class CantieriPage : ContentPage
         SalvaCantiereBtn.IsVisible = false;
 	}
 
-    private async void AggiornaCantiere_Clicked(object sender, EventArgs e)
+    private void AggiornaCantiere_Clicked(object sender, EventArgs e)
     {
         Button button = (Button)sender;
         Cantiere cantiere = (Cantiere)button.BindingContext;
 
-        // Aggiorna i dati del cantiere con i valori del 
-        cantiere.Citta = CittaEntry.Text;               //Se c'è un problema nel database, la lista viene aggiornata comunque
+        cantiere.Citta = CittaEntry.Text;
         cantiere.Committente = CommittenteEntry.Text;
         cantiere.DataInizio = DataInizioPicker.Date;
         cantiere.Scadenza = ScadenzaPicker.Date;
-            
-        await DisplayAlert("Dettagli Cantiere", $"Citta: {cantiere.Citta}\nCommittente: {cantiere.Committente}\nData di inizio: " +
+
+        DisplayAlert("Dettagli Cantiere", $"Citta: {cantiere.Citta}\nCommittente: {cantiere.Committente}\nData di inizio: " +
                            $"{cantiere.DataInizio.ToShortDateString()}\nData di scadenza: {cantiere.Scadenza.ToShortDateString()}", "OK");
 
         bool success = CantiereService.AggiornaCantiere(cantiere);
@@ -141,15 +139,16 @@ public partial class CantieriPage : ContentPage
         {
             FormStackLayout.IsVisible = false;
             AggiornaCantiereBtn.IsVisible = false;
-            NuovoCantiereBtn.IsVisible = true;                
-            await DisplayAlert("Successo", "Cantiere aggiornato con successo", "OK");
+            NuovoCantiereBtn.IsVisible = true;
+            ClearForm();
+
             CantieriList.Clear();
             LoadCantieri();
-            ClearForm();
+            DisplayAlert("Successo", "Cantiere aggiornato con successo", "OK");
         }
         else
         {
-            await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento del cantiere", "OK");
+            DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento del cantiere", "OK");
         }
     }
 
@@ -169,7 +168,7 @@ public partial class CantieriPage : ContentPage
             }
             else
             {
-                    await DisplayAlert("Errore", "Si è verificato un errore durante la cancellazione del cantiere", "OK");
+                await DisplayAlert("Errore", "Si è verificato un errore durante la cancellazione del cantiere", "OK");
             }              
         }
     }

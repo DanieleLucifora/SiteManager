@@ -31,36 +31,40 @@ public partial class ChiusuraGiornataPage : ContentPage
 	{
         Button button = (Button)sender;
         Operaio operaio = (Operaio)button.BindingContext;
-        string result = await DisplayPromptAsync("Inserimento Ore Lavorate", $"Inserisci le ore lavorate per {operaio.Nome} " + 
-			$"{operaio.Cognome}:", "Salva", "Annulla", placeholder: "0.0", maxLength: 5, keyboard: Keyboard.Numeric);
 
-		if (string.IsNullOrEmpty(result))
+        string stringa_ore = await DisplayPromptAsync("Inserimento Ore Lavorate", $"Inserisci le ore lavorate per {operaio.Nome} " + 
+			$"{operaio.Cognome}:", "Salva", "Annulla", placeholder: "0.0", maxLength: 4, keyboard: Keyboard.Numeric);
+
+		if (string.IsNullOrEmpty(stringa_ore))
 		{
             await DisplayAlert("Errore", "Inserisci un valore", "OK");
+            return;
         }
-		else
-		{
-            if (decimal.TryParse(result, out decimal ore))  //Decimal è un value type
+
+        if (decimal.TryParse(stringa_ore, out decimal ore))
+        {
+            Presenza presenzaOperaio = new()
             {
-                Presenza presenzaOperaio = new Presenza     //object initializer
-                {
-                    OperaioId = operaio.IdOperaio,
-                    Ore = ore,
-                    CantiereId = cantiere.IdCantiere
-                };
+                OperaioId = operaio.IdOperaio,
+                Ore = ore,
+                CantiereId = cantiere.IdCantiere
+            };
 
-                bool success = PresenzaService.AggiungiPresenza(presenzaOperaio);
+            bool presenza_aggiunta = PresenzaService.AggiungiPresenza(presenzaOperaio);
 
-                if (success)
-                {
-                    await DisplayAlert("Successo", $"Registrate {ore} ore per {operaio.Nome} {operaio.Cognome}", "OK");
-                }
-                else
-                {
-                    await DisplayAlert("Errore", "Impossibile registrare le ore lavorate", "OK");
-                }
+            if (presenza_aggiunta)
+            {
+                await DisplayAlert("Successo", $"Registrate {ore} ore per {operaio.Nome} {operaio.Cognome}", "OK");
             }
-		}
+            else
+            {
+                await DisplayAlert("Errore", "Impossibile registrare le ore lavorate", "OK");
+            }
+        }
+        else
+        {
+            await DisplayAlert("Errore", "Formato non valido", "OK");
+        }
 	}
 
 	private void AggiungiSpesa_Clicked(object sender, EventArgs e)
@@ -71,38 +75,43 @@ public partial class ChiusuraGiornataPage : ContentPage
         ClearForm();
 	}
 
-    private async void SalvaSpesa_Clicked(object sender, EventArgs e)
+    private void SalvaSpesa_Clicked(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(DescrizioneEntry.Text) || 
             string.IsNullOrWhiteSpace(CostoEntry.Text))
         {
-            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
             return;
         }
 
-        string descrizione = DescrizioneEntry.Text; 
-        decimal costo = decimal.Parse(CostoEntry.Text.Replace(" €", "")); // Se viene inserito € estrai il valore numerico
-
-        Spesa nuovaSpesa = new Spesa
+        string descrizione = DescrizioneEntry.Text;
+        if(decimal.TryParse(CostoEntry.Text, out decimal costo))
         {
-            Descrizione = descrizione,
-            Costo = costo,
-			CantiereId = cantiere.IdCantiere
-        };
+            Spesa nuovaSpesa = new()
+            {
+                Descrizione = descrizione,
+                Costo = costo,
+			    CantiereId = cantiere.IdCantiere
+            };
 
-        bool success = SpesaService.AggiungiSpesa(nuovaSpesa);
+            bool spesa_aggiunta = SpesaService.AggiungiSpesa(nuovaSpesa);
 
-        if (success)
-        {
-            await DisplayAlert("Successo", "Spesa aggiunta con successo", "OK");
-            FormStackLayout.IsVisible = false;
-            SalvaSpesaBtn.IsVisible = false;
-            AggiungiSpesaBtn.IsVisible = true;
-            ClearForm();
+            if (spesa_aggiunta)
+            {
+                FormStackLayout.IsVisible = false;
+                SalvaSpesaBtn.IsVisible = false;
+                AggiungiSpesaBtn.IsVisible = true;
+                ClearForm();
+                DisplayAlert("Successo", "Spesa aggiunta con successo", "OK");
+            }
+            else
+            {
+                DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta della spesa", "OK");
+            }
         }
         else
         {
-            await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta della spesa", "OK");
+            DisplayAlert("Errore", "Formato non valido", "OK");
         }
     }
 

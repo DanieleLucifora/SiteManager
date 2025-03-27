@@ -5,8 +5,6 @@ public partial class LoginPage : ContentPage
     public LoginPage()
     {
         InitializeComponent();
-        UsernameEntry.Completed += (s, e) => PasswordEntry.Focus();
-        PasswordEntry.Completed += (s, e) => LoginButton_Clicked(null, EventArgs.Empty);
     }
 
     private async void LoginButton_Clicked(object? sender, EventArgs e)
@@ -17,7 +15,6 @@ public partial class LoginPage : ContentPage
         if (username == "admin" && password == "password")
         {
             await Navigation.PushAsync(new MainPage());
-            Application.Current.MainPage = new NavigationPage(new MainPage());
         }
         else
         {
