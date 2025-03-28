@@ -34,14 +34,14 @@ public partial class OperaiPage : ContentPage
         ClearForm();
 	}
 
-    private void SalvaOperaio_Clicked(object sender, EventArgs e)
+    private async void SalvaOperaio_Clicked(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(NomeEntry.Text) || 
             string.IsNullOrWhiteSpace(CognomeEntry.Text) || 
             string.IsNullOrWhiteSpace(MansioneLabel.Text) || 
             string.IsNullOrWhiteSpace(CostoOrarioLabel.Text))
         {
-            DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
             return;
         }
 
@@ -71,21 +71,21 @@ public partial class OperaiPage : ContentPage
             SalvaOperaioBtn.IsVisible = false;
             OperaiList.Add(nuovoOperaio);
             ClearForm();
-            DisplayAlert("Successo", "Operaio aggiunto con successo", "OK");
+            await DisplayAlert("Successo", "Operaio aggiunto con successo", "OK");
         }
         else
         {
-            DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta dell'operaio", "OK");
+            await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta dell'operaio", "OK");
         }
     }
 
-    private void VisualizzaOperaio_Clicked(object sender, EventArgs e)
+    private async void VisualizzaOperaio_Clicked(object sender, EventArgs e)
     {
         Button button = (Button)sender;
         Operaio operaio = (Operaio)button.BindingContext;
         if (operaio != null)
         {
-            DisplayAlert("Dettagli Operaio", $"Nome: {operaio.Nome}\nCognome: {operaio.Cognome}\nMansione: {operaio.Mansione}\n" +
+            await DisplayAlert("Dettagli Operaio", $"Nome: {operaio.Nome}\nCognome: {operaio.Cognome}\nMansione: {operaio.Mansione}\n" +
                         $"Data di Nascita: {operaio.DataNascita.ToShortDateString()}\nData di Assunzione: " +
                         $"{operaio.DataAssunzione.ToShortDateString()}", "OK");
         }
@@ -110,7 +110,7 @@ public partial class OperaiPage : ContentPage
         AggiungiOperaioBtn.IsVisible = false;
 	}
 
-    private void AggiornaOperaio_Clicked(object sender, EventArgs e)
+    private async void AggiornaOperaio_Clicked(object sender, EventArgs e)
     {
         Operaio operaio = (Operaio)AggiornaOperaioBtn.BindingContext;
 
@@ -120,7 +120,7 @@ public partial class OperaiPage : ContentPage
         operaio.DataNascita = DataNascitaPicker.Date;
         operaio.DataAssunzione = DataAssunzionePicker.Date;
             
-        DisplayAlert("Dettagli Operaio", $"Nome: {operaio.Nome}\nCognome: {operaio.Cognome}\n" +
+        await DisplayAlert("Dettagli Operaio", $"Nome: {operaio.Nome}\nCognome: {operaio.Cognome}\n" +
                             $"Mansione: {operaio.Mansione}\nData di Nascita: {operaio.DataNascita.ToShortDateString()}\n" +
                             $"Data di Assunzione: {operaio.DataAssunzione.ToShortDateString()}", "OK");
 
@@ -134,12 +134,12 @@ public partial class OperaiPage : ContentPage
 
             OperaiList.Clear();
             LoadOperai();
-            DisplayAlert("Successo", "Operaio aggiornato con successo", "OK");
+            await DisplayAlert("Successo", "Operaio aggiornato con successo", "OK");
             ClearForm();
         }
         else
         {
-            DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento dell'operaio", "OK");
+            await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento dell'operaio", "OK");
         }
     }
 

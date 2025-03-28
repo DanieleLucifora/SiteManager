@@ -75,12 +75,12 @@ public partial class ChiusuraGiornataPage : ContentPage
         ClearForm();
 	}
 
-    private void SalvaSpesa_Clicked(object sender, EventArgs e)
+    private async void SalvaSpesa_Clicked(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(DescrizioneEntry.Text) || 
             string.IsNullOrWhiteSpace(CostoEntry.Text))
         {
-            DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
             return;
         }
 
@@ -102,16 +102,16 @@ public partial class ChiusuraGiornataPage : ContentPage
                 SalvaSpesaBtn.IsVisible = false;
                 AggiungiSpesaBtn.IsVisible = true;
                 ClearForm();
-                DisplayAlert("Successo", "Spesa aggiunta con successo", "OK");
+                await DisplayAlert("Successo", "Spesa aggiunta con successo", "OK");
             }
             else
             {
-                DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta della spesa", "OK");
+                await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta della spesa", "OK");
             }
         }
         else
         {
-            DisplayAlert("Errore", "Formato non valido", "OK");
+            await DisplayAlert("Errore", "Formato non valido", "OK");
         }
     }
 

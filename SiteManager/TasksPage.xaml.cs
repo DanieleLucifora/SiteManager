@@ -45,11 +45,11 @@ public partial class TasksPage : ContentPage
         ClearForm();
 	}
 
-    private void SalvaTask_Clicked(object sender, EventArgs e)
+    private async void SalvaTask_Clicked(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(DescrizioneEntry.Text))
         {
-            DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
             return;
         }        
         
@@ -73,11 +73,11 @@ public partial class TasksPage : ContentPage
 
             TasksList.Add(nuovaTask);
             ClearForm();
-            DisplayAlert("Successo", "Task aggiunto con successo", "OK");
+            await DisplayAlert("Successo", "Task aggiunto con successo", "OK");
         }
         else
         {
-            DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta del task", "OK");
+            await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta del task", "OK");
         }
     }
 
@@ -97,14 +97,14 @@ public partial class TasksPage : ContentPage
         SalvaTaskBtn.IsVisible = false;
 	}
 
-    private void AggiornaTask_Clicked(object sender, EventArgs e)
+    private async void AggiornaTask_Clicked(object sender, EventArgs e)
     {
         Tasks task = (Tasks)AggiornaTaskBtn.BindingContext;
 
         task.Descrizione = DescrizioneEntry.Text;
         task.Data = DataPicker.Date;
          
-        DisplayAlert("Dettagli Task", $"Descrizione: {task.Descrizione} \nData: {task.Data.ToShortDateString()}", "OK");
+        await DisplayAlert("Dettagli Task", $"Descrizione: {task.Descrizione} \nData: {task.Data.ToShortDateString()}", "OK");
 
         bool success = TasksService.AggiornaTask(task);
 
@@ -117,11 +117,11 @@ public partial class TasksPage : ContentPage
 
             TasksList.Clear();
             LoadTasks();
-            DisplayAlert("Successo", "Task aggiornato con successo", "OK");
+            await DisplayAlert("Successo", "Task aggiornato con successo", "OK");
         }
         else
         {
-            DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento del task", "OK");
+            await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento del task", "OK");
         }
     }
 

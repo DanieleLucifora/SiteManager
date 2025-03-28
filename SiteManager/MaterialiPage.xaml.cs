@@ -33,14 +33,14 @@ public partial class MaterialiPage : ContentPage
         ClearForm();
 	}
 
-    private void SalvaMateriale_Clicked(object sender, EventArgs e)
+    private async void SalvaMateriale_Clicked(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(NomeEntry.Text) ||
             string.IsNullOrWhiteSpace(QuantitaEntry.Text) ||
             string.IsNullOrWhiteSpace(UnitaEntry.Text) ||
             string.IsNullOrWhiteSpace(CostoUnitarioEntry.Text))
         {
-            DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
+            await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
             return;
         }
 
@@ -68,27 +68,27 @@ public partial class MaterialiPage : ContentPage
                 SalvaMaterialeBtn.IsVisible = false;
                 MaterialiList.Add(nuovoMateriale);
                 ClearForm();
-                DisplayAlert("Successo", "Materiale aggiunto con successo", "OK");
+                await DisplayAlert("Successo", "Materiale aggiunto con successo", "OK");
             }
             else
             {
-                DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta del materiale", "OK");
+                await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta del materiale", "OK");
 
             }
         }
         catch (Exception)
         {
-            DisplayAlert("Errore", "Errore di Formattazione", "OK");
+            await DisplayAlert("Errore", "Errore di Formattazione", "OK");
         }
     }
 
-    private void VisualizzaMateriale_Clicked(object sender, EventArgs e)
+    private async void VisualizzaMateriale_Clicked(object sender, EventArgs e)
     {
         Button button = (Button)sender;
         Materiale materiale = (Materiale)button.BindingContext;
         if (materiale != null)
         {
-            DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantità: {materiale.Quantita.ToString()}" +
+            await DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantità: {materiale.Quantita.ToString()}" +
                           $"\nUnità: {materiale.Unita}\nCosto: {materiale.CostoUnitario.ToString()} €", "OK");
         }
     }
@@ -111,7 +111,7 @@ public partial class MaterialiPage : ContentPage
         AggiungiMaterialeBtn.IsVisible = false;
 	}
 
-    private void AggiornaMateriale_Clicked(object sender, EventArgs e)
+    private async void AggiornaMateriale_Clicked(object sender, EventArgs e)
     {
         Materiale materiale = (Materiale)AggiornaMaterialeBtn.BindingContext;
 
@@ -122,7 +122,7 @@ public partial class MaterialiPage : ContentPage
             materiale.Unita = UnitaEntry.Text;
             materiale.CostoUnitario = double.Parse(CostoUnitarioEntry.Text);
 
-            DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantita: {materiale.Quantita}\n" +
+            await DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantita: {materiale.Quantita}\n" +
                                 $"Unita: {materiale.Unita}\nData di Nascita: {materiale.CostoUnitario}", "OK");
 
             bool materiale_aggiornato = MaterialeService.AggiornaMateriale(materiale);
@@ -134,17 +134,17 @@ public partial class MaterialiPage : ContentPage
                 AggiornaMaterialeBtn.IsVisible = false;
                 MaterialiCollectionView.ItemsSource = null;
                 MaterialiCollectionView.ItemsSource = MaterialiList;
-                DisplayAlert("Successo", "Materiale aggiornato con successo", "OK");
+                await DisplayAlert("Successo", "Materiale aggiornato con successo", "OK");
                 ClearForm();
             }
             else
             {
-                DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento del materiale", "OK");
+                await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiornamento del materiale", "OK");
             }
         }
         catch (Exception)
         {
-            DisplayAlert("Errore", "Errore di Formattazione", "OK");
+            await DisplayAlert("Errore", "Errore di Formattazione", "OK");
         }
     }
 
