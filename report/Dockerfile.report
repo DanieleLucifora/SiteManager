@@ -6,11 +6,9 @@ COPY report/requirements.txt .
 COPY report/report.py .
 COPY report/report_generator.py .
 
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip show flask
+RUN pip install -r requirements.txt
 
 ENV PYTHONUNBUFFERED=1
-ENV FLASK_ENV=development
 
 EXPOSE 5001
 

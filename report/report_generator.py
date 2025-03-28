@@ -127,9 +127,6 @@ class Cantiere():
         else:
             self.costi[descrizione] = costo
 
-    def totale_costi(self):
-        return sum(self.costi.values())
-
 def main():    
     nome_cantiere = sys.argv[1]                         # sys.argv è la lista (vettore) degli argomenti passati tramite riga di comando
     lista_tasks_json = json.loads(sys.argv[2])          # è una lista di dizionari {'IdTasks': 0, 'Descrizione': "Rifare il tetto dell'aula D34", 'Data': etc...}
