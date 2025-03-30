@@ -20,21 +20,18 @@ public partial class TasksPage : ContentPage
     private void LoadTasks()
     {
         List<Tasks> tasks = TasksService.OttieniTasks(cantiere);
-        foreach (var task in tasks)
+        foreach (Tasks task in tasks)
         {
             TasksList.Add(task);
         }
         TasksCollectionView.ItemsSource = TasksList;
     }
     
-    private void VisualizzaTask_Clicked(object sender, EventArgs e)
+    private async void VisualizzaTask_Clicked(object sender, EventArgs e)
     {
         Button button = (Button)sender;
         Tasks task = (Tasks)button.BindingContext;
-        if (task != null)
-        {
-            DisplayAlert("Dettagli Task", $"Descrizione: {task.Descrizione}\nData: {task.Data.ToShortDateString()}\nId: {task.IdTasks}", "OK");
-        }
+        await DisplayAlert("Dettagli Task", $"Descrizione: {task.Descrizione}\nData: {task.Data.ToShortDateString()}\nId: {task.IdTasks}", "OK");
     }
 
 	private void AggiungiTask_Clicked(object sender, EventArgs e)
@@ -42,7 +39,6 @@ public partial class TasksPage : ContentPage
 		FormStackLayout.IsVisible = true;
         SalvaTaskBtn.IsVisible = true;
         NuovoTaskBtn.IsVisible = false;
-        ClearForm();
 	}
 
     private async void SalvaTask_Clicked(object sender, EventArgs e)
@@ -52,20 +48,17 @@ public partial class TasksPage : ContentPage
             await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
             return;
         }        
-        
-        string descrizione = DescrizioneEntry.Text;
-        DateTime data = DataPicker.Date;
 
         Tasks nuovaTask = new()
         {
-            Descrizione = descrizione,
-            Data = data,
+            Descrizione = DescrizioneEntry.Text,
+            Data = DataPicker.Date,
             CantiereId = cantiere.IdCantiere
         };
 
-        bool task_aggiunta = TasksService.AggiungiTask(nuovaTask);
+        bool taskAggiunto = TasksService.AggiungiTask(nuovaTask);
 
-        if (task_aggiunta)
+        if (taskAggiunto)
         {
             NuovoTaskBtn.IsVisible = true;
             FormStackLayout.IsVisible = false;
@@ -106,9 +99,9 @@ public partial class TasksPage : ContentPage
          
         await DisplayAlert("Dettagli Task", $"Descrizione: {task.Descrizione} \nData: {task.Data.ToShortDateString()}", "OK");
 
-        bool success = TasksService.AggiornaTask(task);
+        bool TaskAggiornato = TasksService.AggiornaTask(task);
 
-        if (success)
+        if (TaskAggiornato)
         {
             FormStackLayout.IsVisible = false;
             AggiornaTaskBtn.IsVisible = false;
@@ -134,9 +127,9 @@ public partial class TasksPage : ContentPage
 
         if (conferma)
         {
-            bool task_eliminato = TasksService.EliminaTask(task.IdTasks);
+            bool taskEliminato = TasksService.EliminaTask(task.IdTasks);
 
-            if (task_eliminato)
+            if (taskEliminato)
             {
                 TasksList.Remove(task);
                 await DisplayAlert("Successo", "Task cancellato con successo", "OK");                

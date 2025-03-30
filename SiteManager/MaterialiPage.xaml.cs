@@ -17,8 +17,8 @@ public partial class MaterialiPage : ContentPage
 
     private void LoadMateriali()
     {
-        var materiali = MaterialeService.OttieniMateriali();
-        foreach (var materiale in materiali)
+        List<Materiale> materiali = MaterialeService.OttieniMateriali();
+        foreach (Materiale materiale in materiali)
         {
             MaterialiList.Add(materiale); 
         }        
@@ -30,12 +30,11 @@ public partial class MaterialiPage : ContentPage
 		FormStackLayout.IsVisible = true;
         SalvaMaterialeBtn.IsVisible = true;
         AggiungiMaterialeBtn.IsVisible = false;
-        ClearForm();
 	}
 
     private async void SalvaMateriale_Clicked(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(NomeEntry.Text) ||
+        if (string.IsNullOrWhiteSpace(NomeEntry.Text) ||    
             string.IsNullOrWhiteSpace(QuantitaEntry.Text) ||
             string.IsNullOrWhiteSpace(UnitaEntry.Text) ||
             string.IsNullOrWhiteSpace(CostoUnitarioEntry.Text))
@@ -46,22 +45,17 @@ public partial class MaterialiPage : ContentPage
 
         try
         {
-            string nome = NomeEntry.Text;
-            int Quantita = int.Parse(QuantitaEntry.Text);
-            string Unita = UnitaEntry.Text;
-            double CostoUnitario = double.Parse(CostoUnitarioEntry.Text);
-
-            Materiale nuovoMateriale = new Materiale
+            Materiale nuovoMateriale = new()
             {
-                Nome = nome,
-                Quantita = Quantita,
-                Unita = Unita,
-                CostoUnitario = CostoUnitario
+                Nome = NomeEntry.Text,
+                Quantita = int.Parse(QuantitaEntry.Text),
+                Unita = UnitaEntry.Text,
+                CostoUnitario = double.Parse(CostoUnitarioEntry.Text)
             };
 
-            bool success = MaterialeService.AggiungiMateriale(nuovoMateriale);
+            bool materialeAggiunto = MaterialeService.AggiungiMateriale(nuovoMateriale);
 
-            if (success)
+            if (materialeAggiunto)
             {
                 AggiungiMaterialeBtn.IsVisible = true;
                 FormStackLayout.IsVisible = false;
@@ -73,7 +67,6 @@ public partial class MaterialiPage : ContentPage
             else
             {
                 await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta del materiale", "OK");
-
             }
         }
         catch (Exception)
@@ -86,11 +79,8 @@ public partial class MaterialiPage : ContentPage
     {
         Button button = (Button)sender;
         Materiale materiale = (Materiale)button.BindingContext;
-        if (materiale != null)
-        {
-            await DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantità: {materiale.Quantita.ToString()}" +
-                          $"\nUnità: {materiale.Unita}\nCosto: {materiale.CostoUnitario.ToString()} €", "OK");
-        }
+        await DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantità: {materiale.Quantita}" +
+                           $"\nUnità: {materiale.Unita}\nCosto: {materiale.CostoUnitario} €", "OK");
     }
 
     private void ModificaMateriale_Clicked(object sender, EventArgs e)
@@ -125,9 +115,9 @@ public partial class MaterialiPage : ContentPage
             await DisplayAlert("Dettagli materiale", $"Nome: {materiale.Nome}\nQuantita: {materiale.Quantita}\n" +
                                 $"Unita: {materiale.Unita}\nData di Nascita: {materiale.CostoUnitario}", "OK");
 
-            bool materiale_aggiornato = MaterialeService.AggiornaMateriale(materiale);
+            bool materialeAggiornato = MaterialeService.AggiornaMateriale(materiale);
 
-            if (materiale_aggiornato)
+            if (materialeAggiornato)
             {
                 AggiungiMaterialeBtn.IsVisible = true;
                 FormStackLayout.IsVisible = false;
@@ -156,8 +146,8 @@ public partial class MaterialiPage : ContentPage
         bool conferma = await DisplayAlert("Conferma Eliminazione", $"Sei sicuro di voler cancellare il {materiale.Nome}?", "Si", "No");
         if (conferma)
         {
-            bool materiale_eliminato = MaterialeService.EliminaMateriale(materiale.IdMateriale);
-            if (materiale_eliminato)
+            bool materialeEliminato = MaterialeService.EliminaMateriale(materiale.IdMateriale);
+            if (materialeEliminato)
             {
                 MaterialiList.Remove(materiale);
                 await DisplayAlert("Successo", "Materiale cancellato con successo", "OK");  

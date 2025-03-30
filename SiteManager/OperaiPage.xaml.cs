@@ -31,51 +31,50 @@ public partial class OperaiPage : ContentPage
 		FormStackLayout.IsVisible = true;
         SalvaOperaioBtn.IsVisible = true;
         AggiungiOperaioBtn.IsVisible = false;
-        ClearForm();
 	}
 
     private async void SalvaOperaio_Clicked(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(NomeEntry.Text) || 
-            string.IsNullOrWhiteSpace(CognomeEntry.Text) || 
-            string.IsNullOrWhiteSpace(MansioneLabel.Text) || 
+        if (string.IsNullOrWhiteSpace(NomeEntry.Text) ||
+            string.IsNullOrWhiteSpace(CognomeEntry.Text) ||
+            string.IsNullOrWhiteSpace(MansioneLabel.Text) ||
             string.IsNullOrWhiteSpace(CostoOrarioLabel.Text))
         {
             await DisplayAlert("Attenzione", "Tutti i campi devono essere compilati", "OK");
             return;
         }
 
-        string nome = NomeEntry.Text; 
-        string cognome = CognomeEntry.Text; 
-        string mansione = MansioneLabel.Text; 
-        decimal costoOrario = decimal.Parse(CostoOrarioLabel.Text.Replace(" €/h", ""));
-        DateTime dataNascita = DataNascitaPicker.Date; 
-        DateTime dataAssunzione = DataAssunzionePicker.Date; 
-
-        Operaio nuovoOperaio = new()
+        try
         {
-            Nome = nome,
-            Cognome = cognome,
-            Mansione = mansione,
-            CostoOrario = costoOrario,
-            DataNascita = dataNascita,
-            DataAssunzione = dataAssunzione
-        };
+            Operaio nuovoOperaio = new()
+            {
+                Nome = NomeEntry.Text,
+                Cognome = CognomeEntry.Text,
+                Mansione = MansioneLabel.Text,
+                CostoOrario = decimal.Parse(CostoOrarioLabel.Text.Replace(" €/h", "")), //non serve il try
+                DataNascita = DataNascitaPicker.Date,
+                DataAssunzione = DataAssunzionePicker.Date
+            };
 
-        bool operaio_aggiunto = OperaioService.AggiungiOperaio(nuovoOperaio);
+            bool operaioAggiunto = OperaioService.AggiungiOperaio(nuovoOperaio);
 
-        if (operaio_aggiunto)
-        {
-            AggiungiOperaioBtn.IsVisible = true;
-            FormStackLayout.IsVisible = false;
-            SalvaOperaioBtn.IsVisible = false;
-            OperaiList.Add(nuovoOperaio);
-            ClearForm();
-            await DisplayAlert("Successo", "Operaio aggiunto con successo", "OK");
+            if (operaioAggiunto)
+            {
+                AggiungiOperaioBtn.IsVisible = true;
+                FormStackLayout.IsVisible = false;
+                SalvaOperaioBtn.IsVisible = false;
+                OperaiList.Add(nuovoOperaio);
+                ClearForm();
+                await DisplayAlert("Successo", "Operaio aggiunto con successo", "OK");
+            }
+            else
+            {
+                await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta dell'operaio", "OK");
+            }
         }
-        else
+        catch
         {
-            await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta dell'operaio", "OK");
+            await DisplayAlert("Errore", "Problema durante la formattazione", "OK");
         }
     }
 
@@ -83,12 +82,9 @@ public partial class OperaiPage : ContentPage
     {
         Button button = (Button)sender;
         Operaio operaio = (Operaio)button.BindingContext;
-        if (operaio != null)
-        {
-            await DisplayAlert("Dettagli Operaio", $"Nome: {operaio.Nome}\nCognome: {operaio.Cognome}\nMansione: {operaio.Mansione}\n" +
-                        $"Data di Nascita: {operaio.DataNascita.ToShortDateString()}\nData di Assunzione: " +
-                        $"{operaio.DataAssunzione.ToShortDateString()}", "OK");
-        }
+        await DisplayAlert("Dettagli Operaio", $"Nome: {operaio.Nome}\nCognome: {operaio.Cognome}\nMansione: {operaio.Mansione}\n" +
+                          $"Data di Nascita: {operaio.DataNascita.ToShortDateString()}\nData di Assunzione: " +
+                          $"{operaio.DataAssunzione.ToShortDateString()}", "OK");
     }
 
     private void ModificaOperaio_Clicked(object sender, EventArgs e)
@@ -124,9 +120,9 @@ public partial class OperaiPage : ContentPage
                             $"Mansione: {operaio.Mansione}\nData di Nascita: {operaio.DataNascita.ToShortDateString()}\n" +
                             $"Data di Assunzione: {operaio.DataAssunzione.ToShortDateString()}", "OK");
 
-        bool operaio_aggiornato = OperaioService.AggiornaOperaio(operaio);
+        bool operaioAggiornato = OperaioService.AggiornaOperaio(operaio);
 
-        if (operaio_aggiornato)
+        if (operaioAggiornato)
         {
             AggiungiOperaioBtn.IsVisible = true;
             FormStackLayout.IsVisible = false;
@@ -152,9 +148,9 @@ public partial class OperaiPage : ContentPage
         
         if (conferma)
         {
-            bool operaio_eliminato = OperaioService.EliminaOperaio(operaio.IdOperaio);
+            bool operaioEliminato = OperaioService.EliminaOperaio(operaio.IdOperaio);
 
-            if (operaio_eliminato)
+            if (operaioEliminato)
             {
                 OperaiList.Remove(operaio);
                 await DisplayAlert("Successo", "Operaio cancellato con successo", "OK"); 

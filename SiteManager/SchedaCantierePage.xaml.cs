@@ -44,7 +44,7 @@ public partial class SchedaCantierePage : ContentPage
     {
         List<Materiale> materiali = MaterialeService.OttieniMateriali();
 
-        foreach (var materiale in materiali)
+        foreach (Materiale materiale in materiali)
         {
             MaterialiList.Add(materiale);
         }
@@ -101,16 +101,16 @@ public partial class SchedaCantierePage : ContentPage
         Button button = (Button)sender;
         Materiale materiale = (Materiale)button.CommandParameter;
 
-        string stringa_quantità = await DisplayPromptAsync("Quantità", "Inserisci la quantità da assegnare:", "OK", "Annulla", "Quantità");
+        string stringaQuantità = await DisplayPromptAsync("Quantità", "Inserisci la quantità da assegnare:", "OK", "Annulla", "Quantità");
         
-        if (int.TryParse(stringa_quantità, out int quantità))
+        try
         {
-            MaterialeService.AssegnaMaterialeACantiere(cantiere.IdCantiere, materiale.IdMateriale, quantità);
+            MaterialeService.AssegnaMaterialeACantiere(cantiere.IdCantiere, materiale.IdMateriale, int.Parse(stringaQuantità));
             MaterialiList.Clear();
             LoadMateriali();
             await DisplayAlert("Successo", "Materiale assegnato con successo.", "OK");
         }
-        else
+        catch
         {
             await DisplayAlert("Errore", "Inserisci una quantità valida.", "OK");
         }

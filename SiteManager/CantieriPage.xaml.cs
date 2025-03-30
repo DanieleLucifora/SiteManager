@@ -44,7 +44,6 @@ public partial class CantieriPage : ContentPage
 		FormStackLayout.IsVisible = true;
         SalvaCantiereBtn.IsVisible = true;
         NuovoCantiereBtn.IsVisible = false;
-        ClearForm();
 	}
 
     private async void SalvaCantiere_Clicked(object sender, EventArgs e)
@@ -56,29 +55,24 @@ public partial class CantieriPage : ContentPage
             return;
         }
 
-        string citta = CittaEntry.Text; 
-        string committente = CommittenteEntry.Text;  
-        DateTime dataInizio = DataInizioPicker.Date; 
-        DateTime scadenza = ScadenzaPicker.Date; 
-
-        Cantiere nuovoCantiere = new Cantiere
+        Cantiere nuovoCantiere = new()
         {
-            Citta = citta,
-            Committente = committente,
-            DataInizio = dataInizio,
-            Scadenza = scadenza
+            Citta = CittaEntry.Text,
+            Committente = CommittenteEntry.Text,
+            DataInizio = DataInizioPicker.Date,
+            Scadenza = ScadenzaPicker.Date
         };
 
-        bool success = CantiereService.AggiungiCantiere(nuovoCantiere);
+        bool cantiereAggiunto = CantiereService.AggiungiCantiere(nuovoCantiere);
 
-        if (success)
+        if (cantiereAggiunto)
         {
-            await DisplayAlert("Successo", "Cantiere aggiunto con successo", "OK");
             FormStackLayout.IsVisible = false;
             SalvaCantiereBtn.IsVisible = false;
             NuovoCantiereBtn.IsVisible = true;
             CantieriList.Add(nuovoCantiere);
             ClearForm();
+            await DisplayAlert("Successo", "Cantiere aggiunto con successo", "OK");
         }
         else
         {

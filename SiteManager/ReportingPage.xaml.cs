@@ -19,8 +19,8 @@ public partial class ReportingPage : ContentPage
 
 	private void LoadCantieri()
 	{
-		var cantieri = CantiereService.OttieniCantieri();
-		foreach (var cantiere in cantieri)
+		List<Cantiere> cantieri = CantiereService.OttieniCantieri();
+		foreach (Cantiere cantiere in cantieri)
 		{
 			CantieriList.Add(cantiere);
 		}

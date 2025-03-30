@@ -32,36 +32,36 @@ public partial class ChiusuraGiornataPage : ContentPage
         Button button = (Button)sender;
         Operaio operaio = (Operaio)button.BindingContext;
 
-        string stringa_ore = await DisplayPromptAsync("Inserimento Ore Lavorate", $"Inserisci le ore lavorate per {operaio.Nome} " + 
-			$"{operaio.Cognome}:", "Salva", "Annulla", placeholder: "0.0", maxLength: 4, keyboard: Keyboard.Numeric);
+        string stringaOre = await DisplayPromptAsync("Inserimento Ore Lavorate", $"Inserisci le ore lavorate per {operaio.Nome} " + 
+			$"{operaio.Cognome}:", "Salva", "Annulla", placeholder: "0.0", maxLength: 4);
 
-		if (string.IsNullOrEmpty(stringa_ore))
+		if (string.IsNullOrEmpty(stringaOre))
 		{
             await DisplayAlert("Errore", "Inserisci un valore", "OK");
             return;
         }
 
-        if (decimal.TryParse(stringa_ore, out decimal ore))
+        try
         {
             Presenza presenzaOperaio = new()
             {
                 OperaioId = operaio.IdOperaio,
-                Ore = ore,
+                Ore = decimal.Parse(stringaOre),
                 CantiereId = cantiere.IdCantiere
             };
 
-            bool presenza_aggiunta = PresenzaService.AggiungiPresenza(presenzaOperaio);
+            bool presenzaAggiunta = PresenzaService.AggiungiPresenza(presenzaOperaio);
 
-            if (presenza_aggiunta)
+            if (presenzaAggiunta)
             {
-                await DisplayAlert("Successo", $"Registrate {ore} ore per {operaio.Nome} {operaio.Cognome}", "OK");
+                await DisplayAlert("Successo", $"Registrate {presenzaOperaio.Ore} ore per {operaio.Nome} {operaio.Cognome}", "OK");
             }
             else
             {
                 await DisplayAlert("Errore", "Impossibile registrare le ore lavorate", "OK");
             }
         }
-        else
+        catch
         {
             await DisplayAlert("Errore", "Formato non valido", "OK");
         }
@@ -72,7 +72,6 @@ public partial class ChiusuraGiornataPage : ContentPage
 		FormStackLayout.IsVisible = true;
         SalvaSpesaBtn.IsVisible = true;
 		AggiungiSpesaBtn.IsVisible = false;
-        ClearForm();
 	}
 
     private async void SalvaSpesa_Clicked(object sender, EventArgs e)
@@ -84,19 +83,18 @@ public partial class ChiusuraGiornataPage : ContentPage
             return;
         }
 
-        string descrizione = DescrizioneEntry.Text;
-        if(decimal.TryParse(CostoEntry.Text, out decimal costo))
+        try
         {
             Spesa nuovaSpesa = new()
             {
-                Descrizione = descrizione,
-                Costo = costo,
+                Descrizione = DescrizioneEntry.Text,
+                Costo = decimal.Parse(CostoEntry.Text),
 			    CantiereId = cantiere.IdCantiere
             };
 
-            bool spesa_aggiunta = SpesaService.AggiungiSpesa(nuovaSpesa);
+            bool spesaAggiunta = SpesaService.AggiungiSpesa(nuovaSpesa);
 
-            if (spesa_aggiunta)
+            if (spesaAggiunta)
             {
                 FormStackLayout.IsVisible = false;
                 SalvaSpesaBtn.IsVisible = false;
@@ -109,7 +107,7 @@ public partial class ChiusuraGiornataPage : ContentPage
                 await DisplayAlert("Errore", "Si è verificato un errore durante l'aggiunta della spesa", "OK");
             }
         }
-        else
+        catch
         {
             await DisplayAlert("Errore", "Formato non valido", "OK");
         }
