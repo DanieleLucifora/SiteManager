@@ -48,7 +48,7 @@ double calcolaSomma(const vector<Spesa>& spese) {
 }
 
 double CalcolaCostoMateriali(const vector<Materiale>& materiali) {
-    return calcolaSomma<Materiale>(materiali);
+    return calcolaSomma(materiali);
 }
 
 double CalcolaCostoPersonale(const vector<Presenza>& presenze, const vector<Operaio>& operai) {
@@ -67,7 +67,7 @@ double CalcolaCostoPersonale(const vector<Presenza>& presenze, const vector<Oper
 }
 
 double CalcolaTotaleSpese(const vector<Spesa>& spese) {
-    return calcolaSomma<Spesa>(spese);
+    return calcolaSomma(spese);
 }
 
 int main() {
