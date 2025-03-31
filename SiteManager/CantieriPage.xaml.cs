@@ -127,9 +127,9 @@ public partial class CantieriPage : ContentPage
         await DisplayAlert("Dettagli Cantiere", $"Citta: {cantiere.Citta}\nCommittente: {cantiere.Committente}\nData di inizio: " +
                            $"{cantiere.DataInizio.ToShortDateString()}\nData di scadenza: {cantiere.Scadenza.ToShortDateString()}", "OK");
 
-        bool success = CantiereService.AggiornaCantiere(cantiere);
+        bool cantiereAggiornato = CantiereService.AggiornaCantiere(cantiere);
 
-        if (success)
+        if (cantiereAggiornato)
         {
             FormStackLayout.IsVisible = false;
             AggiornaCantiereBtn.IsVisible = false;
@@ -153,8 +153,8 @@ public partial class CantieriPage : ContentPage
         bool conferma = await DisplayAlert("Conferma Eliminazione", $"Sei sicuro di voler cancellare il cantiere di {cantiere.Citta}?", "Si", "No");
         if (conferma)
         {
-            bool success = CantiereService.EliminaCantiere(cantiere.IdCantiere);
-            if (success)
+            bool cantiereEliminato = CantiereService.EliminaCantiere(cantiere.IdCantiere);
+            if (cantiereEliminato)
             {
                 CantieriList.Remove(cantiere);
                 await DisplayAlert("Successo", "Cantiere cancellato con successo", "OK"); 

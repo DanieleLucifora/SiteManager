@@ -5,42 +5,42 @@
             Title="Scheda Cantiere">
     
     <Grid RowDefinitions="auto,*,auto,*">  
-       <Label Text="Elenco Operai" Grid.Row="0" Margin="20,20,0,0" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>  
-       <CollectionView x:Name="OperaiCollectionView" Grid.Row="1" Margin="20,0,20,0">  
+       <Label Text="Elenco Operai:" Grid.Row="0" Margin="20,5" FontSize="20" TextColor="SteelBlue"/>  
+       <CollectionView x:Name="OperaiCollectionView" Grid.Row="1" Margin="20,0">  
            <CollectionView.ItemTemplate>  
                <DataTemplate>  
-                   <Grid ColumnDefinitions="*,auto" Padding="5" BackgroundColor="{Binding BackgroundColor}">  
-                       <HorizontalStackLayout>  
-                           <Label Text="Nome:" VerticalTextAlignment="Center" />  
-                           <Label Text="{Binding Nome}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>  
-                           <Label Text="Cognome:" VerticalTextAlignment="Center" />  
-                           <Label Text="{Binding Cognome}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>  
-                           <Label Text="Mansione:" VerticalTextAlignment="Center" />
-                           <Label Text="{Binding Mansione}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>
+                   <Grid ColumnDefinitions="*,auto" BackgroundColor="{Binding BackgroundColor}">
+                       <HorizontalStackLayout Grid.Column="0" VerticalOptions="Center">  
+                           <Label Text="Nome:" />  
+                           <Label Text="{Binding Nome}" Margin="5,0" TextColor="SteelBlue"/>  
+                           <Label Text="Cognome:" />  
+                           <Label Text="{Binding Cognome}" Margin="5,0" TextColor="SteelBlue"/>  
+                           <Label Text="Mansione:" />
+                           <Label Text="{Binding Mansione}" Margin="5,0" TextColor="SteelBlue"/>
                        </HorizontalStackLayout>   
-                       <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">  
+                       <HorizontalStackLayout Grid.Column="1">  
                            <Button Text="Assegna" Clicked="AssegnaOperaio_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>  
                            <Button Text="Rimuovi" Clicked="RimuoviOperaio_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>  
-                       </HorizontalStackLayout>  
+                       </HorizontalStackLayout>
                    </Grid>  
                </DataTemplate>  
            </CollectionView.ItemTemplate>  
        </CollectionView>  
          
-       <Label Text="Elenco Materiali" Grid.Row="2" Margin="20,20,0,0" FontSize="25" FontFamily="Roboto" FontAttributes="Bold" TextColor="SteelBlue"/>  
-       <CollectionView x:Name="MaterialiCollectionView" Grid.Row="3" SelectionMode="None" Margin="20,0,20,0">  
+       <Label Text="Elenco Materiali:" Grid.Row="2" Margin="20,5" FontSize="20" TextColor="SteelBlue"/>  
+       <CollectionView x:Name="MaterialiCollectionView" Grid.Row="3" Margin="20,0">  
            <CollectionView.ItemTemplate>  
                <DataTemplate>  
-                   <Grid ColumnDefinitions="*,auto" Padding="5">  
-                       <HorizontalStackLayout>  
-                           <Label Text="Nome: " VerticalTextAlignment="Center"/>  
-                           <Label Text="{Binding Nome}" VerticalTextAlignment="Center" FontSize="16" Margin="5,0,5,0" FontFamily="Roboto" TextColor="SteelBlue"/>  
-                           <Label Text="Quantità: " VerticalTextAlignment="Center"/>  
-                           <Label Text="{Binding Quantita}" FontSize="16" VerticalTextAlignment="Center" Margin="5,0,0,0" FontFamily="Roboto" TextColor="SteelBlue"/>
-                           <Label Text="{Binding Unita}" FontSize="16" VerticalTextAlignment="Center" FontFamily="Roboto" TextColor="SteelBlue"/>
+                   <Grid ColumnDefinitions="*,auto" >
+                       <HorizontalStackLayout Grid.Column="0" VerticalOptions="Center">  
+                           <Label Text="Nome: " />  
+                           <Label Text="{Binding Nome}" Margin="5,0" TextColor="SteelBlue"/>  
+                           <Label Text="Quantità: "/>  
+                           <Label Text="{Binding Quantita}" Margin="5,0,0,0" TextColor="SteelBlue"/>
+                           <Label Text="{Binding Unita}" TextColor="SteelBlue"/>
                        </HorizontalStackLayout>  
-                       <HorizontalStackLayout Grid.Column="1" VerticalOptions="Start">
-                            <Button Text="Assegna" Clicked="AssegnaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
+                       <HorizontalStackLayout Grid.Column="1" >
+                           <Button Text="Assegna" Clicked="AssegnaMateriale_Clicked" CommandParameter="{Binding}" Margin="3" BackgroundColor="SteelBlue"/>
                         </HorizontalStackLayout>  
                    </Grid>  
                </DataTemplate>  

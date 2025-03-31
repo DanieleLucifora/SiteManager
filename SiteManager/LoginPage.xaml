@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SiteManager.LoginPage">
 
-    <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+    <VerticalStackLayout Spacing="20" VerticalOptions="Center">
         <Image Aspect="AspectFit" HeightRequest="200" Source="sm_logo.png"/>
-        <Label FontAttributes="Bold" FontSize="24" Text="Benvenuto su SiteManager" TextColor="SteelBlue" HorizontalOptions="Center"/>
+        <Label FontSize="24" Text="Benvenuto su SiteManager" TextColor="SteelBlue" HorizontalOptions="Center"/>
         <Entry Placeholder="Username" x:Name="UsernameEntry" WidthRequest="250" HorizontalOptions="Center"/>
         <Entry Placeholder="Password" x:Name="PasswordEntry" IsPassword="True" WidthRequest="250" HorizontalOptions="Center"/>
         <Button x:Name="LoginBtn" Text="Login" Clicked="LoginButton_Clicked" BackgroundColor="SteelBlue" WidthRequest="250" HorizontalOptions="Center"/>
