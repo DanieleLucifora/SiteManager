@@ -10,7 +10,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnDefinitions="*,auto" Padding="5">
-                            <HorizontalStackLayout Grid.Row="0" VerticalOptions="Center">
+                            <HorizontalStackLayout Grid.Column="0" VerticalOptions="Center">
                                 <Label Text="Citta: " />
                                 <Label Text="{Binding Citta}" Margin="5,0" TextColor="SteelBlue"/>
                                 <Label Text="Committente: " />

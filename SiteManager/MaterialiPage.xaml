@@ -11,8 +11,8 @@
                     <DataTemplate>
                         <Grid ColumnDefinitions="*,auto" Padding="5">
                             <HorizontalStackLayout Grid.Column="0" VerticalOptions="Center">
-                                <Label Text="Nome: " />
-                                <Label Text="{Binding Nome}"  Margin="5,0" TextColor="SteelBlue"/>
+                                <Label Text="Nome: "/>
+                                <Label Text="{Binding Nome}" Margin="5,0" TextColor="SteelBlue"/>
                                 <Label Text="Quantità: "/>
                                 <Label Text="{Binding Quantita}" Margin="5,0,0,0" TextColor="SteelBlue"/>
                                 <Label Text="{Binding Unita}" TextColor="SteelBlue"/>

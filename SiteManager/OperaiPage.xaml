@@ -12,7 +12,7 @@
                         <Grid ColumnDefinitions="*,auto" Padding="5">
                             <HorizontalStackLayout Grid.Column="0" VerticalOptions="Center">
                                 <Label Text="Nome:" />
-                                <Label Text="{Binding Nome}"  Margin="5,0" TextColor="SteelBlue"/>
+                                <Label Text="{Binding Nome}" Margin="5,0" TextColor="SteelBlue"/>
                                 <Label Text="Cognome:" />
                                 <Label Text="{Binding Cognome}" Margin="5,0" TextColor="SteelBlue"/>
                                 <Label Text="Mansione:" />
